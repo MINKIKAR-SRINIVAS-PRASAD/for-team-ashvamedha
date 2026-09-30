@@ -1,0 +1,1189 @@
+{
+  "EVENTS": [
+    {
+      "slug": "football",
+      "name": "Football",
+      "arena": "The Arena",
+      "category": "Team Sport",
+      "tagline": "Eleven against the storm.",
+      "description": "The flagship battle of ASHVAMEDHA, played across a full 90-minute war of endurance and structure. Group stages run on the main ground before the floodlit final decides who lifts the Ashvamedha Shield.",
+      "date": "13–15 Nov 2026",
+      "day": 1,
+      "time": "09:00 onwards",
+      "venue": "Main Ground",
+      "teamSize": "11 + 5 subs",
+      "registration": "closing",
+      "entryFee": "₹1,200 / team",
+      "prizePool": "₹45,000",
+      "format": "Group stage + knockout",
+      "accent": "crimson",
+      "image": null,
+      "glyph": "football"
+    },
+    {
+      "slug": "basketball",
+      "name": "Basketball",
+      "arena": "Court 01 Protocol",
+      "category": "Team Sport",
+      "tagline": "Four quarters. No retreat.",
+      "description": "Fast-break basketball under the arena lights with a shot-clock enforced at 24 seconds. Played 5v5 across four ten-minute quarters with a knockout bracket for the top eight squads.",
+      "date": "14–15 Nov 2026",
+      "day": 2,
+      "time": "10:30 onwards",
+      "venue": "Court 01",
+      "teamSize": "5 + 4 subs",
+      "registration": "open",
+      "entryFee": "₹900 / team",
+      "prizePool": "₹30,000",
+      "format": "Knockout bracket",
+      "accent": "volt",
+      "image": null,
+      "glyph": "basketball"
+    },
+    {
+      "slug": "badminton",
+      "name": "Badminton",
+      "arena": "Indoor Hall",
+      "category": "Racquet",
+      "tagline": "Speed you can hear.",
+      "description": "Singles and doubles combat on four regulation courts with BWF-scoring to 21. Quarter-final losers enter a repechage ladder so no campaign ends without a second strike.",
+      "date": "13–14 Nov 2026",
+      "day": 1,
+      "time": "11:30 onwards",
+      "venue": "Indoor Hall",
+      "teamSize": "1 or 2",
+      "registration": "open",
+      "entryFee": "₹250 / player",
+      "prizePool": "₹18,000",
+      "format": "Singles + doubles, BWF 21",
+      "accent": "gold",
+      "image": null,
+      "glyph": "badminton"
+    },
+    {
+      "slug": "table-tennis",
+      "name": "Table Tennis",
+      "arena": "Precision Bay",
+      "category": "Racquet",
+      "tagline": "Reflex is a weapon.",
+      "description": "Eight tables running in parallel, best-of-five to 11 points. Known across the circuit for upsets — the shortest distance between an underdog and a trophy.",
+      "date": "13 Nov 2026",
+      "day": 1,
+      "time": "14:00 onwards",
+      "venue": "Indoor Hall — Bay 2",
+      "teamSize": "1 or 2",
+      "registration": "open",
+      "entryFee": "₹200 / player",
+      "prizePool": "₹12,000",
+      "format": "Best of 5, knockout",
+      "accent": "volt",
+      "image": null,
+      "glyph": "tabletennis"
+    },
+    {
+      "slug": "lawn-tennis",
+      "name": "Lawn Tennis",
+      "arena": "Sun Court",
+      "category": "Racquet",
+      "tagline": "Long rallies break hearts.",
+      "description": "Hard-court tennis with pro-set scoring in the early rounds and best-of-three sets from the semi-finals. Played under the open Odisha sky with a dedicated medical bay on standby.",
+      "date": "14 Nov 2026",
+      "day": 2,
+      "time": "07:00 onwards",
+      "venue": "Lawn Courts",
+      "teamSize": "1 or 2",
+      "registration": "closing",
+      "entryFee": "₹300 / player",
+      "prizePool": "₹15,000",
+      "format": "Pro-set then best of 3",
+      "accent": "gold",
+      "image": null,
+      "glyph": "lawn"
+    },
+    {
+      "slug": "chess",
+      "name": "Chess",
+      "arena": "The Quiet War",
+      "category": "Board & Mind",
+      "tagline": "Silence, then devastation.",
+      "description": "FIDE standard blitz and rapid formats in a sound-controlled hall, arbiter-monitored throughout. Nine rounds of Swiss pairings decide the grandmaster of ASHVAMEDHA.",
+      "date": "13 Nov 2026",
+      "day": 1,
+      "time": "09:30 onwards",
+      "venue": "Lecture Hall Complex",
+      "teamSize": "1",
+      "registration": "open",
+      "entryFee": "₹150 / player",
+      "prizePool": "₹10,000",
+      "format": "Swiss, 9 rounds",
+      "accent": "violet",
+      "image": null,
+      "glyph": "chess"
+    },
+    {
+      "slug": "gym",
+      "name": "Gym",
+      "arena": "Iron Protocol",
+      "category": "Power & Fitness",
+      "tagline": "Against gravity, and yourself.",
+      "description": "Raw strength benchmarks across squat, bench press and deadlift judged on bodyweight multipliers. Technique is audited by certified spotters — form beats ego every time.",
+      "date": "15 Nov 2026",
+      "day": 3,
+      "time": "08:00 onwards",
+      "venue": "Strength & Conditioning Centre",
+      "teamSize": "1",
+      "registration": "open",
+      "entryFee": "₹200 / athlete",
+      "prizePool": "₹14,000",
+      "format": "3-lift total",
+      "accent": "crimson",
+      "image": null,
+      "glyph": "gym"
+    },
+    {
+      "slug": "gym-events",
+      "name": "Gym Events",
+      "arena": "Iron Gauntlet",
+      "category": "Power & Fitness",
+      "tagline": "A gauntlet of five trials.",
+      "description": "Arm wrestling, plank hold, pull-up endurance, farmer's carry and a timed relay of four stations. Scored on aggregate — the most complete athlete wins, not the biggest.",
+      "date": "15 Nov 2026",
+      "day": 3,
+      "time": "15:00 onwards",
+      "venue": "Strength & Conditioning Centre",
+      "teamSize": "1 + relay of 4",
+      "registration": "open",
+      "entryFee": "₹250 / athlete",
+      "prizePool": "₹16,000",
+      "format": "5 trials, aggregate points",
+      "accent": "crimson",
+      "image": null,
+      "glyph": "gym"
+    },
+    {
+      "slug": "valorant",
+      "name": "Valorant",
+      "arena": "Server War",
+      "category": "Esports",
+      "tagline": "Five operators. One site.",
+      "description": "LAN-adjacent competitive FPS on a 100 Mbps dedicated line with best-of-three series throughout. Coaches get a comms slot behind the players — strategy is part of the spectacle.",
+      "date": "13–15 Nov 2026",
+      "day": 1,
+      "time": "16:00 onwards",
+      "venue": "Systems Lab — Esports Bay",
+      "teamSize": "5 + 1 coach",
+      "registration": "closing",
+      "entryFee": "₹1,000 / team",
+      "prizePool": "₹35,000",
+      "format": "Best of 3 / Bo5 final",
+      "accent": "violet",
+      "image": null,
+      "glyph": "valorant"
+    },
+    {
+      "slug": "athletics",
+      "name": "Athletics",
+      "arena": "The Track",
+      "category": "Power & Fitness",
+      "tagline": "Milliseconds define legacies.",
+      "description": "100m, 200m, 400m, 4x100m relay plus long jump and shot put. Electronic timing with photo-finish review ensures every podium is beyond dispute.",
+      "date": "14 Nov 2026",
+      "day": 2,
+      "time": "06:30 onwards",
+      "venue": "Athletics Track",
+      "teamSize": "Individual + relay of 4",
+      "registration": "open",
+      "entryFee": "₹150 / event",
+      "prizePool": "₹22,000",
+      "format": "Heats + finals",
+      "accent": "volt",
+      "image": null,
+      "glyph": "athletics"
+    },
+    {
+      "slug": "volleyball",
+      "name": "Volleyball",
+      "arena": "Court 02",
+      "category": "Team Sport",
+      "tagline": "Six hands, one wall.",
+      "description": "Six-a-side volleyball played to 25 points with rally scoring. Rotation discipline decides the tight sets — the final has gone to five sets three years running.",
+      "date": "14–15 Nov 2026",
+      "day": 2,
+      "time": "15:30 onwards",
+      "venue": "Court 02",
+      "teamSize": "6 + 4 subs",
+      "registration": "open",
+      "entryFee": "₹800 / team",
+      "prizePool": "₹25,000",
+      "format": "Group + knockout",
+      "accent": "gold",
+      "image": null,
+      "glyph": "volleyball"
+    },
+    {
+      "slug": "cricket",
+      "name": "Cricket",
+      "arena": "Sunset Oval",
+      "category": "Team Sport",
+      "tagline": "Ten overs of chaos.",
+      "description": "T10 knockout cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
+      "date": "13 Nov 2026",
+      "day": 1,
+      "time": "13:00 onwards",
+      "venue": "Main Ground",
+      "teamSize": "11 + 4 subs",
+      "registration": "closed",
+      "entryFee": "₹1,500 / team",
+      "prizePool": "₹40,000",
+      "format": "T10 knockout + super over",
+      "accent": "crimson",
+      "image": null,
+      "glyph": "football"
+    }
+  ],
+  "FEATURED_SLUGS": [
+    "football",
+    "basketball",
+    "valorant",
+    "badminton",
+    "athletics",
+    "chess"
+  ],
+  "TEAMS": [
+    {
+      "slug": "phoenix-brigade",
+      "name": "Phoenix Brigade",
+      "institution": "IIT Bhubaneswar",
+      "department": "School of Mechanical Sciences",
+      "captain": "A. Mahapatra",
+      "sport": "Football",
+      "rank": 1,
+      "accent": "crimson",
+      "crest": [
+        "#e11d2e",
+        "#4a0710"
+      ],
+      "motto": "Rise. Repeat. Reign."
+    },
+    {
+      "slug": "titan-syndicate",
+      "name": "Titan Syndicate",
+      "institution": "IIT Bhubaneswar",
+      "department": "School of Electrical Sciences",
+      "captain": "R. Nayak",
+      "sport": "Basketball",
+      "rank": 2,
+      "accent": "volt",
+      "crest": [
+        "#31a8ff",
+        "#062642"
+      ],
+      "motto": "Above the rim, beyond the noise."
+    },
+    {
+      "slug": "obsidian-order",
+      "name": "Obsidian Order",
+      "institution": "NIT Rourkela",
+      "department": "Department of Computer Science",
+      "captain": "S. Patel",
+      "sport": "Valorant",
+      "rank": 3,
+      "accent": "violet",
+      "crest": [
+        "#7c5cff",
+        "#241048"
+      ],
+      "motto": "Every site is ours."
+    },
+    {
+      "slug": "iron-veil",
+      "name": "Iron Veil",
+      "institution": "IIT Bhubaneswar",
+      "department": "School of Infrastructure",
+      "captain": "K. Das",
+      "sport": "Gym",
+      "rank": 4,
+      "accent": "crimson",
+      "crest": [
+        "#ff5a3c",
+        "#3a0d05"
+      ],
+      "motto": "Weight is only a rumour."
+    },
+    {
+      "slug": "silver-lance",
+      "name": "Silver Lance",
+      "institution": "KIIT Bhubaneswar",
+      "department": "School of Law",
+      "captain": "P. Mohanty",
+      "sport": "Lawn Tennis",
+      "rank": 5,
+      "accent": "gold",
+      "crest": [
+        "#e8c46a",
+        "#42310d"
+      ],
+      "motto": "Placed, not played."
+    },
+    {
+      "slug": "stormforge",
+      "name": "Stormforge",
+      "institution": "IIT Bhubaneswar",
+      "department": "School of Basic Sciences",
+      "captain": "N. Behera",
+      "sport": "Badminton",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+    {
+      "slug": "quiet-war",
+      "name": "The Quiet War",
+      "institution": "IIT Bhubaneswar",
+      "department": "School of Humanities",
+      "captain": "A. Rout",
+      "sport": "Chess",
+      "rank": 7,
+      "accent": "violet",
+      "crest": [
+        "#b39cff",
+        "#2a1a5e"
+      ],
+      "motto": "We win it in silence."
+    },
+    {
+      "slug": "red-meridian",
+      "name": "Red Meridian",
+      "institution": "CET Bhubaneswar",
+      "department": "Department of Civil Engineering",
+      "captain": "V. Sahu",
+      "sport": "Athletics",
+      "rank": 8,
+      "accent": "crimson",
+      "crest": [
+        "#ff3b57",
+        "#46060f"
+      ],
+      "motto": "Milliseconds are ours."
+    },
+    {
+      "slug": "walled-court",
+      "name": "Walled Court",
+      "institution": "IIT Bhubaneswar",
+      "department": "School of Minerals",
+      "captain": "D. Panda",
+      "sport": "Volleyball",
+      "rank": 9,
+      "accent": "gold",
+      "crest": [
+        "#ffd98a",
+        "#4a3611"
+      ],
+      "motto": "Six hands. One wall."
+    },
+    {
+      "slug": "night-protocol",
+      "name": "Night Protocol",
+      "institution": "VSSUT Burla",
+      "department": "Department of Electronics",
+      "captain": "T. Jena",
+      "sport": "Table Tennis",
+      "rank": 10,
+      "accent": "volt",
+      "crest": [
+        "#3ddc97",
+        "#053827"
+      ],
+      "motto": "Reflex over reason."
+    },
+    {
+      "slug": "cinder-crew",
+      "name": "Cinder Crew",
+      "institution": "IIT Bhubaneswar",
+      "department": "School of Earth Sciences",
+      "captain": "M. Sahoo",
+      "sport": "Cricket",
+      "rank": 11,
+      "accent": "crimson",
+      "crest": [
+        "#c2410c",
+        "#331003"
+      ],
+      "motto": "Ten overs is a lifetime."
+    },
+    {
+      "slug": "apex-collective",
+      "name": "Apex Collective",
+      "institution": "IIT Bhubaneswar",
+      "department": "Open Category",
+      "captain": "H. Mishra",
+      "sport": "Gym Events",
+      "rank": 12,
+      "accent": "gold",
+      "crest": [
+        "#eab308",
+        "#3f2d03"
+      ],
+      "motto": "All five trials. No excuses."
+    }
+  ],
+  "DAYS": [
+    {
+      "day": 1,
+      "label": "DAY 01",
+      "date": "13 NOV 2026",
+      "headline": "IGNITION",
+      "note": "Opening ceremony, group stages and the first eliminations."
+    },
+    {
+      "day": 2,
+      "label": "DAY 02",
+      "date": "14 NOV 2026",
+      "headline": "ESCALATION",
+      "note": "Semi-finals across the arena, track finals at first light."
+    },
+    {
+      "day": 3,
+      "label": "DAY 03",
+      "date": "15 NOV 2026",
+      "headline": "FINAL STAND",
+      "note": "Championship finals, podium ceremony and the closing arena."
+    }
+  ],
+  "SCHEDULE": [
+    {
+      "id": "d1-0900",
+      "day": 1,
+      "time": "09:00",
+      "title": "Opening Ceremony",
+      "venue": "Main Ground",
+      "stage": "Ceremony",
+      "status": "completed",
+      "duration": "45 min"
+    },
+    {
+      "id": "d1-0900-fb",
+      "day": 1,
+      "time": "09:45",
+      "title": "Football — Group Stage",
+      "venue": "Main Ground",
+      "eventSlug": "football",
+      "stage": "Group A / B",
+      "status": "completed",
+      "duration": "3 hrs"
+    },
+    {
+      "id": "d1-0930-ch",
+      "day": 1,
+      "time": "09:30",
+      "title": "Chess — Rounds 1–4",
+      "venue": "Lecture Hall Complex",
+      "eventSlug": "chess",
+      "stage": "Swiss",
+      "status": "completed",
+      "duration": "2 hrs 30 min"
+    },
+    {
+      "id": "d1-1130-bd",
+      "day": 1,
+      "time": "11:30",
+      "title": "Badminton — Round of 32",
+      "venue": "Indoor Hall",
+      "eventSlug": "badminton",
+      "stage": "Knockout",
+      "status": "completed",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d1-1300-cr",
+      "day": 1,
+      "time": "13:00",
+      "title": "Cricket — T10 Knockout",
+      "venue": "Main Ground",
+      "eventSlug": "cricket",
+      "stage": "Quarter-finals",
+      "status": "completed",
+      "duration": "4 hrs"
+    },
+    {
+      "id": "d1-1400-tt",
+      "day": 1,
+      "time": "14:00",
+      "title": "Table Tennis — Prelims",
+      "venue": "Indoor Hall — Bay 2",
+      "eventSlug": "table-tennis",
+      "stage": "Best of 5",
+      "status": "completed",
+      "duration": "3 hrs"
+    },
+    {
+      "id": "d1-1600-vl",
+      "day": 1,
+      "time": "16:00",
+      "title": "Valorant — Opening Series",
+      "venue": "Systems Lab — Esports Bay",
+      "eventSlug": "valorant",
+      "stage": "Bo3",
+      "status": "completed",
+      "duration": "4 hrs"
+    },
+    {
+      "id": "d1-1900-ig",
+      "day": 1,
+      "time": "19:00",
+      "title": "Arena Ignition — Light Show",
+      "venue": "Main Ground",
+      "stage": "Ceremony",
+      "status": "completed",
+      "duration": "30 min"
+    },
+    {
+      "id": "d2-0630-at",
+      "day": 2,
+      "time": "06:30",
+      "title": "Athletics — Heats",
+      "venue": "Athletics Track",
+      "eventSlug": "athletics",
+      "stage": "100m / 200m",
+      "status": "live",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d2-0700-lt",
+      "day": 2,
+      "time": "07:00",
+      "title": "Lawn Tennis — Quarter-finals",
+      "venue": "Lawn Courts",
+      "eventSlug": "lawn-tennis",
+      "stage": "Pro-set",
+      "status": "live",
+      "duration": "3 hrs"
+    },
+    {
+      "id": "d2-0900-tt",
+      "day": 2,
+      "time": "09:00",
+      "title": "Table Tennis — Semi-finals",
+      "venue": "Indoor Hall — Bay 2",
+      "eventSlug": "table-tennis",
+      "stage": "Best of 5",
+      "status": "scheduled",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d2-1030-bb",
+      "day": 2,
+      "time": "10:30",
+      "title": "Basketball — Knockout Bracket",
+      "venue": "Court 01",
+      "eventSlug": "basketball",
+      "stage": "Round of 16",
+      "status": "scheduled",
+      "duration": "3 hrs"
+    },
+    {
+      "id": "d2-1130-bd",
+      "day": 2,
+      "time": "11:30",
+      "title": "Badminton — Quarter-finals",
+      "venue": "Indoor Hall",
+      "eventSlug": "badminton",
+      "stage": "Knockout",
+      "status": "scheduled",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d2-1330-at",
+      "day": 2,
+      "time": "13:30",
+      "title": "Athletics — Track Finals",
+      "venue": "Athletics Track",
+      "eventSlug": "athletics",
+      "stage": "400m · Relay · Jump",
+      "status": "scheduled",
+      "duration": "2 hrs 30 min"
+    },
+    {
+      "id": "d2-1530-vb",
+      "day": 2,
+      "time": "15:30",
+      "title": "Volleyball — Group Stage",
+      "venue": "Court 02",
+      "eventSlug": "volleyball",
+      "stage": "Groups",
+      "status": "scheduled",
+      "duration": "3 hrs"
+    },
+    {
+      "id": "d2-1800-fb",
+      "day": 2,
+      "time": "18:00",
+      "title": "Football — Semi-final I",
+      "venue": "Main Ground",
+      "eventSlug": "football",
+      "stage": "Semi-final",
+      "status": "scheduled",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d2-2000-vl",
+      "day": 2,
+      "time": "20:00",
+      "title": "Valorant — Upper Bracket Final",
+      "venue": "Systems Lab — Esports Bay",
+      "eventSlug": "valorant",
+      "stage": "Bo3",
+      "status": "scheduled",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d3-0800-gy",
+      "day": 3,
+      "time": "08:00",
+      "title": "Gym — Strength Trials",
+      "venue": "Strength & Conditioning Centre",
+      "eventSlug": "gym",
+      "stage": "3-lift total",
+      "status": "scheduled",
+      "duration": "3 hrs"
+    },
+    {
+      "id": "d3-1000-bd",
+      "day": 3,
+      "time": "10:00",
+      "title": "Badminton — Finals",
+      "venue": "Indoor Hall",
+      "eventSlug": "badminton",
+      "stage": "Gold Medal",
+      "status": "scheduled",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d3-1130-bb",
+      "day": 3,
+      "time": "11:30",
+      "title": "Basketball — Final",
+      "venue": "Court 01",
+      "eventSlug": "basketball",
+      "stage": "Gold Medal",
+      "status": "scheduled",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d3-1400-vb",
+      "day": 3,
+      "time": "14:00",
+      "title": "Volleyball — Final",
+      "venue": "Court 02",
+      "eventSlug": "volleyball",
+      "stage": "Gold Medal",
+      "status": "scheduled",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d3-1500-ge",
+      "day": 3,
+      "time": "15:00",
+      "title": "Gym Events — Iron Gauntlet",
+      "venue": "Strength & Conditioning Centre",
+      "eventSlug": "gym-events",
+      "stage": "5 trials",
+      "status": "scheduled",
+      "duration": "2 hrs 30 min"
+    },
+    {
+      "id": "d3-1700-vl",
+      "day": 3,
+      "time": "17:00",
+      "title": "Valorant — Grand Final",
+      "venue": "Systems Lab — Esports Bay",
+      "eventSlug": "valorant",
+      "stage": "Bo5",
+      "status": "scheduled",
+      "duration": "3 hrs"
+    },
+    {
+      "id": "d3-1900-fb",
+      "day": 3,
+      "time": "19:00",
+      "title": "Football — Championship Final",
+      "venue": "Main Ground",
+      "eventSlug": "football",
+      "stage": "Gold Medal",
+      "status": "scheduled",
+      "duration": "2 hrs"
+    },
+    {
+      "id": "d3-2100-cl",
+      "day": 3,
+      "time": "21:00",
+      "title": "Podium & Closing Arena",
+      "venue": "Main Ground",
+      "stage": "Ceremony",
+      "status": "scheduled",
+      "duration": "60 min"
+    }
+  ],
+  "RANKINGS": [
+    {
+      "rank": 1,
+      "team": "Phoenix Brigade",
+      "teamSlug": "phoenix-brigade",
+      "matches": 12,
+      "wins": 11,
+      "losses": 1,
+      "points": 33
+    },
+    {
+      "rank": 2,
+      "team": "Titan Syndicate",
+      "teamSlug": "titan-syndicate",
+      "matches": 12,
+      "wins": 10,
+      "losses": 2,
+      "points": 30
+    },
+    {
+      "rank": 3,
+      "team": "Obsidian Order",
+      "teamSlug": "obsidian-order",
+      "matches": 11,
+      "wins": 9,
+      "losses": 2,
+      "points": 27
+    },
+    {
+      "rank": 4,
+      "team": "Iron Veil",
+      "teamSlug": "iron-veil",
+      "matches": 10,
+      "wins": 8,
+      "losses": 2,
+      "points": 24
+    },
+    {
+      "rank": 5,
+      "team": "Silver Lance",
+      "teamSlug": "silver-lance",
+      "matches": 11,
+      "wins": 8,
+      "losses": 3,
+      "points": 24
+    },
+    {
+      "rank": 6,
+      "team": "Stormforge",
+      "teamSlug": "stormforge",
+      "matches": 10,
+      "wins": 7,
+      "losses": 3,
+      "points": 21
+    },
+    {
+      "rank": 7,
+      "team": "The Quiet War",
+      "teamSlug": "quiet-war",
+      "matches": 9,
+      "wins": 6,
+      "losses": 3,
+      "points": 18
+    },
+    {
+      "rank": 8,
+      "team": "Red Meridian",
+      "teamSlug": "red-meridian",
+      "matches": 10,
+      "wins": 6,
+      "losses": 4,
+      "points": 18
+    },
+    {
+      "rank": 9,
+      "team": "Walled Court",
+      "teamSlug": "walled-court",
+      "matches": 10,
+      "wins": 5,
+      "losses": 5,
+      "points": 15
+    },
+    {
+      "rank": 10,
+      "team": "Night Protocol",
+      "teamSlug": "night-protocol",
+      "matches": 9,
+      "wins": 4,
+      "losses": 5,
+      "points": 12
+    },
+    {
+      "rank": 11,
+      "team": "Cinder Crew",
+      "teamSlug": "cinder-crew",
+      "matches": 9,
+      "wins": 3,
+      "losses": 6,
+      "points": 9
+    },
+    {
+      "rank": 12,
+      "team": "Apex Collective",
+      "teamSlug": "apex-collective",
+      "matches": 8,
+      "wins": 2,
+      "losses": 6,
+      "points": 6
+    }
+  ],
+  "CHAMPION_SPOTLIGHT": {
+    "reigning": "Phoenix Brigade",
+    "reigningSport": "Football · Season 2025",
+    "streak": "11-match unbeaten run",
+    "contenders": [
+      {
+        "name": "Titan Syndicate",
+        "note": "Highest scoring average in the arena"
+      },
+      {
+        "name": "Obsidian Order",
+        "note": "Only squad yet to drop a map"
+      },
+      {
+        "name": "Iron Veil",
+        "note": "Three straight podium finishes"
+      }
+    ]
+  },
+  "LIVE_MATCHES": [
+    {
+      "id": "live-fb-1",
+      "sport": "Football",
+      "eventSlug": "football",
+      "home": {
+        "name": "Phoenix Brigade",
+        "score": 2
+      },
+      "away": {
+        "name": "Cinder Crew",
+        "score": 1
+      },
+      "status": "live",
+      "clock": "68'",
+      "detail": "Semi-final I · Main Ground",
+      "accent": "crimson"
+    },
+    {
+      "id": "live-bb-1",
+      "sport": "Basketball",
+      "eventSlug": "basketball",
+      "home": {
+        "name": "Titan Syndicate",
+        "score": 74
+      },
+      "away": {
+        "name": "Apex Collective",
+        "score": 69
+      },
+      "status": "live",
+      "clock": "Q4 · 04:12",
+      "detail": "Round of 16 · Court 01",
+      "accent": "volt"
+    },
+    {
+      "id": "live-vl-1",
+      "sport": "Valorant",
+      "eventSlug": "valorant",
+      "home": {
+        "name": "Obsidian Order",
+        "score": 1
+      },
+      "away": {
+        "name": "Night Protocol",
+        "score": 1
+      },
+      "status": "live",
+      "clock": "MAP 3",
+      "detail": "Upper Bracket Final · Esports Bay",
+      "accent": "violet"
+    },
+    {
+      "id": "next-at-1",
+      "sport": "Athletics",
+      "eventSlug": "athletics",
+      "home": {
+        "name": "Red Meridian",
+        "score": "—"
+      },
+      "away": {
+        "name": "Field A",
+        "score": "—"
+      },
+      "status": "upcoming",
+      "clock": "13:30",
+      "detail": "400m Final · Athletics Track",
+      "accent": "gold"
+    }
+  ],
+  "RECENT_RESULTS": [
+    {
+      "sport": "Table Tennis",
+      "winner": "Night Protocol",
+      "loser": "Stormforge",
+      "score": "3 – 2",
+      "stage": "Round of 16"
+    },
+    {
+      "sport": "Badminton",
+      "winner": "Stormforge",
+      "loser": "Silver Lance",
+      "score": "21-18, 21-16",
+      "stage": "Round of 32"
+    },
+    {
+      "sport": "Chess",
+      "winner": "The Quiet War",
+      "loser": "Apex Collective",
+      "score": "4 – 1",
+      "stage": "Swiss R4"
+    },
+    {
+      "sport": "Valorant",
+      "winner": "Obsidian Order",
+      "loser": "Iron Veil",
+      "score": "13 – 9",
+      "stage": "Opening Series"
+    }
+  ],
+  "EVENT_CHAMPIONS": [
+    {
+      "event": "Cricket",
+      "champion": "Cinder Crew",
+      "runnerUp": "Phoenix Brigade"
+    },
+    {
+      "event": "Chess",
+      "champion": "The Quiet War",
+      "runnerUp": "Apex Collective"
+    },
+    {
+      "event": "Table Tennis",
+      "champion": "Night Protocol",
+      "runnerUp": "Stormforge"
+    },
+    {
+      "event": "Gym",
+      "champion": "Iron Veil",
+      "runnerUp": "Apex Collective"
+    }
+  ],
+  "PODIUM_2025": [
+    {
+      "place": 1,
+      "team": "Phoenix Brigade",
+      "points": 33,
+      "medal": "gold"
+    },
+    {
+      "place": 2,
+      "team": "Titan Syndicate",
+      "points": 30,
+      "medal": "silver"
+    },
+    {
+      "place": 3,
+      "team": "Obsidian Order",
+      "points": 27,
+      "medal": "bronze"
+    }
+  ],
+  "PREVIOUS_EDITIONS": [
+    {
+      "year": "2025",
+      "champion": "Phoenix Brigade",
+      "sports": 22,
+      "teams": 61
+    },
+    {
+      "year": "2024",
+      "champion": "Titan Syndicate",
+      "sports": 20,
+      "teams": 54
+    },
+    {
+      "year": "2023",
+      "champion": "Obsidian Order",
+      "sports": 18,
+      "teams": 47
+    }
+  ],
+  "GALLERY": [
+    {
+      "id": "g1",
+      "title": "Floodlit Final",
+      "category": "MATCHDAY",
+      "image": null,
+      "caption": "The 2025 football final, decided in the 88th minute under the arena lights.",
+      "span": "tall",
+      "accent": "crimson"
+    },
+    {
+      "id": "g2",
+      "title": "Takeoff",
+      "category": "ATHLETES",
+      "image": null,
+      "caption": "Long jump final — a 6.4m leap that reset the campus record.",
+      "span": "square",
+      "accent": "gold"
+    },
+    {
+      "id": "g3",
+      "title": "The Wall",
+      "category": "CROWD",
+      "image": null,
+      "caption": "Three thousand voices behind the north stand during the basketball final.",
+      "span": "wide",
+      "accent": "volt"
+    },
+    {
+      "id": "g4",
+      "title": "Lifting the Shield",
+      "category": "CHAMPIONS",
+      "image": null,
+      "caption": "Phoenix Brigade collect the Ashvamedha Shield for the second straight year.",
+      "span": "tall",
+      "accent": "gold"
+    },
+    {
+      "id": "g5",
+      "title": "Campus at Dusk",
+      "category": "CAMPUS",
+      "image": null,
+      "caption": "The arena complex moments before the evening session begins.",
+      "span": "wide",
+      "accent": "violet"
+    },
+    {
+      "id": "g6",
+      "title": "Server War",
+      "category": "MATCHDAY",
+      "image": null,
+      "caption": "Esports bay, map three, both squads one round from elimination.",
+      "span": "square",
+      "accent": "violet"
+    },
+    {
+      "id": "g7",
+      "title": "Behind the Lens",
+      "category": "BEHIND THE SCENES",
+      "image": null,
+      "caption": "The production crew running the arena broadcast across four feeds.",
+      "span": "square",
+      "accent": "volt"
+    },
+    {
+      "id": "g8",
+      "title": "Match Point",
+      "category": "ATHLETES",
+      "image": null,
+      "caption": "Badminton singles final — the rally that lasted 41 shots.",
+      "span": "tall",
+      "accent": "crimson"
+    },
+    {
+      "id": "g9",
+      "title": "Track Start",
+      "category": "MATCHDAY",
+      "image": null,
+      "caption": "100m final set. Electronic timing, photo-finish review on standby.",
+      "span": "wide",
+      "accent": "gold"
+    },
+    {
+      "id": "g10",
+      "title": "Podium Protocol",
+      "category": "CHAMPIONS",
+      "image": null,
+      "caption": "Gold, silver and bronze on the closing night stage.",
+      "span": "square",
+      "accent": "gold"
+    },
+    {
+      "id": "g11",
+      "title": "Courtside",
+      "category": "CROWD",
+      "image": null,
+      "caption": "Court 01 at capacity during the semi-final double header.",
+      "span": "tall",
+      "accent": "volt"
+    },
+    {
+      "id": "g12",
+      "title": "Loading Dock",
+      "category": "BEHIND THE SCENES",
+      "image": null,
+      "caption": "12:40 AM — staging and rigging for the opening ceremony.",
+      "span": "square",
+      "accent": "violet"
+    }
+  ],
+  "SPONSORS": [
+    {
+      "name": "Odisha Sports Authority",
+      "logo": null,
+      "wordmark": "ODISHA SPORTS AUTHORITY",
+      "tier": "title",
+      "note": "Title sponsor · Season 2026"
+    },
+    {
+      "name": "Bharat Heavy Alloys",
+      "logo": null,
+      "wordmark": "BHARAT HEAVY ALLOYS",
+      "tier": "powered"
+    },
+    {
+      "name": "Cuttack Coffee Co.",
+      "logo": null,
+      "wordmark": "CUTTACK COFFEE CO.",
+      "tier": "powered"
+    },
+    {
+      "name": "Konark Renewables",
+      "logo": null,
+      "wordmark": "KONARK RENEWABLES",
+      "tier": "powered"
+    },
+    {
+      "name": "Astra Athletic",
+      "logo": null,
+      "wordmark": "ASTRA ATHLETIC",
+      "tier": "partner"
+    },
+    {
+      "name": "Bhubaneswar Metro Fit",
+      "logo": null,
+      "wordmark": "BBSR METRO FIT",
+      "tier": "partner"
+    },
+    {
+      "name": "Kalinga Digital",
+      "logo": null,
+      "wordmark": "KALINGA DIGITAL",
+      "tier": "partner"
+    },
+    {
+      "name": "Utkal Nutrition Labs",
+      "logo": null,
+      "wordmark": "UTKAL NUTRITION",
+      "tier": "partner"
+    },
+    {
+      "name": "Chilika Hydration",
+      "logo": null,
+      "wordmark": "CHILIKA HYDRATION",
+      "tier": "partner"
+    }
+  ]
+}
