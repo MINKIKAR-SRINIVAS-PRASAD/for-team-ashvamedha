@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 const MEDAL_TONE = {
   gold: { ring: "border-gold/50", text: "text-gold", bg: "rgba(232,196,106,0.12)" },
-  silver: { ring: "border-silver/40", text: "text-silver", bg: "rgba(215,222,233,0.1)" },
+  silver: { ring: "border-silver/40", text: "text-silver", bg: "rgba(2,222,233,0.1)" },
   bronze: { ring: "border-bronze/45", text: "text-bronze", bg: "rgba(192,122,69,0.12)" },
 };
 

@@ -40,10 +40,10 @@ export interface FestEvent {
     | "badminton"
     | "tabletennis"
     | "lawn"
-    | "chess"
-    | "gym"
-    | "valorant"
-    | "athletics"
+    | "kho-kho"
+    | "gym events"
+    | "esportst"
+    | "swimming"
     | "volleyball";
 }
 
@@ -154,8 +154,8 @@ export const EVENTS: FestEvent[] = [
     glyph: "lawn",
   },
   {
-    slug: "chess",
-    name: "Chess",
+    slug: "kho-kho",
+    name: "Kho-kho",
     arena: "The Quiet War",
     category: "Board & Mind",
     tagline: "Silence, then devastation.",
@@ -172,11 +172,11 @@ export const EVENTS: FestEvent[] = [
     format: "Swiss, 9 rounds",
     accent: "violet",
     image: null,
-    glyph: "chess",
+    glyph: "kho-kho",
   },
   {
-    slug: "gym",
-    name: "Gym",
+    slug: "gym events",
+    name: "Gym events",
     arena: "Iron Protocol",
     category: "Power & Fitness",
     tagline: "Against gravity, and yourself.",
@@ -193,32 +193,11 @@ export const EVENTS: FestEvent[] = [
     format: "3-lift total",
     accent: "crimson",
     image: null,
-    glyph: "gym",
+    glyph: "gym events",
   },
   {
-    slug: "gym-events",
-    name: "Gym Events",
-    arena: "Iron Gauntlet",
-    category: "Power & Fitness",
-    tagline: "A gauntlet of five trials.",
-    description:
-      "Arm wrestling, plank hold, pull-up endurance, farmer's carry and a timed relay of four stations. Scored on aggregate — the most complete athlete wins, not the biggest.",
-    date: "11 Oct 2026",
-    day: 3,
-    time: "15:00 onwards",
-    venue: "Strength & Conditioning Centre",
-    teamSize: "1 + relay of 4",
-    registration: "open",
-    entryFee: "₹250 / athlete",
-    prizePool: "₹16,000",
-    format: "5 trials, aggregate points",
-    accent: "crimson",
-    image: null,
-    glyph: "gym",
-  },
-  {
-    slug: "valorant",
-    name: "Valorant",
+    slug: "esportst",
+    name: "ESportst",
     arena: "Server War",
     category: "Esports",
     tagline: "Five operators. One site.",
@@ -235,11 +214,11 @@ export const EVENTS: FestEvent[] = [
     format: "Best of 3 / Bo5 final",
     accent: "violet",
     image: null,
-    glyph: "valorant",
+    glyph: "esportst",
   },
   {
-    slug: "athletics",
-    name: "Athletics",
+    slug: "swimming",
+    name: "Swimming",
     arena: "The Track",
     category: "Power & Fitness",
     tagline: "Milliseconds define legacies.",
@@ -248,7 +227,7 @@ export const EVENTS: FestEvent[] = [
     date: "10 Oct 2026",
     day: 2,
     time: "06:30 onwards",
-    venue: "Athletics Track",
+    venue: "Swimming Track",
     teamSize: "Individual + relay of 4",
     registration: "open",
     entryFee: "₹150 / event",
@@ -256,7 +235,7 @@ export const EVENTS: FestEvent[] = [
     format: "Heats + finals",
     accent: "volt",
     image: null,
-    glyph: "athletics",
+    glyph: "swimming",
   },
   {
     slug: "volleyball",
@@ -280,13 +259,13 @@ export const EVENTS: FestEvent[] = [
     glyph: "volleyball",
   },
   {
-    slug: "cricket",
-    name: "Cricket",
+    slug: "mix cricket",
+    name: "Mix cricket",
     arena: "Sunset Oval",
     category: "Team Sport",
     tagline: "Ten overs of chaos.",
     description:
-      "T10 knockout cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
+      "T10 knockout mix cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
     date: "09-11 Oct 2026",
     day: 1,
     time: "13:00 onwards",
@@ -329,8 +308,8 @@ export function getEventsByDay(day: number) {
 export const FEATURED_SLUGS = [
   "football",
   "basketball",
-  "valorant",
+  "esportst",
   "badminton",
-  "athletics",
-  "chess",
+  "swimming",
+  "kho-kho",
 ] as const;

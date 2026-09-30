@@ -71,7 +71,7 @@ export function SportGlyph({
           <path d="M28 12l-5 5M34 16l-5 5M22 22l8 8M28 28l8 8" />
         </svg>
       );
-    case "chess":
+    case "kho-kho":
       return (
         <svg {...common}>
           <path d="M16 38h18v5H16z" />
@@ -79,7 +79,7 @@ export function SportGlyph({
           <path d="M22 24l-3-6 4 2 2-5 3 5 4-2-3 6" />
         </svg>
       );
-    case "gym":
+    case "gym events":
       return (
         <svg {...common}>
           <path d="M4 24h6M38 24h6" />
@@ -89,7 +89,7 @@ export function SportGlyph({
           <path d="M20 18v12M28 18v12" />
         </svg>
       );
-    case "valorant":
+    case "esportst":
       return (
         <svg {...common}>
           <circle cx="24" cy="24" r="15" />
@@ -98,7 +98,7 @@ export function SportGlyph({
           <path d="M31 17l6-6M17 17l-6-6M31 31l6 6M17 31l-6 6" />
         </svg>
       );
-    case "athletics":
+    case "swimming":
       return (
         <svg {...common}>
           <circle cx="28" cy="9" r="4" />

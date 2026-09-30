@@ -15,7 +15,7 @@ Category = Literal["Team Sport", "Racquet", "Board & Mind", "Power & Fitness", "
 RegistrationState = Literal["open", "closing", "closed"]
 Glyph = Literal[
     "football", "basketball", "badminton", "tabletennis", "lawn",
-    "chess", "gym", "valorant", "athletics", "volleyball",
+    "kho-kho", "gym events", "esportst", "swimming", "volleyball",
 ]
 SlotStatus = Literal["scheduled", "live", "completed"]
 MatchStatus = Literal["upcoming", "live", "final"]

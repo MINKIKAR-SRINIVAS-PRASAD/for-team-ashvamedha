@@ -71,7 +71,7 @@ export function Introduction() {
                 {[
                   {
                     k: "Scale",
-                    v: "10+ disciplines from football to Valorant, all inside one 72-hour window.",
+                    v: "10+ disciplines from football to ESportst, all inside one 72-hour window.",
                   },
                   {
                     k: "Standard",

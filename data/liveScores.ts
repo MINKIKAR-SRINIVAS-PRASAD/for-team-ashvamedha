@@ -40,8 +40,8 @@ export const LIVE_MATCHES: LiveMatch[] = [
   },
   {
     id: "live-vl-1",
-    sport: "Valorant",
-    eventSlug: "valorant",
+    sport: "ESportst",
+    eventSlug: "esportst",
     home: { name: "Obsidian Order", score: 1 },
     away: { name: "Night Protocol", score: 1 },
     status: "live",
@@ -51,13 +51,13 @@ export const LIVE_MATCHES: LiveMatch[] = [
   },
   {
     id: "next-at-1",
-    sport: "Athletics",
-    eventSlug: "athletics",
+    sport: "Swimming",
+    eventSlug: "swimming",
     home: { name: "Red Meridian", score: "—" },
     away: { name: "Field A", score: "—" },
     status: "upcoming",
     clock: "13:30",
-    detail: "400m Final · Athletics Track",
+    detail: "400m Final · Swimming Track",
     accent: "gold",
   },
 ];
@@ -66,8 +66,8 @@ export const LIVE_MATCHES: LiveMatch[] = [
 export const RECENT_RESULTS = [
   { sport: "Table Tennis", winner: "Night Protocol", loser: "Stormforge", score: "3 – 2", stage: "Round of 16" },
   { sport: "Badminton", winner: "Stormforge", loser: "Silver Lance", score: "21-18, 21-16", stage: "Round of 32" },
-  { sport: "Chess", winner: "The Quiet War", loser: "Apex Collective", score: "4 – 1", stage: "Swiss R4" },
-  { sport: "Valorant", winner: "Obsidian Order", loser: "Iron Veil", score: "13 – 9", stage: "Opening Series" },
+  { sport: "Kho-kho", winner: "The Quiet War", loser: "Apex Collective", score: "4 – 1", stage: "Swiss R4" },
+  { sport: "ESportst", winner: "Obsidian Order", loser: "Iron Veil", score: "13 – 9", stage: "Opening Series" },
 ] as const;
 
 /** Final podium data used by /results and the champion spotlight. */
@@ -85,8 +85,8 @@ export const PREVIOUS_EDITIONS = [
 
 /** Event-level champions crowned so far this season. */
 export const EVENT_CHAMPIONS = [
-  { event: "Cricket", champion: "Cinder Crew", runnerUp: "Phoenix Brigade" },
-  { event: "Chess", champion: "The Quiet War", runnerUp: "Apex Collective" },
+  { event: "Mix cricket", champion: "Cinder Crew", runnerUp: "Phoenix Brigade" },
+  { event: "Kho-kho", champion: "The Quiet War", runnerUp: "Apex Collective" },
   { event: "Table Tennis", champion: "Night Protocol", runnerUp: "Stormforge" },
-  { event: "Gym", champion: "Iron Veil", runnerUp: "Apex Collective" },
+  { event: "Gym events", champion: "Iron Veil", runnerUp: "Apex Collective" },
 ];

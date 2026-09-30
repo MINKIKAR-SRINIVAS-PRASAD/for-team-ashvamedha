@@ -19,11 +19,11 @@ const SPAN_CLASS: Record<GalleryItem["span"], string> = {
 /** Glyph key per gallery category so each frame gets a fitting sigil. */
 const CATEGORY_GLYPH = {
   MATCHDAY: "football",
-  ATHLETES: "athletics",
+  ATHLETES: "swimming",
   CROWD: "volleyball",
   CHAMPIONS: "basketball",
-  CAMPUS: "athletics",
-  "BEHIND THE SCENES": "valorant",
+  CAMPUS: "swimming",
+  "BEHIND THE SCENES": "esportst",
 } as const;
 
 /**

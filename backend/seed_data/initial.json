@@ -7,7 +7,7 @@
       "category": "Team Sport",
       "tagline": "Eleven against the storm.",
       "description": "The flagship battle of ASHVAMEDHA, played across a full 90-minute war of endurance and structure. Group stages run on the main ground before the floodlit final decides who lifts the Ashvamedha Shield.",
-      "date": "13–15 Nov 2026",
+      "date": "09-11 oct 2026",
       "day": 1,
       "time": "09:00 onwards",
       "venue": "Main Ground",
@@ -27,7 +27,7 @@
       "category": "Team Sport",
       "tagline": "Four quarters. No retreat.",
       "description": "Fast-break basketball under the arena lights with a shot-clock enforced at 24 seconds. Played 5v5 across four ten-minute quarters with a knockout bracket for the top eight squads.",
-      "date": "14–15 Nov 2026",
+      "date": "14–15 Oct 2026",
       "day": 2,
       "time": "10:30 onwards",
       "venue": "Court 01",
@@ -47,7 +47,7 @@
       "category": "Racquet",
       "tagline": "Speed you can hear.",
       "description": "Singles and doubles combat on four regulation courts with BWF-scoring to 21. Quarter-final losers enter a repechage ladder so no campaign ends without a second strike.",
-      "date": "13–14 Nov 2026",
+      "date": "13–14 Oct 2026",
       "day": 1,
       "time": "11:30 onwards",
       "venue": "Indoor Hall",
@@ -67,7 +67,7 @@
       "category": "Racquet",
       "tagline": "Reflex is a weapon.",
       "description": "Eight tables running in parallel, best-of-five to 11 points. Known across the circuit for upsets — the shortest distance between an underdog and a trophy.",
-      "date": "13 Nov 2026",
+      "date": "13 Oct 2026",
       "day": 1,
       "time": "14:00 onwards",
       "venue": "Indoor Hall — Bay 2",
@@ -87,7 +87,7 @@
       "category": "Racquet",
       "tagline": "Long rallies break hearts.",
       "description": "Hard-court tennis with pro-set scoring in the early rounds and best-of-three sets from the semi-finals. Played under the open Odisha sky with a dedicated medical bay on standby.",
-      "date": "14 Nov 2026",
+      "date": "14 Oct 2026",
       "day": 2,
       "time": "07:00 onwards",
       "venue": "Lawn Courts",
@@ -101,33 +101,33 @@
       "glyph": "lawn"
     },
     {
-      "slug": "chess",
-      "name": "Chess",
+      "slug": "kho-kho",
+      "name": "kho-kho",
       "arena": "The Quiet War",
       "category": "Board & Mind",
       "tagline": "Silence, then devastation.",
       "description": "FIDE standard blitz and rapid formats in a sound-controlled hall, arbiter-monitored throughout. Nine rounds of Swiss pairings decide the grandmaster of ASHVAMEDHA.",
-      "date": "13 Nov 2026",
+      "date": "09-11 oct 2026",
       "day": 1,
       "time": "09:30 onwards",
       "venue": "Lecture Hall Complex",
       "teamSize": "1",
       "registration": "open",
-      "entryFee": "₹150 / player",
-      "prizePool": "₹10,000",
-      "format": "Swiss, 9 rounds",
+      "entryFee": "",
+      "prizePool": "",
+      "format": "5 rounds",
       "accent": "violet",
       "image": null,
-      "glyph": "chess"
+      "glyph": "kho-kho"
     },
     {
-      "slug": "gym",
-      "name": "Gym",
+      "slug": "gym events",
+      "name": "Gym events",
       "arena": "Iron Protocol",
       "category": "Power & Fitness",
       "tagline": "Against gravity, and yourself.",
       "description": "Raw strength benchmarks across squat, bench press and deadlift judged on bodyweight multipliers. Technique is audited by certified spotters — form beats ego every time.",
-      "date": "15 Nov 2026",
+      "date": "15 Oct 2026",
       "day": 3,
       "time": "08:00 onwards",
       "venue": "Strength & Conditioning Centre",
@@ -138,36 +138,16 @@
       "format": "3-lift total",
       "accent": "crimson",
       "image": null,
-      "glyph": "gym"
+      "glyph": "gym events"
     },
     {
-      "slug": "gym-events",
-      "name": "Gym Events",
-      "arena": "Iron Gauntlet",
-      "category": "Power & Fitness",
-      "tagline": "A gauntlet of five trials.",
-      "description": "Arm wrestling, plank hold, pull-up endurance, farmer's carry and a timed relay of four stations. Scored on aggregate — the most complete athlete wins, not the biggest.",
-      "date": "15 Nov 2026",
-      "day": 3,
-      "time": "15:00 onwards",
-      "venue": "Strength & Conditioning Centre",
-      "teamSize": "1 + relay of 4",
-      "registration": "open",
-      "entryFee": "₹250 / athlete",
-      "prizePool": "₹16,000",
-      "format": "5 trials, aggregate points",
-      "accent": "crimson",
-      "image": null,
-      "glyph": "gym"
-    },
-    {
-      "slug": "valorant",
-      "name": "Valorant",
+      "slug": "esportst",
+      "name": "ESportst",
       "arena": "Server War",
       "category": "Esports",
       "tagline": "Five operators. One site.",
       "description": "LAN-adjacent competitive FPS on a 100 Mbps dedicated line with best-of-three series throughout. Coaches get a comms slot behind the players — strategy is part of the spectacle.",
-      "date": "13–15 Nov 2026",
+      "date": "09-11 oct 2026",
       "day": 1,
       "time": "16:00 onwards",
       "venue": "Systems Lab — Esports Bay",
@@ -178,19 +158,19 @@
       "format": "Best of 3 / Bo5 final",
       "accent": "violet",
       "image": null,
-      "glyph": "valorant"
+      "glyph": "esportst"
     },
     {
-      "slug": "athletics",
-      "name": "Athletics",
+      "slug": "swimming",
+      "name": "Swimming",
       "arena": "The Track",
       "category": "Power & Fitness",
       "tagline": "Milliseconds define legacies.",
       "description": "100m, 200m, 400m, 4x100m relay plus long jump and shot put. Electronic timing with photo-finish review ensures every podium is beyond dispute.",
-      "date": "14 Nov 2026",
+      "date": "14 Oct 2026",
       "day": 2,
       "time": "06:30 onwards",
-      "venue": "Athletics Track",
+      "venue": "Swimming Track",
       "teamSize": "Individual + relay of 4",
       "registration": "open",
       "entryFee": "₹150 / event",
@@ -198,7 +178,7 @@
       "format": "Heats + finals",
       "accent": "volt",
       "image": null,
-      "glyph": "athletics"
+      "glyph": "swimming"
     },
     {
       "slug": "volleyball",
@@ -207,7 +187,7 @@
       "category": "Team Sport",
       "tagline": "Six hands, one wall.",
       "description": "Six-a-side volleyball played to 25 points with rally scoring. Rotation discipline decides the tight sets — the final has gone to five sets three years running.",
-      "date": "14–15 Nov 2026",
+      "date": "14–15 Oct 2026",
       "day": 2,
       "time": "15:30 onwards",
       "venue": "Court 02",
@@ -221,13 +201,13 @@
       "glyph": "volleyball"
     },
     {
-      "slug": "cricket",
-      "name": "Cricket",
+      "slug": "mix cricket",
+      "name": "Mix cricket",
       "arena": "Sunset Oval",
       "category": "Team Sport",
       "tagline": "Ten overs of chaos.",
-      "description": "T10 knockout cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
-      "date": "13 Nov 2026",
+      "description": "T10 knockout mix cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
+      "date": "13 Oct 2026",
       "day": 1,
       "time": "13:00 onwards",
       "venue": "Main Ground",
@@ -244,10 +224,10 @@
   "FEATURED_SLUGS": [
     "football",
     "basketball",
-    "valorant",
+    "esportst",
     "badminton",
-    "athletics",
-    "chess"
+    "swimming",
+    "kho-kho"
   ],
   "TEAMS": [
     {
@@ -286,7 +266,7 @@
       "institution": "NIT Rourkela",
       "department": "Department of Computer Science",
       "captain": "S. Patel",
-      "sport": "Valorant",
+      "sport": "ESportst",
       "rank": 3,
       "accent": "violet",
       "crest": [
@@ -301,7 +281,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "School of Infrastructure",
       "captain": "K. Das",
-      "sport": "Gym",
+      "sport": "Gym events",
       "rank": 4,
       "accent": "crimson",
       "crest": [
@@ -346,7 +326,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "School of Humanities",
       "captain": "A. Rout",
-      "sport": "Chess",
+      "sport": "Kho-kho",
       "rank": 7,
       "accent": "violet",
       "crest": [
@@ -361,7 +341,7 @@
       "institution": "CET Bhubaneswar",
       "department": "Department of Civil Engineering",
       "captain": "V. Sahu",
-      "sport": "Athletics",
+      "sport": "Swimming",
       "rank": 8,
       "accent": "crimson",
       "crest": [
@@ -406,7 +386,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "School of Earth Sciences",
       "captain": "M. Sahoo",
-      "sport": "Cricket",
+      "sport": "Mix cricket",
       "rank": 11,
       "accent": "crimson",
       "crest": [
@@ -421,7 +401,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "Open Category",
       "captain": "H. Mishra",
-      "sport": "Gym Events",
+      "sport": "Gym events Events",
       "rank": 12,
       "accent": "gold",
       "crest": [
@@ -435,21 +415,21 @@
     {
       "day": 1,
       "label": "DAY 01",
-      "date": "13 NOV 2026",
+      "date": "13 OCT 2026",
       "headline": "IGNITION",
       "note": "Opening ceremony, group stages and the first eliminations."
     },
     {
       "day": 2,
       "label": "DAY 02",
-      "date": "14 NOV 2026",
+      "date": "14 OCT 2026",
       "headline": "ESCALATION",
       "note": "Semi-finals across the arena, track finals at first light."
     },
     {
       "day": 3,
       "label": "DAY 03",
-      "date": "15 NOV 2026",
+      "date": "15 OCT 2026",
       "headline": "FINAL STAND",
       "note": "Championship finals, podium ceremony and the closing arena."
     }
@@ -480,9 +460,9 @@
       "id": "d1-0930-ch",
       "day": 1,
       "time": "09:30",
-      "title": "Chess — Rounds 1–4",
+      "title": "Kho-kho — Rounds 1–4",
       "venue": "Lecture Hall Complex",
-      "eventSlug": "chess",
+      "eventSlug": "kho-kho",
       "stage": "Swiss",
       "status": "completed",
       "duration": "2 hrs 30 min"
@@ -502,9 +482,9 @@
       "id": "d1-1300-cr",
       "day": 1,
       "time": "13:00",
-      "title": "Cricket — T10 Knockout",
+      "title": "Mix cricket — T10 Knockout",
       "venue": "Main Ground",
-      "eventSlug": "cricket",
+      "eventSlug": "mix cricket",
       "stage": "Quarter-finals",
       "status": "completed",
       "duration": "4 hrs"
@@ -524,9 +504,9 @@
       "id": "d1-1600-vl",
       "day": 1,
       "time": "16:00",
-      "title": "Valorant — Opening Series",
+      "title": "ESportst — Opening Series",
       "venue": "Systems Lab — Esports Bay",
-      "eventSlug": "valorant",
+      "eventSlug": "esportst",
       "stage": "Bo3",
       "status": "completed",
       "duration": "4 hrs"
@@ -545,9 +525,9 @@
       "id": "d2-0630-at",
       "day": 2,
       "time": "06:30",
-      "title": "Athletics — Heats",
-      "venue": "Athletics Track",
-      "eventSlug": "athletics",
+      "title": "Swimming — Heats",
+      "venue": "Swimming Track",
+      "eventSlug": "swimming",
       "stage": "100m / 200m",
       "status": "live",
       "duration": "2 hrs"
@@ -600,9 +580,9 @@
       "id": "d2-1330-at",
       "day": 2,
       "time": "13:30",
-      "title": "Athletics — Track Finals",
-      "venue": "Athletics Track",
-      "eventSlug": "athletics",
+      "title": "Swimming — Track Finals",
+      "venue": "Swimming Track",
+      "eventSlug": "swimming",
       "stage": "400m · Relay · Jump",
       "status": "scheduled",
       "duration": "2 hrs 30 min"
@@ -633,9 +613,9 @@
       "id": "d2-2000-vl",
       "day": 2,
       "time": "20:00",
-      "title": "Valorant — Upper Bracket Final",
+      "title": "ESportst — Upper Bracket Final",
       "venue": "Systems Lab — Esports Bay",
-      "eventSlug": "valorant",
+      "eventSlug": "esportst",
       "stage": "Bo3",
       "status": "scheduled",
       "duration": "2 hrs"
@@ -644,9 +624,9 @@
       "id": "d3-0800-gy",
       "day": 3,
       "time": "08:00",
-      "title": "Gym — Strength Trials",
+      "title": "Gym events — Strength Trials",
       "venue": "Strength & Conditioning Centre",
-      "eventSlug": "gym",
+      "eventSlug": "gym events",
       "stage": "3-lift total",
       "status": "scheduled",
       "duration": "3 hrs"
@@ -685,28 +665,17 @@
       "duration": "2 hrs"
     },
     {
-      "id": "d3-1500-ge",
-      "day": 3,
-      "time": "15:00",
-      "title": "Gym Events — Iron Gauntlet",
-      "venue": "Strength & Conditioning Centre",
-      "eventSlug": "gym-events",
-      "stage": "5 trials",
-      "status": "scheduled",
-      "duration": "2 hrs 30 min"
-    },
-    {
       "id": "d3-1700-vl",
       "day": 3,
       "time": "17:00",
-      "title": "Valorant — Grand Final",
+      "title": "ESportst — Grand Final",
       "venue": "Systems Lab — Esports Bay",
-      "eventSlug": "valorant",
+      "eventSlug": "esportst",
       "stage": "Bo5",
       "status": "scheduled",
       "duration": "3 hrs"
     },
-    {
+    {git status
       "id": "d3-1900-fb",
       "day": 3,
       "time": "19:00",
@@ -894,8 +863,8 @@
     },
     {
       "id": "live-vl-1",
-      "sport": "Valorant",
-      "eventSlug": "valorant",
+      "sport": "ESportst",
+      "eventSlug": "esportst",
       "home": {
         "name": "Obsidian Order",
         "score": 1
@@ -911,8 +880,8 @@
     },
     {
       "id": "next-at-1",
-      "sport": "Athletics",
-      "eventSlug": "athletics",
+      "sport": "Swimming",
+      "eventSlug": "swimming",
       "home": {
         "name": "Red Meridian",
         "score": "—"
@@ -923,7 +892,7 @@
       },
       "status": "upcoming",
       "clock": "13:30",
-      "detail": "400m Final · Athletics Track",
+      "detail": "400m Final · Swimming Track",
       "accent": "gold"
     }
   ],
@@ -943,14 +912,14 @@
       "stage": "Round of 32"
     },
     {
-      "sport": "Chess",
+      "sport": "Kho-kho",
       "winner": "The Quiet War",
       "loser": "Apex Collective",
       "score": "4 – 1",
       "stage": "Swiss R4"
     },
     {
-      "sport": "Valorant",
+      "sport": "ESportst",
       "winner": "Obsidian Order",
       "loser": "Iron Veil",
       "score": "13 – 9",
@@ -959,12 +928,12 @@
   ],
   "EVENT_CHAMPIONS": [
     {
-      "event": "Cricket",
+      "event": "Mix cricket",
       "champion": "Cinder Crew",
       "runnerUp": "Phoenix Brigade"
     },
     {
-      "event": "Chess",
+      "event": "Kho-kho",
       "champion": "The Quiet War",
       "runnerUp": "Apex Collective"
     },
@@ -974,7 +943,7 @@
       "runnerUp": "Stormforge"
     },
     {
-      "event": "Gym",
+      "event": "Gym events",
       "champion": "Iron Veil",
       "runnerUp": "Apex Collective"
     }

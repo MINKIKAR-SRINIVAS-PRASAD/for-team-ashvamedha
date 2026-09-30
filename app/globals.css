@@ -40,7 +40,7 @@
   --crimson-rgb: 225 29 46;
   --crimson-deep-rgb: 124 11 22;
   --ember-rgb: 255 90 60;
-  --silver-rgb: 215 222 233;
+  --silver-rgb: 2 222 233;
   --silver-dim-rgb: 139 148 166;
   --volt-rgb: 49 168 255;
   --volt-deep-rgb: 11 78 138;
@@ -56,7 +56,7 @@
     Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --shell: clamp(1.15rem, 4vw, 5rem);
+  --shell: clamp(1.rem, 4vw, 5rem);
   --nav-h: 76px;
 }
 
@@ -143,7 +143,7 @@
       90deg,
       transparent,
       rgba(225, 29, 46, 0.55) 18%,
-      rgba(215, 222, 233, 0.35) 50%,
+      rgba(2, 222, 233, 0.35) 50%,
       rgba(49, 168, 255, 0.45) 82%,
       transparent
     );
@@ -153,7 +153,7 @@
   .panel {
     position: relative;
     background: linear-gradient(
-      155deg,
+      5deg,
       rgba(18, 22, 31, 0.92) 0%,
       rgba(11, 14, 20, 0.86) 48%,
       rgba(5, 6, 10, 0.94) 100%
@@ -203,7 +203,7 @@
 
   .text-outline {
     color: transparent;
-    -webkit-text-stroke: 1.4px rgba(215, 222, 233, 0.34);
+    -webkit-text-stroke: 1.4px rgba(2, 222, 233, 0.34);
   }
 
   .hud {

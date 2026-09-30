@@ -75,7 +75,7 @@ export async function EventsSection() {
         <Reveal className="mt-14 flex flex-wrap items-center justify-between gap-5 border-t border-white/10 pt-8">
           <p className="max-w-lg text-[0.9rem] leading-relaxed text-silver-dim">
             Twelve more disciplines are running across the arena — from lawn tennis and table tennis
-            to gym trials and the esports bracket.
+            to gym events trials and the esports bracket.
           </p>
           <CTA href="/events" variant="ghost">
             See All 10+ Sports

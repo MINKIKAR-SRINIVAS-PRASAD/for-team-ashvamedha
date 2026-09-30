@@ -40,13 +40,12 @@ TEAM_LIMITS = {
     "badminton": (1, 2),
     "table-tennis": (1, 2),
     "lawn-tennis": (1, 2),
-    "chess": (1, 1),
-    "gym": (1, 1),
-    "gym-events": (1, 4),
-    "valorant": (5, 6),
-    "athletics": (1, 4),
+    "kho-kho": (1, 1),
+    "gym events": (1, 1),
+    "esportst": (5, 6),
+    "swimming": (1, 4),
     "volleyball": (6, 10),
-    "cricket": (11, 15),
+    "mix cricket": (11, 15),
 }
 
 
