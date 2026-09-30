@@ -10,3 +10,10 @@ yarn-error.log*
 .env*.local
 next-env.d.ts
 tsconfig.tsbuildinfo
+.env.local
+.vscode
+# Backend
+backend/.env
+backend/.venv/
+backend/__pycache__/
+backend/**/*.pyc

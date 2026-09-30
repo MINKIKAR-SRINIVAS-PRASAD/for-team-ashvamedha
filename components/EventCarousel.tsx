@@ -6,7 +6,8 @@ import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react
 import Link from "next/link";
 import Image from "next/image";
 import { BattlefieldFrame } from "@/components/art/BattlefieldFrame";
-import { EVENTS, FEATURED_SLUGS, type FestEvent } from "@/data/events";
+import type { FestEvent } from "@/data/events";
+import { useFestData } from "@/components/FestDataProvider";
 import { accentOf } from "@/lib/accents";
 import { cn, pad } from "@/lib/utils";
 
@@ -23,12 +24,13 @@ const AUTOPLAY_MS = 5200;
  * infinitely in both directions.
  */
 export function EventCarousel({ events }: { events?: FestEvent[] }) {
+  const { events: allEvents, featuredSlugs } = useFestData();
   const items = useMemo(() => {
-    const picked = FEATURED_SLUGS.map((s) => EVENTS.find((e) => e.slug === s)).filter(
+    const picked = featuredSlugs.map((s) => allEvents.find((e) => e.slug === s)).filter(
       Boolean,
     ) as FestEvent[];
-    return events ?? picked;
-  }, [events]);
+    return events ?? (picked.length ? picked : allEvents.slice(0, 6));
+  }, [events, allEvents, featuredSlugs]);
 
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);

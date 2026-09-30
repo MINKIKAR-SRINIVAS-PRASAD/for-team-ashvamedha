@@ -3,7 +3,8 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SportsGrid } from "@/components/SportsGrid";
 import { EventCarousel } from "@/components/EventCarousel";
 import { CTASection } from "@/components/sections/HomeSections";
-import { EVENT_CATEGORIES, EVENTS } from "@/data/events";
+import { EVENT_CATEGORIES } from "@/data/events";
+import { getFestData } from "@/lib/festData";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
     "Every sport at ASHVAMEDHA 2026 — football, basketball, badminton, table tennis, chess, lawn tennis, gym, Valorant and more, with dates, venues and registration status.",
 };
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const { events: EVENTS } = await getFestData();
   return (
     <>
       {/* page masthead */}
@@ -25,15 +27,16 @@ export default function EventsPage() {
             <span className="text-metal">BATTLEFIELDS</span>
           </h1>
           <p className="mt-6 max-w-2xl text-[1rem] leading-relaxed text-silver-dim">
-            {EVENTS.length} disciplines across {EVENT_CATEGORIES.length - 1} categories. Filter by
+            {"10+"} disciplines across {EVENT_CATEGORIES.length - 1} categories. Filter by
             category, open any event for its full protocol — date, venue, format, prize pool and
             registration status.
           </p>
 
           <dl className="mt-9 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-5 border-t border-white/10 pt-6 sm:grid-cols-4">
             {[
-              { k: "Disciplines", v: String(EVENTS.length) },
-              { k: "Team Sports", v: String(EVENTS.filter((e) => e.category === "Team Sport").length) },
+              { k: "Disciplines", v:"10+" },
+             // { k: "Team Sports", v: String(EVENTS.filter((e) => e.category === "Team Sport").length) },
+              { k: "Team Sports", v: "20+" },
               { k: "Open Entries", v: String(EVENTS.filter((e) => e.registration !== "closed").length) },
               { k: "Total Prize", v: "₹2.8L" },
             ].map((s) => (

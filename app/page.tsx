@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: "ASHVAMEDHA 2026 — The Battle Begins | IIT Bhubaneswar",
   description:
-    "ASHVAMEDHA 2026, the annual sports fest of IIT Bhubaneswar. Twenty-four sports, sixty-eight teams, three days of battle. Register, follow live scores and watch the championship table.",
+    "ASHVAMEDHA 2026, the annual sports fest of IIT Bhubaneswar. Twenty pluse sports, fifty pluse teams, three days of battle. Register, follow live scores and watch the championship table.",
 };
 
 /**

@@ -54,7 +54,8 @@ export function Introduction() {
               Ashvamedha Shield.
             </p>
             <p className="mt-5 text-[1.02rem] leading-relaxed text-silver-dim">
-              Twenty-four sports. Sixty-eight squads from across Odisha and beyond. Every court,
+              Ten pluse sports. twenty pluse teams. Three days under the arena lights at{" "}
+              <span className="text-silver">{SITE.hostLong}</span>. Every court,
               every board, every server room becomes a battlefield with a scoreboard attached.
             </p>
 
@@ -70,7 +71,7 @@ export function Introduction() {
                 {[
                   {
                     k: "Scale",
-                    v: "24 disciplines from football to Valorant, all inside one 72-hour window.",
+                    v: "10+ disciplines from football to Valorant, all inside one 72-hour window.",
                   },
                   {
                     k: "Standard",

@@ -137,7 +137,7 @@ export function Hero() {
               }}
               className="mt-5 max-w-xl text-[0.95rem] leading-relaxed text-silver-dim"
             >
-              Twenty-four sports. Sixty-eight teams. Three days under the arena lights at{" "}
+              Ten pluse sports. twenty pluse teams. Three days under the arena lights at{" "}
               <span className="text-silver">{SITE.hostLong}</span>. This is not just a sports
               fest — this is the battle for glory.
             </motion.p>
@@ -204,7 +204,7 @@ export function Hero() {
                   ["SYSTEM", HUD.status],
                   ["ARENA", "IIT BHUBANESWAR"],
                   ["SEASON", SITE.year],
-                  ["EVENT WINDOW", "13 — 15 NOV 2026"],
+                  ["EVENT WINDOW", "09 -11 OCT 2026"],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-center justify-between gap-4 border-b border-white/5 pb-2">
                     <span>{k}</span>

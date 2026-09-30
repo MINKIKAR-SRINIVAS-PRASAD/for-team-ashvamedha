@@ -56,7 +56,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Eleven against the storm.",
     description:
       "The flagship battle of ASHVAMEDHA, played across a full 90-minute war of endurance and structure. Group stages run on the main ground before the floodlit final decides who lifts the Ashvamedha Shield.",
-    date: "13–15 Nov 2026",
+    date: "09-11 Oct 2026",
     day: 1,
     time: "09:00 onwards",
     venue: "Main Ground",
@@ -77,7 +77,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Four quarters. No retreat.",
     description:
       "Fast-break basketball under the arena lights with a shot-clock enforced at 24 seconds. Played 5v5 across four ten-minute quarters with a knockout bracket for the top eight squads.",
-    date: "14–15 Nov 2026",
+    date: "09-11 Oct 2026",
     day: 2,
     time: "10:30 onwards",
     venue: "Court 01",
@@ -98,7 +98,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Speed you can hear.",
     description:
       "Singles and doubles combat on four regulation courts with BWF-scoring to 21. Quarter-final losers enter a repechage ladder so no campaign ends without a second strike.",
-    date: "13–14 Nov 2026",
+    date: "09–10 Oct 2026",
     day: 1,
     time: "11:30 onwards",
     venue: "Indoor Hall",
@@ -119,7 +119,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Reflex is a weapon.",
     description:
       "Eight tables running in parallel, best-of-five to 11 points. Known across the circuit for upsets — the shortest distance between an underdog and a trophy.",
-    date: "13 Nov 2026",
+    date: "09-11 Oct 2026",
     day: 1,
     time: "14:00 onwards",
     venue: "Indoor Hall — Bay 2",
@@ -140,7 +140,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Long rallies break hearts.",
     description:
       "Hard-court tennis with pro-set scoring in the early rounds and best-of-three sets from the semi-finals. Played under the open Odisha sky with a dedicated medical bay on standby.",
-    date: "14 Nov 2026",
+    date: "10 Oct 2026",
     day: 2,
     time: "07:00 onwards",
     venue: "Lawn Courts",
@@ -161,7 +161,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Silence, then devastation.",
     description:
       "FIDE standard blitz and rapid formats in a sound-controlled hall, arbiter-monitored throughout. Nine rounds of Swiss pairings decide the grandmaster of ASHVAMEDHA.",
-    date: "13 Nov 2026",
+    date: "09 Oct 2026",
     day: 1,
     time: "09:30 onwards",
     venue: "Lecture Hall Complex",
@@ -182,7 +182,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Against gravity, and yourself.",
     description:
       "Raw strength benchmarks across squat, bench press and deadlift judged on bodyweight multipliers. Technique is audited by certified spotters — form beats ego every time.",
-    date: "15 Nov 2026",
+    date: "11 Oct 2026",
     day: 3,
     time: "08:00 onwards",
     venue: "Strength & Conditioning Centre",
@@ -203,7 +203,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "A gauntlet of five trials.",
     description:
       "Arm wrestling, plank hold, pull-up endurance, farmer's carry and a timed relay of four stations. Scored on aggregate — the most complete athlete wins, not the biggest.",
-    date: "15 Nov 2026",
+    date: "11 Oct 2026",
     day: 3,
     time: "15:00 onwards",
     venue: "Strength & Conditioning Centre",
@@ -224,7 +224,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Five operators. One site.",
     description:
       "LAN-adjacent competitive FPS on a 100 Mbps dedicated line with best-of-three series throughout. Coaches get a comms slot behind the players — strategy is part of the spectacle.",
-    date: "13–15 Nov 2026",
+    date: "09–11 Oct 2026",
     day: 1,
     time: "16:00 onwards",
     venue: "Systems Lab — Esports Bay",
@@ -245,7 +245,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Milliseconds define legacies.",
     description:
       "100m, 200m, 400m, 4x100m relay plus long jump and shot put. Electronic timing with photo-finish review ensures every podium is beyond dispute.",
-    date: "14 Nov 2026",
+    date: "10 Oct 2026",
     day: 2,
     time: "06:30 onwards",
     venue: "Athletics Track",
@@ -266,7 +266,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Six hands, one wall.",
     description:
       "Six-a-side volleyball played to 25 points with rally scoring. Rotation discipline decides the tight sets — the final has gone to five sets three years running.",
-    date: "14–15 Nov 2026",
+    date: "10-11 Oct 2026",
     day: 2,
     time: "15:30 onwards",
     venue: "Court 02",
@@ -287,7 +287,7 @@ export const EVENTS: FestEvent[] = [
     tagline: "Ten overs of chaos.",
     description:
       "T10 knockout cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
-    date: "13 Nov 2026",
+    date: "09-11 Oct 2026",
     day: 1,
     time: "13:00 onwards",
     venue: "Main Ground",

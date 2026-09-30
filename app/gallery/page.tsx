@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Gallery } from "@/components/Gallery";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CTASection } from "@/components/sections/HomeSections";
-import { GALLERY, GALLERY_CATEGORIES } from "@/data/gallery";
+import { GALLERY_CATEGORIES } from "@/data/gallery";
+import { getFestData } from "@/lib/festData";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     "Matchday, athletes, crowd, champions and behind the scenes at ASHVAMEDHA — the arena archive from IIT Bhubaneswar.",
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const { gallery: GALLERY } = await getFestData();
   return (
     <>
       <section className="relative overflow-hidden pt-[calc(var(--nav-h)+3rem)] pb-10">

@@ -1,4 +1,5 @@
-import { SPONSORS, SPONSOR_TIERS } from "@/data/sponsors";
+import { SPONSOR_TIERS } from "@/data/sponsors";
+import { getFestData } from "@/lib/festData";
 import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
@@ -7,7 +8,9 @@ import { cn } from "@/lib/utils";
  * Monochrome/silver by default, brightening on hover. Logo files can be dropped
  * in later via `sponsor.logo`; until then the wordmark renders as styled type.
  */
-export function Sponsors() {
+export async function Sponsors() {
+  const { sponsors: SPONSORS } = await getFestData();
+
   return (
     <div className="space-y-14">
       {SPONSOR_TIERS.map((tier) => {

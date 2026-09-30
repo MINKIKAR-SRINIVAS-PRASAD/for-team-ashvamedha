@@ -7,6 +7,8 @@ import { CursorEffects } from "@/components/CursorEffects";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { PageTransition } from "@/components/PageTransition";
 import { SITE } from "@/data/site";
+import { FestDataProvider } from "@/components/FestDataProvider";
+import { getFestData } from "@/lib/festData";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ashvamedha.iitbbs.ac.in"),
@@ -15,7 +17,7 @@ export const metadata: Metadata = {
     template: `%s · ASHVAMEDHA ${SITE.year}`,
   },
   description:
-    "ASHVAMEDHA 2026 — the annual sports fest of IIT Bhubaneswar. Twenty-four sports, sixty-eight teams, three days of battle. Enter the arena.",
+    "ASHVAMEDHA 2026 — the annual sports fest of IIT Bhubaneswar. Ten pluse sports, twenty pluse teams, three days of battle. Enter the arena.",
   keywords: [
     "ASHVAMEDHA",
     "ASHVAMEDHA 2026",
@@ -27,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `ASHVAMEDHA ${SITE.year} — The Battle Begins`,
     description:
-      "The annual sports fest of IIT Bhubaneswar. Twenty-four sports. Three days. One legacy.",
+      "The annual sports fest of IIT Bhubaneswar. Ten pluse sports. Three days. One legacy.",
     type: "website",
     locale: "en_IN",
     siteName: `ASHVAMEDHA ${SITE.year}`,
@@ -46,9 +48,11 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const festData = await getFestData();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -69,15 +73,17 @@ export default function RootLayout({
           Skip to content
         </a>
 
-        <LoadingScreen />
-        <BackgroundEffects />
-        <CursorEffects />
-        <Navbar />
+        <FestDataProvider initial={festData}>
+          <LoadingScreen />
+          <BackgroundEffects />
+          <CursorEffects />
+          <Navbar />
 
-        <PageTransition>
-          <main id="main">{children}</main>
-          <Footer />
-        </PageTransition>
+          <PageTransition>
+            <main id="main">{children}</main>
+            <Footer />
+          </PageTransition>
+        </FestDataProvider>
       </body>
     </html>
   );

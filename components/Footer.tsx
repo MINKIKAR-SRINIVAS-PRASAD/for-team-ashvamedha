@@ -68,7 +68,7 @@ export function Footer() {
             </Link>
 
             <p className="mt-5 max-w-sm text-[0.88rem] leading-relaxed text-silver-dim">
-              The annual sports fest of {SITE.hostLong}. Twenty-four sports, three days, one
+              The annual sports fest of {SITE.hostLong}. Ten pluse sports, three days, one
               championship shield — and the only arena in Odisha that runs a broadcast for every
               final.
             </p>

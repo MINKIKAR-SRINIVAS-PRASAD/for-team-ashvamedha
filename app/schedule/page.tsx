@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Schedule } from "@/components/Schedule";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CTASection } from "@/components/sections/HomeSections";
-import { DAYS, SCHEDULE } from "@/data/schedule";
+import { getFestData } from "@/lib/festData";
 
 export const metadata: Metadata = {
   title: "Schedule",
@@ -10,7 +10,8 @@ export const metadata: Metadata = {
     "The full ASHVAMEDHA 2026 running order — three days, 24 sports, opening ceremony to closing podium at IIT Bhubaneswar.",
 };
 
-export default function SchedulePage() {
+export default async function SchedulePage() {
+  const { days: DAYS, schedule: SCHEDULE } = await getFestData();
   const liveCount = SCHEDULE.filter((s) => s.status === "live").length;
 
   return (
@@ -25,7 +26,7 @@ export default function SchedulePage() {
             <span className="text-metal">OF BATTLE</span>
           </h1>
           <p className="mt-6 max-w-2xl text-[1rem] leading-relaxed text-silver-dim">
-            From the opening ceremony on 13 November to the podium on the closing night — every
+            From the opening ceremony on 09 October to the podium on the closing night — every
             session, venue and stage. Scroll the timeline sideways on desktop, or follow it top to
             bottom on mobile.
           </p>

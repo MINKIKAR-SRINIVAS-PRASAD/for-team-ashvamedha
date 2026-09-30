@@ -4,9 +4,8 @@ import { motion } from "framer-motion";
 import { Crown, Flame, Shield } from "lucide-react";
 import { Trophy } from "@/components/art/Trophy";
 import { Crest } from "@/components/art/Crest";
-import { CHAMPION_SPOTLIGHT, PODIUM } from "@/data/leaderboard";
-import { PREVIOUS_EDITIONS as EDITIONS } from "@/data/liveScores";
-import { getTeam } from "@/data/teams";
+import { useFestData } from "@/components/FestDataProvider";
+import { findTeam } from "@/lib/festData";
 import { EASE } from "@/lib/motion";
 
 /**
@@ -15,7 +14,14 @@ import { EASE } from "@/lib/motion";
  * and the three contenders, plus the recent edition roll-call.
  */
 export function ChampionSpotlight() {
-  const reigning = getTeam("phoenix-brigade");
+  const {
+    championSpotlight: CHAMPION_SPOTLIGHT,
+    podium: PODIUM,
+    previousEditions: EDITIONS,
+    teams,
+  } = useFestData();
+  const reigning =
+    teams.find((t) => t.name === CHAMPION_SPOTLIGHT.reigning) ?? findTeam(teams, "phoenix-brigade");
 
   return (
     <section className="relative overflow-hidden" aria-labelledby="champions-heading">
@@ -130,7 +136,7 @@ export function ChampionSpotlight() {
         {/* podium strip */}
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
           {PODIUM.map((row, i) => {
-            const team = getTeam(row.teamSlug);
+            const team = findTeam(teams, row.teamSlug);
             const tone = ["gold", "silver", "bronze"][i];
             const color = team?.crest[0] ?? "#e8c46a";
             return (

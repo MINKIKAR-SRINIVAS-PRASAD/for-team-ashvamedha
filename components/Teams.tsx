@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import { Trophy as TrophyIcon } from "lucide-react";
 import { Crest } from "@/components/art/Crest";
-import { TEAMS, type Team } from "@/data/teams";
+import type { Team } from "@/data/teams";
+import { useFestData } from "@/components/FestDataProvider";
 import { EASE } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -14,7 +15,8 @@ import { cn } from "@/lib/utils";
  * deep-links from the leaderboard work.
  */
 export function Teams({ limit }: { limit?: number }) {
-  const list = limit ? TEAMS.slice(0, limit) : TEAMS;
+  const { teams } = useFestData();
+  const list = limit ? teams.slice(0, limit) : teams;
 
   return (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -87,10 +89,6 @@ function TeamCard({ team, index }: { team: Team; index: number }) {
         </div>
       </dl>
 
-      <p className="relative mt-4 text-[0.78rem] italic leading-snug text-silver-dim">
-        “{team.motto}”
-      </p>
-
       <span
         className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
         style={{ background: `linear-gradient(90deg, ${team.crest[0]}, transparent)` }}
@@ -101,7 +99,8 @@ function TeamCard({ team, index }: { team: Team; index: number }) {
 
 /** Compact crest + name strip used for podium lists and results pages. */
 export function TeamChip({ slug, className }: { slug: string; className?: string }) {
-  const team = TEAMS.find((t) => t.slug === slug);
+  const { teams } = useFestData();
+  const team = teams.find((t) => t.slug === slug);
   if (!team) return null;
   return (
     <span className={cn("flex items-center gap-2.5", className)}>

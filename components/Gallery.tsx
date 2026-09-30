@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, ZoomIn } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BattlefieldFrame } from "@/components/art/BattlefieldFrame";
-import { GALLERY, GALLERY_CATEGORIES, type GalleryItem } from "@/data/gallery";
+import { GALLERY_CATEGORIES, type GalleryItem } from "@/data/gallery";
+import { useFestData } from "@/components/FestDataProvider";
 import { accentOf } from "@/lib/accents";
 import { EASE } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -31,13 +32,14 @@ const CATEGORY_GLYPH = {
  * (Esc to close, ← / → to move between frames).
  */
 export function Gallery({ limit }: { limit?: number }) {
+  const { gallery } = useFestData();
   const [filter, setFilter] = useState<string>("ALL");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const items = useMemo(() => {
-    const list = filter === "ALL" ? GALLERY : GALLERY.filter((g) => g.category === filter);
+    const list = filter === "ALL" ? gallery : gallery.filter((g) => g.category === filter);
     return limit ? list.slice(0, limit) : list;
-  }, [filter, limit]);
+  }, [filter, limit, gallery]);
 
   const close = useCallback(() => setOpenIndex(null), []);
   const step = useCallback(

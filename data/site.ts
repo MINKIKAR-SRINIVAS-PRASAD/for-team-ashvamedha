@@ -11,14 +11,14 @@ export const SITE = {
   subTagline: "THE BATTLE FOR GLORY",
   arena: "ARENA · IIT BHUBANESWAR",
   /** Opening ceremony — used by the Doomsday Clock. */
-  startsAt: "2026-11-13T09:00:00+05:30",
-  endsAt: "2026-11-15T21:00:00+05:30",
-  registrationUrl: "https://ashvamedha.iitbbs.ac.in/register",
+  startsAt: "2026-10-09T09:00:00+05:30",
+  endsAt: "2026-10-11T21:00:00+05:30",
+  /** Registration form (app/register) — submissions go to the backend API. */
+  registrationUrl: "/register",
   contactEmail: "ashvamedha@iitbbs.ac.in",
-  contactPhone: "+91 674 713 5000",
-  address: "IIT Bhubaneswar, Argul, Jatni, Khordha — 752050, Odisha, India",
+  contactPhone: "+91 9321743329",
+  address: "IIT Bhubaneswar, Argul, Jatni, Khordha — 752051, Odisha, India",
 } as const;
-
 export const HUD = {
   status: "SYSTEM ONLINE",
   eventStatus: "EVENT STATUS: ACTIVE",
@@ -54,8 +54,8 @@ export const FOOTER_LINKS = [
 
 /** Championship counts shown in the intro HUD strip. */
 export const FEST_STATS = [
-  { label: "Sports", value: "24" },
-  { label: "Teams", value: "68" },
-  { label: "Athletes", value: "1,240" },
+  { label: "Sports", value: "10+" },
+  { label: "Teams", value: "20+" },
+  { label: "Athletes", value: "700+" },
   { label: "Days of Battle", value: "03" },
 ] as const;

@@ -11,7 +11,7 @@ import { Teams } from "@/components/Teams";
 import { Sponsors } from "@/components/Sponsors";
 import { ChampionSpotlight } from "@/components/ChampionSpotlight";
 import { RegistrationCTA, HeroMessage } from "@/components/RegistrationCTA";
-import { EVENTS } from "@/data/events";
+import { getFestData } from "@/lib/festData";
 import { EventRow } from "@/components/EventCard";
 
 /**
@@ -34,7 +34,7 @@ export function SportsCarouselSection() {
             </>
           }
           description="Six headline arenas. Drag, swipe or use the arrow keys — every card opens its full event protocol."
-          action={<CTA href="/events" variant="ghost">All 24 Events</CTA>}
+          action={<CTA href="/events" variant="ghost">All 10+ Events</CTA>}
         />
         <div className="mt-12">
           <EventCarousel />
@@ -44,7 +44,8 @@ export function SportsCarouselSection() {
   );
 }
 
-export function EventsSection() {
+export async function EventsSection() {
+  const { events: EVENTS } = await getFestData();
   return (
     <section className="section-pad relative" aria-labelledby="events-heading">
       <div className="shell">
@@ -77,7 +78,7 @@ export function EventsSection() {
             to gym trials and the esports bracket.
           </p>
           <CTA href="/events" variant="ghost">
-            See All 24 Sports
+            See All 10+ Sports
           </CTA>
         </Reveal>
       </div>
@@ -207,7 +208,7 @@ export function TeamsSection() {
               <span className="text-metal">IN CONTENTION</span>
             </>
           }
-          description="Sixty-eight squads are registered. These are the ones the table is watching."
+          description="fifty pluse squads are registered. These are the ones the table is watching."
           action={<CTA href="/teams" variant="ghost">All Teams</CTA>}
         />
         <div className="mt-12">

@@ -4,8 +4,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Crown, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { LEADERBOARD_COLUMNS, RANKINGS, winPercent, type RankingRow } from "@/data/leaderboard";
-import { getTeam } from "@/data/teams";
+import { LEADERBOARD_COLUMNS, winPercent, type RankingRow } from "@/data/leaderboard";
+import { useFestData } from "@/components/FestDataProvider";
+import { findTeam } from "@/lib/festData";
 import { EASE } from "@/lib/motion";
 import { cn, pad } from "@/lib/utils";
 
@@ -40,7 +41,9 @@ const MEDAL: Record<number, { ring: string; text: string; glow: string; label: s
  * scrollable rather than collapsing into cards, so the column relationships
  * (which are the whole point of a leaderboard) survive on a phone.
  */
-export function Leaderboard({ compact = false, rows = RANKINGS }: { compact?: boolean; rows?: RankingRow[] }) {
+export function Leaderboard({ compact = false, rows: rowsProp }: { compact?: boolean; rows?: RankingRow[] }) {
+  const { rankings, teams } = useFestData();
+  const rows = rowsProp ?? rankings;
   const [sort, setSort] = useState<SortKey>("rank");
   const reduce = useReducedMotion();
 
@@ -118,7 +121,7 @@ export function Leaderboard({ compact = false, rows = RANKINGS }: { compact?: bo
             {sorted.map((row, i) => {
               const medal = MEDAL[row.rank];
               const pct = winPercent(row);
-              const team = getTeam(row.teamSlug);
+              const team = findTeam(teams, row.teamSlug);
 
               return (
                 <motion.tr
@@ -216,7 +219,7 @@ export function Leaderboard({ compact = false, rows = RANKINGS }: { compact?: bo
       {!compact && (
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 px-5 py-4">
           <p className="font-mono text-[10px] tracking-hud text-silver-dim">
-            Standings recalculated after every completed fixture · Updated 15 NOV 2026, 21:00 IST
+            Standings recalculated after every completed fixture ·
           </p>
           <p className="font-mono text-[10px] tracking-hud text-silver-dim">
             Scroll horizontally on smaller screens

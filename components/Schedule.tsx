@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { MapPin } from "lucide-react";
-import { DAYS, SCHEDULE, SCHEDULE_FILTERS, type ScheduleSlot } from "@/data/schedule";
+import type { ScheduleSlot } from "@/data/schedule";
+import { useFestData } from "@/components/FestDataProvider";
 import { EASE } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -22,17 +23,23 @@ const STATUS_STYLE: Record<ScheduleSlot["status"], string> = {
  * Both views read from data/schedule.ts, so adding a slot updates both.
  */
 export function Schedule({ previewLimit }: { previewLimit?: number }) {
+  const { days, schedule } = useFestData();
   const [filter, setFilter] = useState<string>("all");
 
+  const SCHEDULE_FILTERS = useMemo(
+    () => [{ id: "all", label: "All" }, ...days.map((d) => ({ id: String(d.day), label: `Day ${d.day}` }))],
+    [days],
+  );
+
   const visibleDays = useMemo(() => {
-    const list = filter === "all" ? DAYS : DAYS.filter((d) => String(d.day) === filter);
+    const list = filter === "all" ? days : days.filter((d) => String(d.day) === filter);
     if (!previewLimit) return list;
     // Preview mode keeps the timeline honest: cap the slots, not the days.
     return list;
-  }, [filter, previewLimit]);
+  }, [filter, previewLimit, days]);
 
   const slotsFor = (day: number) => {
-    const list = SCHEDULE.filter((s) => s.day === day).sort((a, b) => a.time.localeCompare(b.time));
+    const list = schedule.filter((s) => s.day === day).sort((a, b) => a.time.localeCompare(b.time));
     return previewLimit ? list.slice(0, previewLimit) : list;
   };
 

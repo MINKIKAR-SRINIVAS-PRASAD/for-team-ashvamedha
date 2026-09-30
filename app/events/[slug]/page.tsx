@@ -7,13 +7,17 @@ import { SportGlyph } from "@/components/art/SportGlyph";
 import { CTA } from "@/components/ui/CTA";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Schedule } from "@/components/Schedule";
-import { EVENTS, REGISTRATION_LABEL, getEvent } from "@/data/events";
-import { SITE } from "@/data/site";
+import { REGISTRATION_LABEL } from "@/data/events";
+import { findEvent, getFestData } from "@/lib/festData";
 import { accentOf } from "@/lib/accents";
 
 /** Pre-render one static page per event — no runtime data fetching needed. */
-export function generateStaticParams() {
-  return EVENTS.map((e) => ({ slug: e.slug }));
+// Pages for events added later through the admin API are rendered on demand.
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const { events } = await getFestData();
+  return events.map((e) => ({ slug: e.slug }));
 }
 
 export async function generateMetadata({
@@ -22,7 +26,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const event = getEvent(slug);
+  const { events } = await getFestData();
+  const event = findEvent(events, slug);
   if (!event) return { title: "Event not found" };
 
   return {
@@ -37,7 +42,8 @@ export default async function EventDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const event = getEvent(slug);
+  const { events: EVENTS } = await getFestData();
+  const event = findEvent(EVENTS, slug);
   if (!event) notFound();
 
   const a = accentOf(event.accent);
@@ -108,8 +114,7 @@ export default async function EventDetailPage({
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <CTA
-                  href={SITE.registrationUrl}
-                  external
+                  href={`/register?event=${event.slug}`}
                   variant="primary"
                   className="!px-7 !py-4"
                   disabled={event.registration === "closed"}

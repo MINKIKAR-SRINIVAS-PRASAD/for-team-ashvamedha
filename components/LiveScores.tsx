@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Radio } from "lucide-react";
 import Link from "next/link";
-import { RECENT_RESULTS } from "@/data/liveScores";
+import { useFestData } from "@/components/FestDataProvider";
 import { useLiveFeed } from "@/lib/hooks/useLiveFeed";
 import { accentOf } from "@/lib/accents";
 import { EASE } from "@/lib/motion";
@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
  */
 export function LiveScores({ showResults = true }: { showResults?: boolean }) {
   const { matches, updatedAt } = useLiveFeed();
+  const { recentResults } = useFestData();
 
   return (
     <div>
@@ -128,7 +129,7 @@ export function LiveScores({ showResults = true }: { showResults?: boolean }) {
             <span className="hud text-volt/90">{"// COMPLETED_FIXTURES"}</span>
           </div>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {RECENT_RESULTS.map((r, i) => (
+            {recentResults.map((r, i) => (
               <motion.li
                 key={`${r.sport}-${r.winner}`}
                 initial={{ opacity: 0, y: 16 }}

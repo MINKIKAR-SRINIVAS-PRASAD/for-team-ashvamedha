@@ -3,7 +3,8 @@ import { Leaderboard } from "@/components/Leaderboard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ChampionSpotlight } from "@/components/ChampionSpotlight";
 import { CTASection } from "@/components/sections/HomeSections";
-import { RANKINGS, winPercent } from "@/data/leaderboard";
+import { winPercent } from "@/data/leaderboard";
+import { getFestData } from "@/lib/festData";
 
 export const metadata: Metadata = {
   title: "Leaderboard",
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
     "ASHVAMEDHA 2026 championship standings — rank, matches, wins, losses, points and win percentage for every competing squad.",
 };
 
-export default function LeaderboardPage() {
+export default async function LeaderboardPage() {
+  const { rankings: RANKINGS } = await getFestData();
   const best = [...RANKINGS].sort((a, b) => winPercent(b) - winPercent(a))[0];
   const totalMatches = RANKINGS.reduce((sum, r) => sum + r.matches, 0);
 

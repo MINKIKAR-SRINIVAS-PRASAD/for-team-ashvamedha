@@ -20,7 +20,7 @@ export const LIVE_MATCHES: LiveMatch[] = [
     id: "live-fb-1",
     sport: "Football",
     eventSlug: "football",
-    home: { name: "Phoenix Brigade", score: 2 },
+    home: { name: " - ", score: 2 },
     away: { name: "Cinder Crew", score: 1 },
     status: "live",
     clock: "68'",

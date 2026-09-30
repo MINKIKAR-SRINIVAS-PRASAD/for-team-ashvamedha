@@ -3,7 +3,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { EventCard } from "@/components/EventCard";
-import { EVENT_CATEGORIES, EVENTS } from "@/data/events";
+import { EVENT_CATEGORIES } from "@/data/events";
+import { useFestData } from "@/components/FestDataProvider";
 import { cn } from "@/lib/utils";
 
 /**
@@ -11,12 +12,13 @@ import { cn } from "@/lib/utils";
  * Adding a sport to data/events.ts is the only step required to extend it.
  */
 export function SportsGrid({ limit }: { limit?: number }) {
+  const { events } = useFestData();
   const [filter, setFilter] = useState<string>("All");
 
   const filtered = useMemo(() => {
-    const list = filter === "All" ? EVENTS : EVENTS.filter((e) => e.category === filter);
+    const list = filter === "All" ? events : events.filter((e) => e.category === filter);
     return limit ? list.slice(0, limit) : list;
-  }, [filter, limit]);
+  }, [filter, limit, events]);
 
   return (
     <div>

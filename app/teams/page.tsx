@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Teams } from "@/components/Teams";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CTASection } from "@/components/sections/HomeSections";
-import { TEAMS } from "@/data/teams";
+import { getFestData } from "@/lib/festData";
 
 export const metadata: Metadata = {
   title: "Teams",
@@ -10,7 +10,8 @@ export const metadata: Metadata = {
     "The squads competing at ASHVAMEDHA 2026 — institutes, departments, captains, sports and current championship ranking.",
 };
 
-export default function TeamsPage() {
+export default async function TeamsPage() {
+  const { teams: TEAMS } = await getFestData();
   const institutes = new Set(TEAMS.map((t) => t.institution));
 
   return (
@@ -25,7 +26,7 @@ export default function TeamsPage() {
             <span className="text-metal">SQUADS</span>
           </h1>
           <p className="mt-6 max-w-2xl text-[1rem] leading-relaxed text-silver-dim">
-            Sixty-eight squads are registered across {institutes.size} institutes. Each card carries
+            50+ squads are registered across {institutes.size} institutes. Each card carries
             its captain, discipline and current position in the championship table.
           </p>
 

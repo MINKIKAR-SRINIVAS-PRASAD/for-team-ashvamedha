@@ -44,7 +44,7 @@ export function Countdown() {
               <p className="mt-2.5 max-w-md text-sm text-silver-dim">
                 {clock.elapsed
                   ? "Opening ceremony in progress at IIT Bhubaneswar."
-                  : "Opening ceremony · 13 November 2026, 09:00 IST · Main Ground."}
+                  : "Opening ceremony · 09 October 2026, 09:00 IST · Main Ground."}
               </p>
             </div>
 

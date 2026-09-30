@@ -1,41 +1,48 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LIVE_MATCHES, type LiveMatch } from "@/data/liveScores";
+import type { LiveMatch } from "@/data/liveScores";
+import { useFestData } from "@/components/FestDataProvider";
+import { PUBLIC_API_URL } from "@/lib/festData";
 
 /**
- * Live feed hook.
- *
- * Today it serves the mock payload from data/liveScores.ts. To go live, replace
- * the body of `fetchMatches` with a call to the scoring API — the shape is
- * already identical, so no component needs to change:
- *
- *   const res = await fetch("/api/live", { cache: "no-store" });
- *   return (await res.json()) as LiveMatch[];
+ * Live feed hook — polls the backend's live ticker.
+ * Starts from the server-rendered data (so there's no flash), then refreshes.
+ * If the API is unreachable it keeps showing the last good data.
  */
-async function fetchMatches(): Promise<LiveMatch[]> {
-  return LIVE_MATCHES;
+async function fetchMatches(): Promise<LiveMatch[] | null> {
+  try {
+    const res = await fetch(`${PUBLIC_API_URL}/api/matches/live`, { cache: "no-store" });
+    if (!res.ok) return null;
+    return (await res.json()) as LiveMatch[];
+  } catch {
+    return null;
+  }
 }
 
-export function useLiveFeed(pollMs = 30_000) {
-  const [matches, setMatches] = useState<LiveMatch[]>(LIVE_MATCHES);
+export function useLiveFeed(pollMs = 15_000) {
+  const { liveMatches } = useFestData();
+  const [matches, setMatches] = useState<LiveMatch[]>(liveMatches);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
 
   useEffect(() => {
     let alive = true;
 
     const load = async () => {
+      if (document.visibilityState !== "visible") return;
       const next = await fetchMatches();
-      if (!alive) return;
+      if (!alive || !next) return;
       setMatches(next);
       setUpdatedAt(new Date());
     };
 
     void load();
     const id = window.setInterval(load, pollMs);
+    document.addEventListener("visibilitychange", load);
     return () => {
       alive = false;
       window.clearInterval(id);
+      document.removeEventListener("visibilitychange", load);
     };
   }, [pollMs]);
 

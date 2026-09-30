@@ -3,8 +3,7 @@ import { Trophy, Medal } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Crest } from "@/components/art/Crest";
 import { CTASection } from "@/components/sections/HomeSections";
-import { EVENT_CHAMPIONS, PODIUM_2025, RECENT_RESULTS } from "@/data/liveScores";
-import { getTeam } from "@/data/teams";
+import { findTeam, getFestData } from "@/lib/festData";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -19,7 +18,14 @@ const MEDAL_TONE = {
   bronze: { ring: "border-bronze/45", text: "text-bronze", bg: "rgba(192,122,69,0.12)" },
 };
 
-export default function ResultsPage() {
+export default async function ResultsPage() {
+  const {
+    eventChampions: EVENT_CHAMPIONS,
+    podium2025: PODIUM_2025,
+    recentResults: RECENT_RESULTS,
+    teams,
+  } = await getFestData();
+  const getTeam = (slug: string) => findTeam(teams, slug);
   return (
     <>
       <section className="relative overflow-hidden pt-[calc(var(--nav-h)+3rem)] pb-10">

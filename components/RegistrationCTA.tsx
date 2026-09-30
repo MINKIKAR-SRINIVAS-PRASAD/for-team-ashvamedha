@@ -51,14 +51,14 @@ export function RegistrationCTA() {
                 Register Now →
               </CTA>
               <CTA href="/events" variant="ghost" className="!px-7 !py-5">
-                Browse 24 Sports
+                Browse 10+ Sports
               </CTA>
             </div>
           </Reveal>
 
           <Reveal delay={0.3}>
             <p className="mt-7 font-mono text-[10px] tracking-hud text-silver-dim">
-              Team entries close 08 NOV 2026 · Individual entries close 11 NOV 2026
+              Team entries close 08 OCT 2026 · Individual entries close 11 OCT 2026
             </p>
           </Reveal>
         </div>
