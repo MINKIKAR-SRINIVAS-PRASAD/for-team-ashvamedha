@@ -9,7 +9,7 @@ import { getFestData } from "@/lib/festData";
 export const metadata: Metadata = {
   title: "Events",
   description:
-    "Every sport at ASHVAMEDHA 2026 — football, basketball, badminton, table tennis, kho-kho, lawn tennis, gym events, ESportst and more, with dates, venues and registration status.",
+    "Every sport at ASHVAMEDHA 2026 — football, basketball, Badminton, Table Tennis, Kho-Kho, Lawn Tennis Tennis, Power Lifting, chess and more, with dates, venues and registration status.",
 };
 
 export default async function EventsPage() {

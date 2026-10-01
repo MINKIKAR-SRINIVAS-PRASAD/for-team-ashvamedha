@@ -66,7 +66,7 @@ export const GALLERY: GalleryItem[] = [
     title: "Server War",
     category: "MATCHDAY",
     image: null,
-    caption: "Esports bay, map three, both squads one round from elimination.",
+    caption: "Chess bay, map three, both squads one round from elimination.",
     span: "square",
     accent: "violet",
   },

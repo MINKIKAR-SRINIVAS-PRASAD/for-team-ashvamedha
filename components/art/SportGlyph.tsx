@@ -34,6 +34,7 @@ export function SportGlyph({
           <path d="M17 20l-6 2.5M31 20l6 2.5M19.7 28.5L15 36M28.3 28.5L33 36" />
         </svg>
       );
+
     case "basketball":
       return (
         <svg {...common}>
@@ -42,6 +43,7 @@ export function SportGlyph({
           <path d="M12 12c6 6 6 18 0 24M36 12c-6 6-6 18 0 24" />
         </svg>
       );
+
     case "badminton":
       return (
         <svg {...common}>
@@ -52,6 +54,7 @@ export function SportGlyph({
           <path d="M22 22l-3-3M28 16l-3-3M31 26l3 3M36 21l3 3" />
         </svg>
       );
+
     case "tabletennis":
       return (
         <svg {...common}>
@@ -61,6 +64,7 @@ export function SportGlyph({
           <circle cx="39" cy="39" r="2.5" />
         </svg>
       );
+
     case "lawn":
       return (
         <svg {...common}>
@@ -71,6 +75,7 @@ export function SportGlyph({
           <path d="M28 12l-5 5M34 16l-5 5M22 22l8 8M28 28l8 8" />
         </svg>
       );
+
     case "kho-kho":
       return (
         <svg {...common}>
@@ -79,6 +84,7 @@ export function SportGlyph({
           <path d="M22 24l-3-6 4 2 2-5 3 5 4-2-3 6" />
         </svg>
       );
+
     case "gym events":
       return (
         <svg {...common}>
@@ -89,6 +95,19 @@ export function SportGlyph({
           <path d="M20 18v12M28 18v12" />
         </svg>
       );
+
+    case "chess":
+      return (
+        <svg {...common}>
+          <path d="M18 8h12" />
+          <path d="M22 8v6l-6 8h16l-6-8V8" />
+          <path d="M18 22h12l4 8H14z" />
+          <path d="M14 30h20" />
+          <path d="M12 36h24" />
+          <path d="M10 41h28" />
+        </svg>
+      );
+
     case "esportst":
       return (
         <svg {...common}>
@@ -98,6 +117,16 @@ export function SportGlyph({
           <path d="M31 17l6-6M17 17l-6-6M31 31l6 6M17 31l-6 6" />
         </svg>
       );
+
+    case "sportsquiz":
+      return (
+        <svg {...common}>
+          <circle cx="24" cy="24" r="17" />
+          <path d="M18 18c0-3 2.5-5 6-5s6 2 6 5c0 3-2 4.5-4.5 6.5-1.5 1.2-2.5 2.3-2.5 4.5" />
+          <circle cx="24" cy="36" r="1.5" fill="currentColor" stroke="none" />
+        </svg>
+      );
+
     case "swimming":
       return (
         <svg {...common}>
@@ -108,6 +137,7 @@ export function SportGlyph({
           <path d="M31 14l7 3" />
         </svg>
       );
+
     case "volleyball":
       return (
         <svg {...common}>
@@ -117,6 +147,7 @@ export function SportGlyph({
           <path d="M9 30c8-8 20-9 30-3" />
         </svg>
       );
+
     default:
       return (
         <svg {...common}>

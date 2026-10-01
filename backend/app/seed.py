@@ -37,15 +37,15 @@ SEED_FILE = Path(__file__).resolve().parent.parent / "seed_data" / "initial.json
 TEAM_LIMITS = {
     "football": (11, 16),
     "basketball": (5, 9),
-    "badminton": (1, 2),
+    "Badminton": (1, 2),
     "table-tennis": (1, 2),
-    "lawn-tennis": (1, 2),
-    "kho-kho": (1, 1),
-    "gym events": (1, 1),
-    "esportst": (5, 6),
-    "swimming": (1, 4),
+    "Lawn Tennis-tennis": (1, 2),
+    "Kho-Kho": (1, 1),
+    "Power Lifting": (1, 1),
+    "chess": (5, 6),
+    "Swimming": (1, 4),
     "volleyball": (6, 10),
-    "mix cricket": (11, 15),
+    "Mixed Cricket": (11, 15),
 }
 
 

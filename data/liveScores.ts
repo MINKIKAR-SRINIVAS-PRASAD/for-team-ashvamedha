@@ -18,7 +18,7 @@ export interface LiveMatch {
 export const LIVE_MATCHES: LiveMatch[] = [
   {
     id: "live-fb-1",
-    sport: "Football",
+    sport: "football",
     eventSlug: "football",
     home: { name: " - ", score: 2 },
     away: { name: "Cinder Crew", score: 1 },
@@ -29,7 +29,7 @@ export const LIVE_MATCHES: LiveMatch[] = [
   },
   {
     id: "live-bb-1",
-    sport: "Basketball",
+    sport: "basketball",
     eventSlug: "basketball",
     home: { name: "Titan Syndicate", score: 74 },
     away: { name: "Apex Collective", score: 69 },
@@ -40,19 +40,19 @@ export const LIVE_MATCHES: LiveMatch[] = [
   },
   {
     id: "live-vl-1",
-    sport: "ESportst",
-    eventSlug: "esportst",
+    sport: "chess",
+    eventSlug: "chess",
     home: { name: "Obsidian Order", score: 1 },
     away: { name: "Night Protocol", score: 1 },
     status: "live",
     clock: "MAP 3",
-    detail: "Upper Bracket Final · Esports Bay",
+    detail: "Upper Bracket Final · Chess Bay",
     accent: "violet",
   },
   {
     id: "next-at-1",
     sport: "Swimming",
-    eventSlug: "swimming",
+    eventSlug: "Swimming",
     home: { name: "Red Meridian", score: "—" },
     away: { name: "Field A", score: "—" },
     status: "upcoming",
@@ -66,8 +66,8 @@ export const LIVE_MATCHES: LiveMatch[] = [
 export const RECENT_RESULTS = [
   { sport: "Table Tennis", winner: "Night Protocol", loser: "Stormforge", score: "3 – 2", stage: "Round of 16" },
   { sport: "Badminton", winner: "Stormforge", loser: "Silver Lance", score: "21-18, 21-16", stage: "Round of 32" },
-  { sport: "Kho-kho", winner: "The Quiet War", loser: "Apex Collective", score: "4 – 1", stage: "Swiss R4" },
-  { sport: "ESportst", winner: "Obsidian Order", loser: "Iron Veil", score: "13 – 9", stage: "Opening Series" },
+  { sport: "Kho-Kho", winner: "The Quiet War", loser: "Apex Collective", score: "4 – 1", stage: "Swiss R4" },
+  { sport: "chess", winner: "Obsidian Order", loser: "Iron Veil", score: "13 – 9", stage: "Opening Series" },
 ] as const;
 
 /** Final podium data used by /results and the champion spotlight. */
@@ -85,8 +85,8 @@ export const PREVIOUS_EDITIONS = [
 
 /** Event-level champions crowned so far this season. */
 export const EVENT_CHAMPIONS = [
-  { event: "Mix cricket", champion: "Cinder Crew", runnerUp: "Phoenix Brigade" },
-  { event: "Kho-kho", champion: "The Quiet War", runnerUp: "Apex Collective" },
+  { event: "Mixed Cricket", champion: "Cinder Crew", runnerUp: "Phoenix Brigade" },
+  { event: "Kho-Kho", champion: "The Quiet War", runnerUp: "Apex Collective" },
   { event: "Table Tennis", champion: "Night Protocol", runnerUp: "Stormforge" },
-  { event: "Gym events", champion: "Iron Veil", runnerUp: "Apex Collective" },
+  { event: "Power Lifting", champion: "Iron Veil", runnerUp: "Apex Collective" },
 ];

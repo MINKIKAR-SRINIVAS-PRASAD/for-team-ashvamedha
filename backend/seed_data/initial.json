@@ -2,7 +2,7 @@
   "EVENTS": [
     {
       "slug": "football",
-      "name": "Football",
+      "name": "football",
       "arena": "The Arena",
       "category": "Team Sport",
       "tagline": "Eleven against the storm.",
@@ -22,7 +22,7 @@
     },
     {
       "slug": "basketball",
-      "name": "Basketball",
+      "name": "basketball",
       "arena": "Court 01 Protocol",
       "category": "Team Sport",
       "tagline": "Four quarters. No retreat.",
@@ -41,7 +41,7 @@
       "glyph": "basketball"
     },
     {
-      "slug": "badminton",
+      "slug": "Badminton",
       "name": "Badminton",
       "arena": "Indoor Hall",
       "category": "Racquet",
@@ -58,7 +58,7 @@
       "format": "Singles + doubles, BWF 21",
       "accent": "gold",
       "image": null,
-      "glyph": "badminton"
+      "glyph": "Badminton"
     },
     {
       "slug": "table-tennis",
@@ -81,8 +81,8 @@
       "glyph": "tabletennis"
     },
     {
-      "slug": "lawn-tennis",
-      "name": "Lawn Tennis",
+      "slug": "Lawn Tennis-tennis",
+      "name": "Lawn Tennis Tennis",
       "arena": "Sun Court",
       "category": "Racquet",
       "tagline": "Long rallies break hearts.",
@@ -90,7 +90,7 @@
       "date": "14 Oct 2026",
       "day": 2,
       "time": "07:00 onwards",
-      "venue": "Lawn Courts",
+      "venue": "Lawn Tennis Courts",
       "teamSize": "1 or 2",
       "registration": "closing",
       "entryFee": "₹300 / player",
@@ -98,11 +98,11 @@
       "format": "Pro-set then best of 3",
       "accent": "gold",
       "image": null,
-      "glyph": "lawn"
+      "glyph": "Lawn Tennis"
     },
     {
-      "slug": "kho-kho",
-      "name": "kho-kho",
+      "slug": "Kho-Kho",
+      "name": "Kho-Kho",
       "arena": "The Quiet War",
       "category": "Board & Mind",
       "tagline": "Silence, then devastation.",
@@ -118,11 +118,11 @@
       "format": "5 rounds",
       "accent": "violet",
       "image": null,
-      "glyph": "kho-kho"
+      "glyph": "Kho-Kho"
     },
     {
-      "slug": "gym events",
-      "name": "Gym events",
+      "slug": "Power Lifting",
+      "name": "Power Lifting",
       "arena": "Iron Protocol",
       "category": "Power & Fitness",
       "tagline": "Against gravity, and yourself.",
@@ -138,19 +138,19 @@
       "format": "3-lift total",
       "accent": "crimson",
       "image": null,
-      "glyph": "gym events"
+      "glyph": "Power Lifting"
     },
     {
-      "slug": "esportst",
-      "name": "ESportst",
+      "slug": "chess",
+      "name": "chess",
       "arena": "Server War",
-      "category": "Esports",
+      "category": "Chess",
       "tagline": "Five operators. One site.",
       "description": "LAN-adjacent competitive FPS on a 100 Mbps dedicated line with best-of-three series throughout. Coaches get a comms slot behind the players — strategy is part of the spectacle.",
       "date": "09-11 oct 2026",
       "day": 1,
       "time": "16:00 onwards",
-      "venue": "Systems Lab — Esports Bay",
+      "venue": "Systems Lab — Chess Bay",
       "teamSize": "5 + 1 coach",
       "registration": "closing",
       "entryFee": "₹1,000 / team",
@@ -158,10 +158,10 @@
       "format": "Best of 3 / Bo5 final",
       "accent": "violet",
       "image": null,
-      "glyph": "esportst"
+      "glyph": "chess"
     },
     {
-      "slug": "swimming",
+      "slug": "Swimming",
       "name": "Swimming",
       "arena": "The Track",
       "category": "Power & Fitness",
@@ -178,11 +178,11 @@
       "format": "Heats + finals",
       "accent": "volt",
       "image": null,
-      "glyph": "swimming"
+      "glyph": "Swimming"
     },
     {
       "slug": "volleyball",
-      "name": "Volleyball",
+      "name": "volleyball",
       "arena": "Court 02",
       "category": "Team Sport",
       "tagline": "Six hands, one wall.",
@@ -201,12 +201,12 @@
       "glyph": "volleyball"
     },
     {
-      "slug": "mix cricket",
-      "name": "Mix cricket",
+      "slug": "Mixed Cricket",
+      "name": "Mixed Cricket",
       "arena": "Sunset Oval",
       "category": "Team Sport",
       "tagline": "Ten overs of chaos.",
-      "description": "T10 knockout mix cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
+      "description": "T10 knockout Mixed Cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
       "date": "13 Oct 2026",
       "day": 1,
       "time": "13:00 onwards",
@@ -224,10 +224,10 @@
   "FEATURED_SLUGS": [
     "football",
     "basketball",
-    "esportst",
-    "badminton",
-    "swimming",
-    "kho-kho"
+    "chess",
+    "Badminton",
+    "Swimming",
+    "Kho-Kho"
   ],
   "TEAMS": [
     {
@@ -236,7 +236,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "School of Mechanical Sciences",
       "captain": "A. Mahapatra",
-      "sport": "Football",
+      "sport": "football",
       "rank": 1,
       "accent": "crimson",
       "crest": [
@@ -251,7 +251,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "School of Electrical Sciences",
       "captain": "R. Nayak",
-      "sport": "Basketball",
+      "sport": "basketball",
       "rank": 2,
       "accent": "volt",
       "crest": [
@@ -266,7 +266,7 @@
       "institution": "NIT Rourkela",
       "department": "Department of Computer Science",
       "captain": "S. Patel",
-      "sport": "ESportst",
+      "sport": "chess",
       "rank": 3,
       "accent": "violet",
       "crest": [
@@ -281,7 +281,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "School of Infrastructure",
       "captain": "K. Das",
-      "sport": "Gym events",
+      "sport": "Power Lifting",
       "rank": 4,
       "accent": "crimson",
       "crest": [
@@ -296,7 +296,7 @@
       "institution": "KIIT Bhubaneswar",
       "department": "School of Law",
       "captain": "P. Mohanty",
-      "sport": "Lawn Tennis",
+      "sport": "Lawn Tennis Tennis",
       "rank": 5,
       "accent": "gold",
       "crest": [
@@ -326,7 +326,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "School of Humanities",
       "captain": "A. Rout",
-      "sport": "Kho-kho",
+      "sport": "Kho-Kho",
       "rank": 7,
       "accent": "violet",
       "crest": [
@@ -356,7 +356,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "School of Minerals",
       "captain": "D. Panda",
-      "sport": "Volleyball",
+      "sport": "volleyball",
       "rank": 9,
       "accent": "gold",
       "crest": [
@@ -386,7 +386,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "School of Earth Sciences",
       "captain": "M. Sahoo",
-      "sport": "Mix cricket",
+      "sport": "Mixed Cricket",
       "rank": 11,
       "accent": "crimson",
       "crest": [
@@ -401,7 +401,7 @@
       "institution": "IIT Bhubaneswar",
       "department": "Open Category",
       "captain": "H. Mishra",
-      "sport": "Gym events Events",
+      "sport": "Power Lifting Events",
       "rank": 12,
       "accent": "gold",
       "crest": [
@@ -449,7 +449,7 @@
       "id": "d1-0900-fb",
       "day": 1,
       "time": "09:45",
-      "title": "Football — Group Stage",
+      "title": "football — Group Stage",
       "venue": "Main Ground",
       "eventSlug": "football",
       "stage": "Group A / B",
@@ -460,9 +460,9 @@
       "id": "d1-0930-ch",
       "day": 1,
       "time": "09:30",
-      "title": "Kho-kho — Rounds 1–4",
+      "title": "Kho-Kho — Rounds 1–4",
       "venue": "Lecture Hall Complex",
-      "eventSlug": "kho-kho",
+      "eventSlug": "Kho-Kho",
       "stage": "Swiss",
       "status": "completed",
       "duration": "2 hrs 30 min"
@@ -473,7 +473,7 @@
       "time": "11:30",
       "title": "Badminton — Round of 32",
       "venue": "Indoor Hall",
-      "eventSlug": "badminton",
+      "eventSlug": "Badminton",
       "stage": "Knockout",
       "status": "completed",
       "duration": "2 hrs"
@@ -482,9 +482,9 @@
       "id": "d1-1300-cr",
       "day": 1,
       "time": "13:00",
-      "title": "Mix cricket — T10 Knockout",
+      "title": "Mixed Cricket — T10 Knockout",
       "venue": "Main Ground",
-      "eventSlug": "mix cricket",
+      "eventSlug": "Mixed Cricket",
       "stage": "Quarter-finals",
       "status": "completed",
       "duration": "4 hrs"
@@ -504,9 +504,9 @@
       "id": "d1-1600-vl",
       "day": 1,
       "time": "16:00",
-      "title": "ESportst — Opening Series",
-      "venue": "Systems Lab — Esports Bay",
-      "eventSlug": "esportst",
+      "title": "chess — Opening Series",
+      "venue": "Systems Lab — Chess Bay",
+      "eventSlug": "chess",
       "stage": "Bo3",
       "status": "completed",
       "duration": "4 hrs"
@@ -527,7 +527,7 @@
       "time": "06:30",
       "title": "Swimming — Heats",
       "venue": "Swimming Track",
-      "eventSlug": "swimming",
+      "eventSlug": "Swimming",
       "stage": "100m / 200m",
       "status": "live",
       "duration": "2 hrs"
@@ -536,9 +536,9 @@
       "id": "d2-0700-lt",
       "day": 2,
       "time": "07:00",
-      "title": "Lawn Tennis — Quarter-finals",
-      "venue": "Lawn Courts",
-      "eventSlug": "lawn-tennis",
+      "title": "Lawn Tennis Tennis — Quarter-finals",
+      "venue": "Lawn Tennis Courts",
+      "eventSlug": "Lawn Tennis-tennis",
       "stage": "Pro-set",
       "status": "live",
       "duration": "3 hrs"
@@ -558,7 +558,7 @@
       "id": "d2-1030-bb",
       "day": 2,
       "time": "10:30",
-      "title": "Basketball — Knockout Bracket",
+      "title": "basketball — Knockout Bracket",
       "venue": "Court 01",
       "eventSlug": "basketball",
       "stage": "Round of 16",
@@ -571,7 +571,7 @@
       "time": "11:30",
       "title": "Badminton — Quarter-finals",
       "venue": "Indoor Hall",
-      "eventSlug": "badminton",
+      "eventSlug": "Badminton",
       "stage": "Knockout",
       "status": "scheduled",
       "duration": "2 hrs"
@@ -582,7 +582,7 @@
       "time": "13:30",
       "title": "Swimming — Track Finals",
       "venue": "Swimming Track",
-      "eventSlug": "swimming",
+      "eventSlug": "Swimming",
       "stage": "400m · Relay · Jump",
       "status": "scheduled",
       "duration": "2 hrs 30 min"
@@ -591,7 +591,7 @@
       "id": "d2-1530-vb",
       "day": 2,
       "time": "15:30",
-      "title": "Volleyball — Group Stage",
+      "title": "volleyball — Group Stage",
       "venue": "Court 02",
       "eventSlug": "volleyball",
       "stage": "Groups",
@@ -602,7 +602,7 @@
       "id": "d2-1800-fb",
       "day": 2,
       "time": "18:00",
-      "title": "Football — Semi-final I",
+      "title": "football — Semi-final I",
       "venue": "Main Ground",
       "eventSlug": "football",
       "stage": "Semi-final",
@@ -613,9 +613,9 @@
       "id": "d2-2000-vl",
       "day": 2,
       "time": "20:00",
-      "title": "ESportst — Upper Bracket Final",
-      "venue": "Systems Lab — Esports Bay",
-      "eventSlug": "esportst",
+      "title": "chess — Upper Bracket Final",
+      "venue": "Systems Lab — Chess Bay",
+      "eventSlug": "chess",
       "stage": "Bo3",
       "status": "scheduled",
       "duration": "2 hrs"
@@ -624,9 +624,9 @@
       "id": "d3-0800-gy",
       "day": 3,
       "time": "08:00",
-      "title": "Gym events — Strength Trials",
+      "title": "Power Lifting — Strength Trials",
       "venue": "Strength & Conditioning Centre",
-      "eventSlug": "gym events",
+      "eventSlug": "Power Lifting",
       "stage": "3-lift total",
       "status": "scheduled",
       "duration": "3 hrs"
@@ -637,7 +637,7 @@
       "time": "10:00",
       "title": "Badminton — Finals",
       "venue": "Indoor Hall",
-      "eventSlug": "badminton",
+      "eventSlug": "Badminton",
       "stage": "Gold Medal",
       "status": "scheduled",
       "duration": "2 hrs"
@@ -646,7 +646,7 @@
       "id": "d3-1130-bb",
       "day": 3,
       "time": "11:30",
-      "title": "Basketball — Final",
+      "title": "basketball — Final",
       "venue": "Court 01",
       "eventSlug": "basketball",
       "stage": "Gold Medal",
@@ -657,7 +657,7 @@
       "id": "d3-1400-vb",
       "day": 3,
       "time": "14:00",
-      "title": "Volleyball — Final",
+      "title": "volleyball — Final",
       "venue": "Court 02",
       "eventSlug": "volleyball",
       "stage": "Gold Medal",
@@ -668,9 +668,9 @@
       "id": "d3-1700-vl",
       "day": 3,
       "time": "17:00",
-      "title": "ESportst — Grand Final",
-      "venue": "Systems Lab — Esports Bay",
-      "eventSlug": "esportst",
+      "title": "chess — Grand Final",
+      "venue": "Systems Lab — Chess Bay",
+      "eventSlug": "chess",
       "stage": "Bo5",
       "status": "scheduled",
       "duration": "3 hrs"
@@ -679,7 +679,7 @@
       "id": "d3-1900-fb",
       "day": 3,
       "time": "19:00",
-      "title": "Football — Championship Final",
+      "title": "football — Championship Final",
       "venue": "Main Ground",
       "eventSlug": "football",
       "stage": "Gold Medal",
@@ -809,7 +809,7 @@
   ],
   "CHAMPION_SPOTLIGHT": {
     "reigning": "Phoenix Brigade",
-    "reigningSport": "Football · Season 2025",
+    "reigningSport": "football · Season 2025",
     "streak": "11-match unbeaten run",
     "contenders": [
       {
@@ -829,7 +829,7 @@
   "LIVE_MATCHES": [
     {
       "id": "live-fb-1",
-      "sport": "Football",
+      "sport": "football",
       "eventSlug": "football",
       "home": {
         "name": "Phoenix Brigade",
@@ -846,7 +846,7 @@
     },
     {
       "id": "live-bb-1",
-      "sport": "Basketball",
+      "sport": "basketball",
       "eventSlug": "basketball",
       "home": {
         "name": "Titan Syndicate",
@@ -863,8 +863,8 @@
     },
     {
       "id": "live-vl-1",
-      "sport": "ESportst",
-      "eventSlug": "esportst",
+      "sport": "chess",
+      "eventSlug": "chess",
       "home": {
         "name": "Obsidian Order",
         "score": 1
@@ -875,13 +875,13 @@
       },
       "status": "live",
       "clock": "MAP 3",
-      "detail": "Upper Bracket Final · Esports Bay",
+      "detail": "Upper Bracket Final · Chess Bay",
       "accent": "violet"
     },
     {
       "id": "next-at-1",
       "sport": "Swimming",
-      "eventSlug": "swimming",
+      "eventSlug": "Swimming",
       "home": {
         "name": "Red Meridian",
         "score": "—"
@@ -912,14 +912,14 @@
       "stage": "Round of 32"
     },
     {
-      "sport": "Kho-kho",
+      "sport": "Kho-Kho",
       "winner": "The Quiet War",
       "loser": "Apex Collective",
       "score": "4 – 1",
       "stage": "Swiss R4"
     },
     {
-      "sport": "ESportst",
+      "sport": "chess",
       "winner": "Obsidian Order",
       "loser": "Iron Veil",
       "score": "13 – 9",
@@ -928,12 +928,12 @@
   ],
   "EVENT_CHAMPIONS": [
     {
-      "event": "Mix cricket",
+      "event": "Mixed Cricket",
       "champion": "Cinder Crew",
       "runnerUp": "Phoenix Brigade"
     },
     {
-      "event": "Kho-kho",
+      "event": "Kho-Kho",
       "champion": "The Quiet War",
       "runnerUp": "Apex Collective"
     },
@@ -943,7 +943,7 @@
       "runnerUp": "Stormforge"
     },
     {
-      "event": "Gym events",
+      "event": "Power Lifting",
       "champion": "Iron Veil",
       "runnerUp": "Apex Collective"
     }
@@ -1039,7 +1039,7 @@
       "title": "Server War",
       "category": "MATCHDAY",
       "image": null,
-      "caption": "Esports bay, map three, both squads one round from elimination.",
+      "caption": "Chess bay, map three, both squads one round from elimination.",
       "span": "square",
       "accent": "violet"
     },

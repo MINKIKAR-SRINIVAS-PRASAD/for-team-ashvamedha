@@ -1,7 +1,12 @@
 /**
  * EVENT SYSTEM — fully data driven.
- * Add / remove / edit a sport here and every surface (grid, carousel, schedule,
- * event detail pages, registration CTAs) updates automatically.
+ *
+ * Source of event facts:
+ * ASHVAMEDHA 2026 RULEBOOK
+ *
+ * The rulebook gives the overall festival dates as Oct 9–11, 2026.
+ * Sport-specific time/venue details are only filled where the rulebook
+ * explicitly provides them. Otherwise they remain "TBA".
  */
 
 export type Accent = "crimson" | "volt" | "violet" | "gold";
@@ -11,29 +16,63 @@ export type RegistrationState = "open" | "closing" | "closed";
 export interface FestEvent {
   /** Stable slug used for /events/[slug] routes. */
   slug: string;
-  /** Display name. */
+
+  /** Official display name. */
   name: string;
-  /** Short battlefield title, e.g. "THE ARENA". */
+
+  /** UI-only battlefield title. */
   arena: string;
-  /** Discipline bucket used by the filter rail. */
-  category: "Team Sport" | "Racquet" | "Board & Mind" | "Power & Fitness" | "Esports";
-  /** One-line cinematic hook. */
+
+  /** UI filter bucket. */
+  category:
+    | "Team Sport"
+    | "Racquet"
+    | "Board & Mind"
+    | "Power & Fitness"
+    | "Esports";
+
+  /** UI-only short hook. */
   tagline: string;
-  /** 2–3 sentence realistic description. */
+
+  /** Rulebook-based event summary. */
   description: string;
+
+  /** Overall ASHVAMEDHA event window from the rulebook cover. */
   date: string;
+
+  /** Exact sport day is not specified in the rulebook. */
   day: 1 | 2 | 3;
+
+  /** Sport-specific time is not specified in the rulebook. */
   time: string;
+
+  /** Venue only where the rulebook explicitly states it. */
   venue: string;
+
+  /** Rulebook participant/team size. */
   teamSize: string;
+
+  /**
+   * Current website registration UI state.
+   * The rulebook does not specify whether registration is open/closing/closed.
+   */
   registration: RegistrationState;
+
+  /** Rulebook registration fee. */
   entryFee: string;
+
+  /** Rulebook prize information. */
   prizePool: string;
+
+  /** Rulebook-based format summary. */
   format: string;
+
+  /** UI-only visual accent. */
   accent: Accent;
-  /** Optional real photography path (public/…). Procedural art renders when null. */
+
   image?: string | null;
-  /** Glyph key consumed by components/art/SportGlyph.tsx */
+
+  /** UI glyph identifier. */
   glyph:
     | "football"
     | "basketball"
@@ -44,237 +83,287 @@ export interface FestEvent {
     | "gym events"
     | "esportst"
     | "swimming"
-    | "volleyball";
+    | "volleyball"
+    | "chess"
+    | "sportsquiz";
 }
 
 export const EVENTS: FestEvent[] = [
+  {
+    slug: "basketball",
+    name: "Basketball",
+    arena: "Basketball",
+    category: "Team Sport",
+    tagline: "FIBA rules, five on court.",
+    description:
+      "Basketball will be conducted according to FIBA rules as adopted by the Basketball Federation of India. Teams must have a minimum of 5 and a maximum of 12 players.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "5–12 players",
+    registration: "open",
+    entryFee: "Boys ₹3,500 / Girls ₹2,000",
+    prizePool:
+      "Boys Winner ₹8,000 / Runner-up ₹5,000; Girls Winner ₹5,000 / Runner-up ₹2,500",
+    format:
+      "FIBA rules; tournament type decided according to number of participating teams",
+    accent: "volt",
+    image: null,
+    glyph: "basketball",
+  },
+
   {
     slug: "football",
     name: "Football",
     arena: "The Arena",
     category: "Team Sport",
-    tagline: "Eleven against the storm.",
+    tagline: "Standard FIFA rules.",
     description:
-      "The flagship battle of ASHVAMEDHA, played across a full 90-minute war of endurance and structure. Group stages run on the main ground before the floodlit final decides who lifts the Ashvamedha Shield.",
-    date: "09-11 Oct 2026",
+      "Football follows standard FIFA rules. A team must consist of a minimum of 7 and maximum of 16 players, with ten outfield players and one goalkeeper in the stated playing formation.",
+    date: "09–11 Oct 2026",
     day: 1,
-    time: "09:00 onwards",
-    venue: "Main Ground",
-    teamSize: "11 + 5 subs",
-    registration: "closing",
-    entryFee: "₹1,200 / team",
-    prizePool: "₹45,000",
-    format: "Group stage + knockout",
+    time: "TBA",
+    venue: "SAC Football Ground",
+    teamSize: "7–16 players",
+    registration: "open",
+    entryFee: "₹4,000 / team",
+    prizePool: "Winner ₹12,000 / Runner-up ₹8,000",
+    format:
+      "50-minute match (2 × 25 min); extra time 16 min (2 × 8 min); penalty shoot-out in tied knockout matches",
     accent: "crimson",
     image: null,
     glyph: "football",
   },
-  {
-    slug: "basketball",
-    name: "Basketball",
-    arena: "Court 01 Protocol",
-    category: "Team Sport",
-    tagline: "Four quarters. No retreat.",
-    description:
-      "Fast-break basketball under the arena lights with a shot-clock enforced at 24 seconds. Played 5v5 across four ten-minute quarters with a knockout bracket for the top eight squads.",
-    date: "09-11 Oct 2026",
-    day: 2,
-    time: "10:30 onwards",
-    venue: "Court 01",
-    teamSize: "5 + 4 subs",
-    registration: "open",
-    entryFee: "₹900 / team",
-    prizePool: "₹30,000",
-    format: "Knockout bracket",
-    accent: "volt",
-    image: null,
-    glyph: "basketball",
-  },
-  {
-    slug: "badminton",
-    name: "Badminton",
-    arena: "Indoor Hall",
-    category: "Racquet",
-    tagline: "Speed you can hear.",
-    description:
-      "Singles and doubles combat on four regulation courts with BWF-scoring to 21. Quarter-final losers enter a repechage ladder so no campaign ends without a second strike.",
-    date: "09–10 Oct 2026",
-    day: 1,
-    time: "11:30 onwards",
-    venue: "Indoor Hall",
-    teamSize: "1 or 2",
-    registration: "open",
-    entryFee: "₹250 / player",
-    prizePool: "₹18,000",
-    format: "Singles + doubles, BWF 21",
-    accent: "gold",
-    image: null,
-    glyph: "badminton",
-  },
-  {
-    slug: "table-tennis",
-    name: "Table Tennis",
-    arena: "Precision Bay",
-    category: "Racquet",
-    tagline: "Reflex is a weapon.",
-    description:
-      "Eight tables running in parallel, best-of-five to 11 points. Known across the circuit for upsets — the shortest distance between an underdog and a trophy.",
-    date: "09-11 Oct 2026",
-    day: 1,
-    time: "14:00 onwards",
-    venue: "Indoor Hall — Bay 2",
-    teamSize: "1 or 2",
-    registration: "open",
-    entryFee: "₹200 / player",
-    prizePool: "₹12,000",
-    format: "Best of 5, knockout",
-    accent: "volt",
-    image: null,
-    glyph: "tabletennis",
-  },
-  {
-    slug: "lawn-tennis",
-    name: "Lawn Tennis",
-    arena: "Sun Court",
-    category: "Racquet",
-    tagline: "Long rallies break hearts.",
-    description:
-      "Hard-court tennis with pro-set scoring in the early rounds and best-of-three sets from the semi-finals. Played under the open Odisha sky with a dedicated medical bay on standby.",
-    date: "10 Oct 2026",
-    day: 2,
-    time: "07:00 onwards",
-    venue: "Lawn Courts",
-    teamSize: "1 or 2",
-    registration: "closing",
-    entryFee: "₹300 / player",
-    prizePool: "₹15,000",
-    format: "Pro-set then best of 3",
-    accent: "gold",
-    image: null,
-    glyph: "lawn",
-  },
-  {
-    slug: "kho-kho",
-    name: "Kho-kho",
-    arena: "The Quiet War",
-    category: "Board & Mind",
-    tagline: "Silence, then devastation.",
-    description:
-      "FIDE standard blitz and rapid formats in a sound-controlled hall, arbiter-monitored throughout. Nine rounds of Swiss pairings decide the grandmaster of ASHVAMEDHA.",
-    date: "09 Oct 2026",
-    day: 1,
-    time: "09:30 onwards",
-    venue: "Lecture Hall Complex",
-    teamSize: "1",
-    registration: "open",
-    entryFee: "₹150 / player",
-    prizePool: "₹10,000",
-    format: "Swiss, 9 rounds",
-    accent: "violet",
-    image: null,
-    glyph: "kho-kho",
-  },
-  {
-    slug: "gym events",
-    name: "Gym events",
-    arena: "Iron Protocol",
-    category: "Power & Fitness",
-    tagline: "Against gravity, and yourself.",
-    description:
-      "Raw strength benchmarks across squat, bench press and deadlift judged on bodyweight multipliers. Technique is audited by certified spotters — form beats ego every time.",
-    date: "11 Oct 2026",
-    day: 3,
-    time: "08:00 onwards",
-    venue: "Strength & Conditioning Centre",
-    teamSize: "1",
-    registration: "open",
-    entryFee: "₹200 / athlete",
-    prizePool: "₹14,000",
-    format: "3-lift total",
-    accent: "crimson",
-    image: null,
-    glyph: "gym events",
-  },
-  {
-    slug: "esportst",
-    name: "ESportst",
-    arena: "Server War",
-    category: "Esports",
-    tagline: "Five operators. One site.",
-    description:
-      "LAN-adjacent competitive FPS on a 100 Mbps dedicated line with best-of-three series throughout. Coaches get a comms slot behind the players — strategy is part of the spectacle.",
-    date: "09–11 Oct 2026",
-    day: 1,
-    time: "16:00 onwards",
-    venue: "Systems Lab — Esports Bay",
-    teamSize: "5 + 1 coach",
-    registration: "closing",
-    entryFee: "₹1,000 / team",
-    prizePool: "₹35,000",
-    format: "Best of 3 / Bo5 final",
-    accent: "violet",
-    image: null,
-    glyph: "esportst",
-  },
-  {
-    slug: "swimming",
-    name: "Swimming",
-    arena: "The Track",
-    category: "Power & Fitness",
-    tagline: "Milliseconds define legacies.",
-    description:
-      "100m, 200m, 400m, 4x100m relay plus long jump and shot put. Electronic timing with photo-finish review ensures every podium is beyond dispute.",
-    date: "10 Oct 2026",
-    day: 2,
-    time: "06:30 onwards",
-    venue: "Swimming Track",
-    teamSize: "Individual + relay of 4",
-    registration: "open",
-    entryFee: "₹150 / event",
-    prizePool: "₹22,000",
-    format: "Heats + finals",
-    accent: "volt",
-    image: null,
-    glyph: "swimming",
-  },
+
   {
     slug: "volleyball",
-    name: "Volleyball",
-    arena: "Court 02",
+    name: "Vollyball",
+    arena: "Vollyball Court",
     category: "Team Sport",
-    tagline: "Six hands, one wall.",
+    tagline: "Six players. Rally scoring.",
     description:
-      "Six-a-side volleyball played to 25 points with rally scoring. Rotation discipline decides the tight sets — the final has gone to five sets three years running.",
-    date: "10-11 Oct 2026",
-    day: 2,
-    time: "15:30 onwards",
-    venue: "Court 02",
-    teamSize: "6 + 4 subs",
+      "Vollyball teams must contain a minimum of 6 and maximum of 12 members. League matches are best of 3 sets, while semi-finals and finals are best of 5 sets.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "6–12 players",
     registration: "open",
-    entryFee: "₹800 / team",
-    prizePool: "₹25,000",
-    format: "Group + knockout",
+    entryFee: "Boys ₹3,500 / Girls ₹2,000",
+    prizePool:
+      "Boys Winner ₹9,000 / Runner-up ₹5,500; Girls Winner ₹4,000 / Runner-up ₹2,000",
+    format:
+      "League: best of 3 sets; semi-finals/finals: best of 5 sets; FIVB rules",
     accent: "gold",
     image: null,
     glyph: "volleyball",
   },
+
   {
-    slug: "mix cricket",
-    name: "Mix cricket",
-    arena: "Sunset Oval",
-    category: "Team Sport",
-    tagline: "Ten overs of chaos.",
+    slug: "badminton",
+    name: "Badminton",
+    arena: "Badminton Arena",
+    category: "Racquet",
+    tagline: "Three games decide the tie.",
     description:
-      "T10 knockout mix cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
-    date: "09-11 Oct 2026",
+      "Badminton is a team event with a maximum of 4 players. The sequence is singles, doubles and singles, with a team winning when it takes 2 of the 3 games.",
+    date: "09–11 Oct 2026",
     day: 1,
-    time: "13:00 onwards",
-    venue: "Main Ground",
-    teamSize: "11 + 4 subs",
-    registration: "closed",
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "Maximum 4 players",
+    registration: "open",
     entryFee: "₹1,500 / team",
-    prizePool: "₹40,000",
-    format: "T10 knockout + super over",
+    prizePool:
+      "Boys Winner ₹5,000 / Runner-up ₹2,500; Girls Winner ₹5,000 / Runner-up ₹2,500",
+    format:
+      "Knockout/elimination; singles, doubles, singles; best of 3 games to 21 points",
+    accent: "gold",
+    image: null,
+    glyph: "badminton",
+  },
+
+  {
+    slug: "table-tennis",
+    name: "Table tennis",
+    arena: "Table Tennis Bay",
+    category: "Racquet",
+    tagline: "Five matches. One team.",
+    description:
+      "Table tennis matches are best of 5. Teams contain 3–4 boys and 1–2 girls, with men's singles, women's singles, men's doubles, mixed doubles and men's singles.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "3–4 boys + 1–2 girls",
+    registration: "open",
+    entryFee: "₹2,000 / team",
+    prizePool: "Winner ₹5,000 / Runner-up ₹2,500",
+    format:
+      "Best of 5; 5-match team order: Men's Singles, Women's Singles, Men's Doubles, Mixed Doubles, Men's Singles",
+    accent: "volt",
+    image: null,
+    glyph: "tabletennis",
+  },
+
+  {
+    slug: "lawn-tennis",
+    name: "Lawn tennis",
+    arena: "Lawn Tennis Court",
+    category: "Racquet",
+    tagline: "Singles, doubles, reverse singles.",
+    description:
+      "Lawn tennis follows AITA rules. Each team has 2–4 players and plays two singles and one doubles match, with reverse singles used when teams are tied at one match each.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "2–4 players",
+    registration: "open",
+    entryFee: "₹1,500 / team",
+    prizePool: "Winner ₹3,500 / Runner-up ₹2,500",
+    format:
+      "Two singles + one doubles; best of 3 sets; league and knockout formats as specified in the rulebook",
+    accent: "gold",
+    image: null,
+    glyph: "lawn",
+  },
+
+  {
+    slug: "chess",
+    name: "Chess",
+    arena: "Chess Hall",
+    category: "Board & Mind",
+    tagline: "FIDE Swiss team battle.",
+    description:
+      "Chess is a team event conducted under FIDE laws and tournament rules. Each team must have 4–6 players, including up to 2 substitutes, with 4 players playing in a round.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "4–6 players (2 substitutes); 4 play per round",
+    registration: "open",
+    entryFee: "₹1,500 / team",
+    prizePool: "Winner ₹4,000 / Runner-up ₹2,500",
+    format:
+      "FIDE Swiss system; qualifier/knockout may precede the Swiss league depending on entries",
+    accent: "violet",
+    image: null,
+    glyph: "chess",
+  },
+
+  {
+    slug: "powerlifting",
+    name: "Power lifting",
+    arena: "Powerlifting Arena",
+    category: "Power & Fitness",
+    tagline: "Three lifts. One DOTS score.",
+    description:
+      "Powerlifting uses the DOTS scoring system to compare lifters across body weights. Each participant performs squat, deadlift and bench press, with three attempts for each lift.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "Individual",
+    registration: "open",
+    entryFee: "₹500 / person",
+    prizePool:
+      "Winner ₹1,500 / Runner-up ₹1,000 / 2nd Runner-up ₹800",
+    format: "Squat + deadlift + bench press; DOTS scoring",
+    accent: "crimson",
+    image: null,
+    glyph: "gym events",
+  },
+
+  {
+    slug: "kho-kho",
+    name: "Kho-kho",
+    arena: "Kho-kho Ground",
+    category: "Team Sport",
+    tagline: "Nine start. Twelve make the team.",
+    description:
+      "Each Kho-kho team consists of 12 players, with 9 taking the field at the beginning. Matches consist of two innings with chasing and defence turns.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "Hockey Ground",
+    teamSize: "12 players (9 start)",
+    registration: "open",
+    entryFee: "₹2,500 / team",
+    prizePool: "Winner ₹6,000 / Runner-up ₹4,000",
+    format:
+      "Two innings; 9-minute turns for Men and 7-minute turns for Women; knockout matches",
+    accent: "violet",
+    image: null,
+    glyph: "kho-kho",
+  },
+
+  {
+    slug: "swimming",
+    name: "Swimming",
+    arena: "Swimming Pool",
+    category: "Power & Fitness",
+    tagline: "Two individual events.",
+    description:
+      "The rulebook specifies 100 m Freestyle and 100 m Breaststroke events. Participants must follow lane, starting and stroke regulations, with the fastest valid timing determining ranking.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "Individual",
+    registration: "open",
+    entryFee: "₹1,500 / single event; ₹2,500 / both events",
+    prizePool:
+      "Winner ₹5,500 / Runner-up ₹3,500 / 2nd Runner-up ₹2,500",
+    format: "100 m Freestyle + 100 m Breaststroke",
+    accent: "volt",
+    image: null,
+    glyph: "swimming",
+  },
+
+  {
+    slug: "sports-quiz",
+    name: "Sports quiz",
+    arena: "Quiz Arena",
+    category: "Board & Mind",
+    tagline: "Two rounds. One sports mind.",
+    description:
+      "The Sports Quiz consists of a preliminary round and a final round. Questions are from the world of sports, with the top 8 teams from prelims advancing to the finals.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "2–3 participants or individual",
+    registration: "open",
+    entryFee: "₹200 / team",
+    prizePool:
+      "Winner ₹2,000 / Runner-up ₹1,500 / 2nd Runner-up ₹500",
+    format:
+      "Two rounds: preliminary + final; prelims contain 20–30 questions; top 8 teams advance",
+    accent: "violet",
+    image: null,
+    glyph: "sportsquiz",
+  },
+
+  {
+    slug: "mixed-cricket",
+    name: "Mixed cricket",
+    arena: "Cricket Ground",
+    category: "Team Sport",
+    tagline: "Five overs. Five boys. Five girls.",
+    description:
+      "Each Mixed Cricket team consists of 10 players — 5 boys and 5 girls. Matches use a tennis ball and bat, with at least one boy and one girl at the crease while girls remain available to bat.",
+    date: "09–11 Oct 2026",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "10 players (5 boys + 5 girls)",
+    registration: "open",
+    entryFee: "₹3,000 / team",
+    prizePool: "Winner ₹6,000 / Runner-up ₹4,500",
+    format:
+      "5 overs per innings; tennis ball; Super Over for tied knockout matches",
     accent: "crimson",
     image: null,
     glyph: "football",
@@ -287,7 +376,6 @@ export const EVENT_CATEGORIES = [
   "Racquet",
   "Board & Mind",
   "Power & Fitness",
-  "Esports",
 ] as const;
 
 export const REGISTRATION_LABEL: Record<RegistrationState, string> = {
@@ -304,11 +392,11 @@ export function getEventsByDay(day: number) {
   return EVENTS.filter((e) => e.day === day);
 }
 
-/** Cards featured in the 3D carousel — the headline battlegrounds. */
+/** Cards featured in the 3D carousel. */
 export const FEATURED_SLUGS = [
   "football",
   "basketball",
-  "esportst",
+  "chess",
   "badminton",
   "swimming",
   "kho-kho",
