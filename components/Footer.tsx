@@ -156,9 +156,6 @@ export function Footer() {
           <p className="font-mono text-[10px] tracking-hud text-silver-dim">
             © ASHVAMEDHA {SITE.year} · {SITE.host.toUpperCase()}
           </p>
-          <p className="font-mono text-[10px] tracking-hud text-silver-dim">
-            Built for the arena · {HUD.status}
-          </p>
         </div>
       </div>
     </footer>
