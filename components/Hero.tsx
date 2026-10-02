@@ -75,21 +75,35 @@ export function Hero() {
               </span>
 
               <span
-                aria-hidden
-                className="block overflow-hidden"
-                style={{ perspective: 1000 }}
-              >
-                <motion.span
-                  variants={{
-                    hidden: { y: "78%", opacity: 0, rotateX: -38 },
-                    show: { y: "0%", opacity: 1, rotateX: 0, transition: { duration: 1.25, ease: EASE } },
-                  }}
-                  className="text-titan text-metal block text-[clamp(3.1rem,12.4vw,13.5rem)]"
-                  style={{ transformOrigin: "50% 100%" }}
-                >
-                  ASHVAMEDHA
-                </motion.span>
-              </span>
+              aria-hidden
+              className="block"
+              style=
+              {
+                {
+              perspective: 1000,
+              width: "100%",
+             overflow: "visible",
+            }
+          }
+>
+  <motion.span
+    variants={{
+      hidden: { y: "78%", opacity: 0, rotateX: -38 },
+      show: {
+        y: "0%",
+        opacity: 1,
+        rotateX: 0,
+        transition: { duration: 1.25, ease: EASE },
+      },
+    }}
+    className="text-titan text-metal block whitespace-nowrap text-[clamp(3rem,11.5vw,13.5rem)]"
+    style={{
+      transformOrigin: "50% 100%",
+    }}
+  >
+    ASHVAMEDHA
+  </motion.span>
+</span>
 
               <span aria-hidden className="mt-1 flex items-end gap-4 sm:gap-6">
                 <motion.span
