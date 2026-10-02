@@ -57,7 +57,7 @@ export function Navbar() {
             aria-label={`${SITE.name} ${SITE.year} home`}
           >
             <span className="relative flex h-8 w-8 items-center justify-center">
-              <span className="logo-ash"><img src="/components/images2026/ash-logo.jpeg" alt="Ashvamedha" />
+              <span className="logo-ash"><img src="/images2026/ash-logo.png" alt="Ashvamedha" />
               </span>
               {/* <span className="absolute inset-0 rotate-45 border border-crimson/70 transition-transform duration-500 group-hover:rotate-[135deg]" />
               <span className="absolute inset-[6px] rotate-45 bg-crimson/90" /> */}
