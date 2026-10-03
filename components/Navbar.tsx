@@ -118,7 +118,7 @@ export function Navbar() {
                         layoutId="nav-active"
                         className="absolute inset-x-2 -bottom-px h-px bg-crimson"
                         style={{
-                          boxShadow: "0 0 12px rgba(225,29,46,0.9)",
+                          boxShadow: "0 0 12px rgba(184, 75, 63, 0.82)",
                         }}
                         transition={{
                           type: "spring",
