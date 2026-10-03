@@ -174,8 +174,9 @@ export function Navbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            {/* COMPLETE RED BACKGROUND */}
-            <div className="absolute inset-0 bg-[rgba(184, 75, 63, 0.75)]" />
+            {/* MOBILE MENU BACKGROUND */}
+            <div className="absolute inset-0 bg-[rgba(184,75,63,0.82)]" />
+
             {/* MENU */}
             <motion.ul
               className="relative flex h-full w-full flex-col justify-center gap-1 overflow-y-auto px-5 pb-8 pt-20 sm:px-8"
