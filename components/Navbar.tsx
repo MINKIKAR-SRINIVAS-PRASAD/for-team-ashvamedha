@@ -50,7 +50,7 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-[80] w-full overflow-x-clip transition-all duration-500",
+          "fixed inset-x-0 top-0 z-[110] w-full overflow-x-clip transition-all duration-500",
           scrolled
             ? "border-b border-white/10 bg-graphite/85 backdrop-blur-xl"
             : "border-b border-transparent bg-transparent",
@@ -168,15 +168,19 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[79] overflow-hidden lg:hidden"
+          className="fixed inset-0 z-[100] overflow-hidden bg-transparent lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             {/* MOBILE MENU BACKGROUND */}
-            <div className="absolute inset-0 bg-[rgba(184, 75, 63, 0.93)]" />
-
+            <div
+  className="absolute inset-0"
+  style={{
+    backgroundColor: "rgba(184, 75, 63, 0.82)",
+  }}
+/>
             {/* MENU */}
             <motion.ul
               className="relative flex h-full w-full flex-col justify-center gap-1 overflow-y-auto px-5 pb-8 pt-20 sm:px-8"
