@@ -151,7 +151,7 @@ export function Hero() {
               }}
               className="mt-5 max-w-xl text-[0.95rem] leading-relaxed text-silver-dim"
             >
-              Ten pluse sports. twenty pluse teams. Three days under the arena lights at{" "}
+              Ten plus sports. twenty plus teams. Three days under the arena lights at{" "}
               <span className="text-silver">{SITE.hostLong}</span>. This is not just a sports
               fest — this is the battle for glory.
             </motion.p>

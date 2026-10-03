@@ -175,7 +175,7 @@ export function Navbar() {
             transition={{ duration: 0.3 }}
           >
             {/* MOBILE MENU BACKGROUND */}
-            <div className="absolute inset-0 bg-[rgba(184,75,63,0.82)]" />
+            <div className="absolute inset-0 bg-[rgba(184, 75, 63, 0.93)]" />
 
             {/* MENU */}
             <motion.ul
