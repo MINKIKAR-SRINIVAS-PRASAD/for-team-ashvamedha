@@ -248,9 +248,8 @@ export function Hero() {
         animate={ready ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 1, delay: 1.3 }}
       >
-        <div className="flex flex-col items-center gap-2">
-          <span className="hud">SCROLL TO ENTER THE ARENA</span>
-          <span className="relative h-10 w-px overflow-hidden bg-white/15">
+          <div className="flex flex-col items-center gap-2">
+            <span className="relative h-10 w-px overflow-hidden bg-white/15">
             <motion.span
               className="absolute inset-x-0 top-0 h-4 bg-crimson"
               animate={{ y: ["-100%", "260%"] }}
@@ -261,4 +260,4 @@ export function Hero() {
       </motion.div>
     </section>
   );
-}
+} 
