@@ -159,7 +159,7 @@ export function Navbar() {
 
             <li>
               <a
-                href="/documents/ashvamedha-2026-rulebook.pdf"
+                href="/images2026/documents/ashvamedha-2026-rulebook.pdf"
                 download="ASHVAMEDHA-2026-Rulebook.pdf"
                 data-cursor-label="RULEBOOK"
                 className="relative flex items-center gap-1.5 whitespace-nowrap px-2.5 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-silver-dim transition-colors duration-300 hover:text-white xl:px-3"
@@ -175,7 +175,7 @@ export function Navbar() {
 
             <li>
               <a
-                href="/documents/ashvamedha-2026-brochure.pdf"
+                href="/images2026/documents/ashvamedha-2026-brochure.pdf"
                 download="ASHVAMEDHA-2026-Brochure.pdf"
                 data-cursor-label="BROCHURE"
                 className="relative flex items-center gap-1.5 whitespace-nowrap px-2.5 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-silver-dim transition-colors duration-300 hover:text-white xl:px-3"
