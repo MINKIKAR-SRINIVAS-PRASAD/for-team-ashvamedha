@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Trophy as TrophyIcon } from "lucide-react";
 import { Crest } from "@/components/art/Crest";
 import type { Team } from "@/data/teams";
 import { useFestData } from "@/components/FestDataProvider";
@@ -20,10 +19,12 @@ type CommitteeMember = {
 };
 
 /*
- * Replace the placeholder Cloudinary URLs with your real Cloudinary links.
+ * Replace the placeholder Cloudinary URLs with your actual Cloudinary links.
  *
  * Example:
- * image: "https://res.cloudinary.com/your-cloud/image/upload/v123456/team/shashank.jpg"
+ *
+ * image:
+ * "https://res.cloudinary.com/your-cloud/image/upload/v123456/team/person.jpg"
  */
 
 /* ---------------------------------------------------------------------------
@@ -78,19 +79,22 @@ const TEAM_COORDINATORS: CommitteeMember[] = [
    ------------------------------------------------------------------------- */
 
 const CORE_HEADS: CommitteeMember[] = [
-  /* WEBND */
+  /* ========================= WEBND ========================= */
+
   {
     name: "Srinivas Prasad",
     role: "Core Head",
     team: "Webnd",
     image: "PASTE_SRINIVAS_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "Samiksha",
     role: "Core Head",
     team: "Webnd",
     image: "PASTE_SAMIKSHA_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "Ayanam Geethanvitha",
     role: "Core Head",
@@ -98,19 +102,22 @@ const CORE_HEADS: CommitteeMember[] = [
     image: "PASTE_AYANAM_CLOUDINARY_URL_HERE",
   },
 
-  /* HOSPITALITY */
+  /* ========================= HOSPITALITY ========================= */
+
   {
     name: "Sidhu Jarpula",
     role: "Core Head",
     team: "Hospitality",
     image: "PASTE_SIDHU_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "SARVESWARNAIK",
     role: "Core Head",
     team: "Hospitality",
     image: "PASTE_SARVESWARNAIK_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "Vachan Potnuru",
     role: "Core Head",
@@ -118,37 +125,43 @@ const CORE_HEADS: CommitteeMember[] = [
     image: "PASTE_VACHAN_CLOUDINARY_URL_HERE",
   },
 
-  /* EVENTS & MANAGEMENT */
+  /* ========================= EVENTS & MANAGEMENT ========================= */
+
   {
     name: "Sanjith Rao. L",
     role: "Core Head",
     team: "Events & Management",
     image: "PASTE_SANJITH_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "Pruthviraj Rameshwar Potbhare",
     role: "Core Head",
     team: "Events & Management",
     image: "PASTE_PRUTHVIRAJ_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "Rajeev jalthaniya",
     role: "Core Head",
     team: "Events & Management",
     image: "PASTE_RAJEEV_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "Mayank Jeet",
     role: "Core Head",
     team: "Events & Management",
     image: "PASTE_MAYANK_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "Uttam Chouhan",
     role: "Core Head",
     team: "Events & Management",
     image: "PASTE_UTTAM_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "N.Vishal",
     role: "Core Head",
@@ -156,19 +169,22 @@ const CORE_HEADS: CommitteeMember[] = [
     image: "PASTE_NVISHAL_CLOUDINARY_URL_HERE",
   },
 
-  /* PUBLICITY */
+  /* ========================= PUBLICITY ========================= */
+
   {
     name: "Riidhi Sanjay bagade",
     role: "Core Head",
     team: "Publicity",
     image: "PASTE_RIIDHI_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "SHIVANSH SAHU",
     role: "Core Head",
     team: "Publicity",
     image: "PASTE_SHIVANSH_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "VISHNU MAIDA",
     role: "Core Head",
@@ -176,13 +192,15 @@ const CORE_HEADS: CommitteeMember[] = [
     image: "PASTE_VISHNU_CLOUDINARY_URL_HERE",
   },
 
-  /* SPONSORSHIP */
+  /* ========================= SPONSORSHIP ========================= */
+
   {
     name: "Siddharth Deva",
     role: "Core Head",
     team: "Sponsorship",
     image: "PASTE_SIDDHARTH_CLOUDINARY_URL_HERE",
   },
+
   {
     name: "Garvit",
     role: "Core Head",
@@ -206,30 +224,36 @@ function CommitteeCard({
     <motion.article
       initial={{ opacity: 0, y: 26 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{
+        once: true,
+        amount: 0.2,
+      }}
       transition={{
         duration: 0.6,
         ease: EASE,
       }}
       className={cn(
-        "group relative flex flex-col items-center text-center",
+        "group relative flex w-full flex-col items-center text-center",
         featured
-          ? "w-full max-w-[340px]"
-          : "w-full max-w-[310px]",
+          ? "max-w-[360px]"
+          : "max-w-[300px]",
       )}
     >
+      {/* ROUND IMAGE FRAME */}
       <div
         className={cn(
-          "relative overflow-hidden rounded-full border border-white/15 bg-[#0b0e14]",
-          "transition-all duration-500 group-hover:-translate-y-1",
-          "group-hover:border-white/35",
+          "relative overflow-hidden rounded-full border bg-[#0b0e14]",
+          "transition-all duration-500",
+          "group-hover:-translate-y-1",
           featured
-            ? "h-40 w-40 sm:h-44 sm:w-44"
+            ? "h-40 w-40 sm:h-48 sm:w-48"
             : "h-28 w-28 sm:h-32 sm:w-32",
         )}
         style={{
+          borderColor:
+            "rgba(255,255,255,0.16)",
           boxShadow:
-            "0 0 0 1px rgba(255,255,255,0.02), 0 18px 50px rgba(0,0,0,0.45)",
+            "0 0 0 1px rgba(255,255,255,0.03), 0 20px 55px rgba(0,0,0,0.5)",
         }}
       >
         {member.image &&
@@ -240,39 +264,49 @@ function CommitteeCard({
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-crimson-deep/40 via-graphite to-black">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-crimson-deep/50 via-graphite to-black">
             <span
               className={cn(
                 "font-display uppercase text-white/90",
-                featured ? "text-4xl" : "text-2xl",
+                featured
+                  ? "text-4xl"
+                  : "text-2xl",
               )}
             >
               {member.name
                 .split(" ")
                 .filter(Boolean)
                 .slice(0, 2)
-                .map((part) => part[0])
+                .map(
+                  (part) => part[0],
+                )
                 .join("")}
             </span>
           </div>
         )}
 
-        {/* glow ring */}
-        <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 transition-all duration-500 group-hover:ring-crimson/60" />
+        {/* INNER RING */}
+        <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 transition-all duration-500 group-hover:ring-crimson/70" />
+
+        {/* GLOW */}
+        <span className="pointer-events-none absolute inset-[-5px] rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100 ring-1 ring-crimson/30" />
       </div>
 
-      <div className="mt-4">
+      {/* TEXT BELOW IMAGE */}
+      <div className="mt-5">
         <h3
           className={cn(
-            "font-display uppercase leading-none text-white",
-            featured ? "text-xl sm:text-2xl" : "text-lg sm:text-xl",
+            "font-display uppercase leading-tight text-white",
+            featured
+              ? "text-xl sm:text-2xl"
+              : "text-lg sm:text-xl",
           )}
         >
           {member.name}
         </h3>
 
         {member.role && (
-          <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.2em] text-crimson">
+          <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.22em] text-crimson">
             {member.role}
           </p>
         )}
@@ -293,20 +327,20 @@ function CommitteeCard({
 
 function OrganizingCommittee() {
   return (
-    <section className="mb-20">
-      {/* Section heading */}
-      <div className="mb-12 text-center">
+    <section className="mb-20 w-full">
+      {/* SECTION TITLE */}
+      <div className="mb-14 text-center">
         <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-crimson">
           ASHVAMEDHA 2026
         </p>
 
-        <h2 className="mt-3 text-4xl text-white sm:text-5xl">
+        <h2 className="mt-3 font-display text-4xl uppercase leading-none text-white sm:text-5xl">
           Organizing Committee
         </h2>
 
-        <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-silver-dim">
-          The people behind the arena, the events and everything that keeps
-          ASHVAMEDHA moving.
+        <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-silver-dim">
+          The people behind the arena, the events and
+          everything that keeps ASHVAMEDHA moving.
         </p>
       </div>
 
@@ -314,7 +348,7 @@ function OrganizingCommittee() {
           CHIEF COORDINATOR
          ================================================================ */}
 
-      <div className="mb-16 flex justify-center">
+      <div className="mb-16 flex w-full justify-center">
         <CommitteeCard
           member={CHIEF_COORDINATOR}
           featured
@@ -325,8 +359,8 @@ function OrganizingCommittee() {
           TEAM COORDINATORS
          ================================================================ */}
 
-      <div className="mb-16">
-        <div className="mb-8 text-center">
+      <div className="mb-20 w-full">
+        <div className="mb-9 text-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-silver-dim">
             Leadership
           </p>
@@ -336,15 +370,29 @@ function OrganizingCommittee() {
           </h3>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-10">
-          {TEAM_COORDINATORS.map((member) => (
-            <div
-              key={`${member.team}-${member.name}`}
-              className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(20%-20px)]"
-            >
-              <CommitteeCard member={member} />
-            </div>
-          ))}
+        {/*
+         * Desktop:
+         * 5 coordinators in one row.
+         *
+         * Tablet:
+         * 2 per row.
+         *
+         * Mobile:
+         * 1 per row.
+         */}
+        <div className="flex w-full flex-wrap justify-center gap-x-4 gap-y-12 sm:gap-x-6">
+          {TEAM_COORDINATORS.map(
+            (member) => (
+              <div
+                key={`${member.team}-${member.name}`}
+                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(20%-20px)]"
+              >
+                <CommitteeCard
+                  member={member}
+                />
+              </div>
+            ),
+          )}
         </div>
       </div>
 
@@ -352,8 +400,8 @@ function OrganizingCommittee() {
           CORE HEADS
          ================================================================ */}
 
-      <div>
-        <div className="mb-8 text-center">
+      <div className="w-full">
+        <div className="mb-10 text-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-silver-dim">
             Department Leadership
           </p>
@@ -364,25 +412,36 @@ function OrganizingCommittee() {
         </div>
 
         {/*
-         * flex-wrap + justify-center is intentional.
+         * IMPORTANT:
          *
-         * On desktop:
-         *   3 cards per row
+         * Desktop:
+         * 3 people per row.
          *
-         * If the final row has:
-         *   1 card → centered
-         *   2 cards → centered
-         *   3 cards → full row
+         * If the final row has 1 person,
+         * that person is centered.
+         *
+         * If the final row has 2 people,
+         * both are centered.
+         *
+         * Tablet:
+         * 2 per row.
+         *
+         * Mobile:
+         * 1 per row.
          */}
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-12">
-          {CORE_HEADS.map((member) => (
-            <div
-              key={`${member.team}-${member.name}`}
-              className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
-            >
-              <CommitteeCard member={member} />
-            </div>
-          ))}
+        <div className="flex w-full flex-wrap justify-center gap-x-6 gap-y-14">
+          {CORE_HEADS.map(
+            (member) => (
+              <div
+                key={`${member.team}-${member.name}`}
+                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+              >
+                <CommitteeCard
+                  member={member}
+                />
+              </div>
+            ),
+          )}
         </div>
       </div>
     </section>
@@ -390,48 +449,36 @@ function OrganizingCommittee() {
 }
 
 /* ============================================================================
-   PARTICIPATING TEAMS
+   TEAMS PAGE
    ========================================================================== */
 
-export function Teams({ limit }: { limit?: number }) {
-  const { teams } = useFestData();
-  const list = limit
-    ? teams.slice(0, limit)
-    : teams;
+export function Teams({
+  limit,
+}: {
+  limit?: number;
+}) {
+  /*
+   * The Teams page now intentionally displays ONLY
+   * the ASHVAMEDHA organizing committee.
+   *
+   * Participant/game team cards are no longer rendered here.
+   *
+   * `limit` is kept in the function signature so existing
+   * imports/calls do not break.
+   */
+  void limit;
 
   return (
-    <div>
-      {/* ORGANIZING COMMITTEE */}
+    <div className="w-full">
       <OrganizingCommittee />
-
-      {/* PARTICIPATING TEAMS */}
-      <section>
-        <div className="mb-10 text-center">
-          <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-crimson">
-            ASHVAMEDHA 2026
-          </p>
-
-          <h2 className="mt-3 text-4xl text-white sm:text-5xl">
-            Participating Teams
-          </h2>
-        </div>
-
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {list.map((team, i) => (
-            <TeamCard
-              key={team.slug}
-              team={team}
-              index={i}
-            />
-          ))}
-        </div>
-      </section>
     </div>
   );
 }
 
 /* ============================================================================
-   PARTICIPATING TEAM CARD
+   PARTICIPANT TEAM CARD
+   Kept in the file for compatibility with the rest of the application.
+   It is NOT rendered by the Teams page.
    ========================================================================== */
 
 function TeamCard({
@@ -470,7 +517,7 @@ function TeamCard({
           "inset 0 1px 0 rgba(255,255,255,0.06)",
       }}
     >
-      {/* hover wash */}
+      {/* HOVER WASH */}
       <span
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
@@ -482,7 +529,8 @@ function TeamCard({
         <div
           className="transition-transform duration-500 group-hover:scale-[1.06]"
           style={{
-            filter: "drop-shadow(0 0 0 transparent)",
+            filter:
+              "drop-shadow(0 0 0 transparent)",
           }}
         >
           <span
@@ -508,7 +556,9 @@ function TeamCard({
               color: team.crest[0],
             }}
           >
-            <TrophyIcon className="h-3 w-3" />
+            <span className="text-[11px]">
+              🏆
+            </span>
             #{team.rank}
           </span>
         ) : (
