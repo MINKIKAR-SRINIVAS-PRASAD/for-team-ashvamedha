@@ -139,12 +139,12 @@ export const EVENTS: FestEvent[] = [
 
   {
     slug: "volleyball",
-    name: "Vollyball",
-    arena: "Vollyball Court",
+    name: "Volleyball",
+    arena: "Volleyball Court",
     category: "Team Sport",
     tagline: "Six players. Rally scoring.",
     description:
-      "Vollyball teams must contain a minimum of 6 and maximum of 12 members. League matches are best of 3 sets, while semi-finals and finals are best of 5 sets.",
+      "Volleyball teams must contain a minimum of 6 and maximum of 12 members. League matches are best of 3 sets, while semi-finals and finals are best of 5 sets.",
     date: "09–11 Oct 2026",
     day: 1,
     time: "TBA",
