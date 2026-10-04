@@ -166,8 +166,13 @@
   }
 
   .section-pad {
-    padding-block: clamp(4.5rem, 9vw, 9.5rem);
+  padding-block: clamp(2rem, 4vw, 4rem);
+}
+@media (max-width: 768px) {
+  .section-pad {
+    padding-block: 2.25rem;
   }
+}
 
   .hairline {
     height: 1px;
