@@ -5,6 +5,7 @@
  * ASHVAMEDHA 2026 RULEBOOK
  *
  * The rulebook gives the overall festival dates as Oct 9–11, 2026.
+ *
  * Sport-specific time/venue details are only filled where the rulebook
  * explicitly provides them. Otherwise they remain "TBA".
  */
@@ -270,7 +271,8 @@ export const EVENTS: FestEvent[] = [
     entryFee: "₹500 / person",
     prizePool:
       "Winner ₹1,500 / Runner-up ₹1,000 / 2nd Runner-up ₹800",
-    format: "Squat + deadlift + bench press; DOTS scoring",
+    format:
+      "Squat + deadlift + bench press; DOTS scoring",
     accent: "crimson",
     image: null,
     glyph: "gym events",
@@ -316,7 +318,8 @@ export const EVENTS: FestEvent[] = [
     entryFee: "₹1,500 / single event; ₹2,500 / both events",
     prizePool:
       "Winner ₹5,500 / Runner-up ₹3,500 / 2nd Runner-up ₹2,500",
-    format: "100 m Freestyle + 100 m Breaststroke",
+    format:
+      "100 m Freestyle + 100 m Breaststroke",
     accent: "volt",
     image: null,
     glyph: "swimming",
@@ -368,6 +371,76 @@ export const EVENTS: FestEvent[] = [
     image: null,
     glyph: "football",
   },
+
+  // ============================================================
+  // ADDITIONAL ESPORTS EVENTS
+  // ============================================================
+
+  {
+    slug: "valorant",
+    name: "Valorant",
+    arena: "Esports Arena",
+    category: "Esports",
+    tagline: "Five operators. One site.",
+    description:
+      "Valorant esports event. Complete registration through the official Google Form.",
+    date: "TBA",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "TBA",
+    registration: "open",
+    entryFee: "TBA",
+    prizePool: "TBA",
+    format: "TBA",
+    accent: "violet",
+    image: null,
+    glyph: "esportst",
+  },
+
+  {
+    slug: "bgmi",
+    name: "BGMI",
+    arena: "Esports Arena",
+    category: "Esports",
+    tagline: "Drop in. Survive. Dominate.",
+    description:
+      "BGMI (Battle Ground Mobile India) esports event. Complete registration through the official Google Form.",
+    date: "TBA",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "TBA",
+    registration: "open",
+    entryFee: "TBA",
+    prizePool: "TBA",
+    format: "TBA",
+    accent: "volt",
+    image: null,
+    glyph: "esportst",
+  },
+
+  {
+    slug: "free-fire",
+    name: "Free Fire",
+    arena: "Esports Arena",
+    category: "Esports",
+    tagline: "Fast drops. Faster decisions.",
+    description:
+      "Free Fire esports event. Complete registration through the official Google Form.",
+    date: "TBA",
+    day: 1,
+    time: "TBA",
+    venue: "TBA",
+    teamSize: "TBA",
+    registration: "open",
+    entryFee: "TBA",
+    prizePool: "TBA",
+    format: "TBA",
+    accent: "crimson",
+    image: null,
+    glyph: "esportst",
+  },
 ];
 
 export const EVENT_CATEGORIES = [
@@ -376,9 +449,13 @@ export const EVENT_CATEGORIES = [
   "Racquet",
   "Board & Mind",
   "Power & Fitness",
+  "Esports",
 ] as const;
 
-export const REGISTRATION_LABEL: Record<RegistrationState, string> = {
+export const REGISTRATION_LABEL: Record<
+  RegistrationState,
+  string
+> = {
   open: "Registration Open",
   closing: "Closing Soon",
   closed: "Entries Closed",
