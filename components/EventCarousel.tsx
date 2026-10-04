@@ -1,10 +1,30 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
+
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Pause,
+  Play,
+} from "lucide-react";
+
 import Link from "next/link";
 import Image from "next/image";
+
 import { BattlefieldFrame } from "@/components/art/BattlefieldFrame";
 import type { FestEvent } from "@/data/events";
 import { useFestData } from "@/components/FestDataProvider";
@@ -16,49 +36,121 @@ const AUTOPLAY_MS = 5200;
 /**
  * EVENT CAROUSEL — premium 3D battle carousel.
  *
- * The centre card is dominant and sharp; neighbours shrink, darken, rotate away
- * from the viewer and pick up a blur, producing real depth. Supports drag,
- * swipe, keyboard (← / →), autoplay with pause-on-hover and pause-on-focus.
- *
- * Position offsets are computed around a virtual centre index, so the ring wraps
- * infinitely in both directions.
+ * Centre card is dominant and sharp.
+ * Neighbouring cards are separated properly.
+ * Autoplay continues even when the mouse is over the carousel.
+ * Supports drag, swipe, keyboard controls and manual pause/play.
  */
-export function EventCarousel({ events }: { events?: FestEvent[] }) {
-  const { events: allEvents, featuredSlugs } = useFestData();
+export function EventCarousel({
+  events,
+}: {
+  events?: FestEvent[];
+}) {
+  const {
+    events: allEvents,
+    featuredSlugs,
+  } = useFestData();
+
   const items = useMemo(() => {
-    const picked = featuredSlugs.map((s) => allEvents.find((e) => e.slug === s)).filter(
-      Boolean,
-    ) as FestEvent[];
-    return events ?? (picked.length ? picked : allEvents.slice(0, 6));
-  }, [events, allEvents, featuredSlugs]);
+    const picked = featuredSlugs
+      .map((s) =>
+        allEvents.find((e) => e.slug === s),
+      )
+      .filter(Boolean) as FestEvent[];
+
+    return (
+      events ??
+      (picked.length
+        ? picked
+        : allEvents.slice(0, 6))
+    );
+  }, [
+    events,
+    allEvents,
+    featuredSlugs,
+  ]);
 
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const [paused, setPaused] = useState(false);
+
   const reduce = useReducedMotion();
   const dragging = useRef(false);
+
   const count = items.length;
 
   const go = useCallback(
-    (dir: number) => setIndex((i) => (i + dir + count) % count),
+    (dir: number) => {
+      if (count < 1) return;
+
+      setIndex(
+        (i) =>
+          (i + dir + count) % count,
+      );
+    },
     [count],
   );
 
-  // Autoplay — halts on hover, focus, drag, reduced-motion, or manual pause.
-  useEffect(() => {
-    if (!playing || paused || reduce || count < 2) return;
-    const id = window.setInterval(() => go(1), AUTOPLAY_MS);
-    return () => window.clearInterval(id);
-  }, [playing, paused, reduce, count, go]);
+  /* ================================================================
+     AUTOPLAY
+     ================================================================ */
 
-  const active = items[index];
+  useEffect(() => {
+    if (
+      !playing ||
+      reduce ||
+      count < 2
+    ) {
+      return;
+    }
+
+    const id = window.setInterval(
+      () => {
+        go(1);
+      },
+      AUTOPLAY_MS,
+    );
+
+    return () => {
+      window.clearInterval(id);
+    };
+  }, [
+    playing,
+    reduce,
+    count,
+    go,
+  ]);
+
+  /* ================================================================
+     ACTIVE EVENT
+     ================================================================ */
+
+  const active = items[index] ?? items[0];
+
+  if (!active) {
+    return null;
+  }
+
   const a = accentOf(active.accent);
 
-  /** Shortest signed distance from the active card, wrapped to the ring. */
+  /* ================================================================
+     POSITION
+     ================================================================ */
+
+  /**
+   * Shortest signed distance from active card,
+   * wrapped to the carousel ring.
+   */
   const offsetOf = (i: number) => {
     let d = i - index;
-    if (d > count / 2) d -= count;
-    if (d < -count / 2) d += count;
+
+    if (d > count / 2) {
+      d -= count;
+    }
+
+    if (d < -count / 2) {
+      d += count;
+    }
+
     return d;
   };
 
@@ -68,25 +160,25 @@ export function EventCarousel({ events }: { events?: FestEvent[] }) {
       role="region"
       aria-roledescription="carousel"
       aria-label="Featured battlegrounds"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => setPaused(false)}
       tabIndex={-1}
       onKeyDown={(e) => {
         if (e.key === "ArrowLeft") {
           e.preventDefault();
           go(-1);
         }
+
         if (e.key === "ArrowRight") {
           e.preventDefault();
           go(1);
         }
       }}
     >
-      {/* stage */}
+      {/* ============================================================
+          STAGE
+         ============================================================ */}
+
       <div
-        className="perspective relative h-[430px] select-none sm:h-[470px] lg:h-[540px]"
+        className="perspective relative h-[430px] select-none overflow-visible sm:h-[470px] lg:h-[540px]"
         onPointerDown={() => {
           dragging.current = false;
         }}
@@ -94,39 +186,100 @@ export function EventCarousel({ events }: { events?: FestEvent[] }) {
         <motion.div
           className="absolute inset-0"
           drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
+          dragConstraints={{
+            left: 0,
+            right: 0,
+          }}
           dragElastic={0.14}
           dragMomentum={false}
           onDragStart={() => {
             dragging.current = true;
           }}
           onDragEnd={(_, info) => {
-            if (info.offset.x < -60 || info.velocity.x < -420) go(1);
-            else if (info.offset.x > 60 || info.velocity.x > 420) go(-1);
+            if (
+              info.offset.x < -60 ||
+              info.velocity.x < -420
+            ) {
+              go(1);
+            } else if (
+              info.offset.x > 60 ||
+              info.velocity.x > 420
+            ) {
+              go(-1);
+            }
           }}
         >
           {items.map((ev, i) => {
             const off = offsetOf(i);
             const isActive = off === 0;
             const absOff = Math.abs(off);
-            if (absOff > 3) return null;
-            const ea = accentOf(ev.accent);
+
+            if (absOff > 3) {
+              return null;
+            }
+
+            const ea = accentOf(
+              ev.accent,
+            );
+
+            /* ========================================================
+               CARD SEPARATION
+               ======================================================== */
+
+            const spacing =
+              "clamp(430px, 31vw, 500px)";
+
+            let xPosition = "-50%";
+
+            if (off > 0) {
+              const distance =
+                absOff === 1
+                  ? spacing
+                  : `calc(${spacing} + ${spacing})`;
+
+              xPosition =
+                `calc(-50% + ${distance})`;
+            }
+
+            if (off < 0) {
+              const distance =
+                absOff === 1
+                  ? spacing
+                  : `calc(${spacing} + ${spacing})`;
+
+              xPosition =
+                `calc(-50% - ${distance})`;
+            }
 
             return (
               <motion.article
                 key={ev.slug}
                 className="absolute left-1/2 top-1/2 w-[78vw] max-w-[420px] sm:w-[60vw] lg:w-[420px]"
-                style={{ transformStyle: "preserve-3d" }}
-                animate={{
-                  x: `calc(-50% + ${off * 56}%)`,
-                  y: "-50%",
-                  z: -absOff * 130,
-                  rotateY: off * -26,
-                  scale: 1 - absOff * 0.13,
-                  opacity: absOff > 2 ? 0 : 1 - absOff * 0.26,
-                  filter: `blur(${absOff * 3.4}px) brightness(${1 - absOff * 0.3})`,
+                style={{
+                  transformStyle:
+                    "preserve-3d",
                 }}
-                transition={{ type: "spring", stiffness: 190, damping: 26, mass: 0.7 }}
+                animate={{
+                  x: xPosition,
+                  y: "-50%",
+                  z: -absOff * 100,
+                  rotateY: off * -18,
+                  scale:
+                    1 - absOff * 0.10,
+                  opacity:
+                    absOff > 2
+                      ? 0
+                      : 1 -
+                        absOff * 0.22,
+                  filter:
+                    `blur(${absOff * 2.8}px) brightness(${1 - absOff * 0.22})`,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 190,
+                  damping: 26,
+                  mass: 0.7,
+                }}
                 aria-hidden={!isActive}
                 aria-roledescription="slide"
                 aria-label={`${i + 1} of ${count}: ${ev.name}`}
@@ -134,7 +287,9 @@ export function EventCarousel({ events }: { events?: FestEvent[] }) {
                 <div
                   className={cn(
                     "group relative overflow-hidden clip-notch border transition-colors duration-500",
-                    isActive ? "border-white/20" : "border-white/5",
+                    isActive
+                      ? "border-white/20"
+                      : "border-white/5",
                   )}
                   style={{
                     boxShadow: isActive
@@ -142,6 +297,10 @@ export function EventCarousel({ events }: { events?: FestEvent[] }) {
                       : "inset 0 1px 0 rgba(255,255,255,0.05)",
                   }}
                 >
+                  {/* ==================================================
+                      EVENT IMAGE
+                     ================================================== */}
+
                   {ev.image ? (
                     <Image
                       src={ev.image}
@@ -160,38 +319,64 @@ export function EventCarousel({ events }: { events?: FestEvent[] }) {
                     />
                   )}
 
-                  {/* active-card info */}
+                  {/* ==================================================
+                      EVENT INFORMATION
+                     ================================================== */}
+
                   <div
                     className={cn(
                       "absolute inset-x-0 bottom-0 p-5 transition-opacity duration-500",
-                      isActive ? "opacity-100" : "opacity-0",
+                      isActive
+                        ? "opacity-100"
+                        : "opacity-0",
                     )}
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-[9px] tracking-hud text-white/70">
                         {ev.category.toUpperCase()}
                       </span>
-                      <span className="font-mono text-[9px] tracking-hud" style={{ color: ea.base }}>
+
+                      <span
+                        className="font-mono text-[9px] tracking-hud"
+                        style={{
+                          color: ea.base,
+                        }}
+                      >
                         {pad(i + 1)}
                       </span>
                     </div>
+
                     <h3 className="mt-2 text-[clamp(1.6rem,4vw,2.4rem)] leading-none text-white">
                       {ev.name}
                     </h3>
-                    <p className="mt-1.5 font-mono text-[10px] tracking-hud" style={{ color: ea.base }}>
+
+                    <p
+                      className="mt-1.5 font-mono text-[10px] tracking-hud"
+                      style={{
+                        color: ea.base,
+                      }}
+                    >
                       {ev.arena.toUpperCase()}
                     </p>
+
                     <p className="mt-3 max-w-sm text-[0.84rem] leading-relaxed text-silver-dim">
                       {ev.tagline}
                     </p>
+
                     <Link
                       href={`/events/${ev.slug}`}
                       className="btn mt-4 clip-notch !px-5 !py-2.5 text-white"
-                      style={{ borderColor: `${ea.base}70`, background: `${ea.base}1F` }}
-                      tabIndex={isActive ? 0 : -1}
+                      style={{
+                        borderColor: `${ea.base}70`,
+                        background: `${ea.base}1F`,
+                      }}
+                      tabIndex={
+                        isActive ? 0 : -1
+                      }
                       data-cursor-label="ENTER"
                     >
                       View event
+
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </div>
@@ -202,9 +387,14 @@ export function EventCarousel({ events }: { events?: FestEvent[] }) {
         </motion.div>
       </div>
 
-      {/* controls */}
+      {/* ================================================================
+          CONTROLS
+         ================================================================ */}
+
       <div className="mt-8 flex items-center justify-between gap-6">
         <div className="flex items-center gap-3">
+          {/* PREVIOUS */}
+
           <button
             type="button"
             onClick={() => go(-1)}
@@ -213,6 +403,9 @@ export function EventCarousel({ events }: { events?: FestEvent[] }) {
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
+
+          {/* NEXT */}
+
           <button
             type="button"
             onClick={() => go(1)}
@@ -221,17 +414,33 @@ export function EventCarousel({ events }: { events?: FestEvent[] }) {
           >
             <ChevronRight className="h-5 w-5" />
           </button>
+
+          {/* PLAY / PAUSE */}
+
           <button
             type="button"
-            onClick={() => setPlaying((p) => !p)}
-            aria-label={playing ? "Pause carousel autoplay" : "Resume carousel autoplay"}
+            onClick={() =>
+              setPlaying((p) => !p)
+            }
+            aria-label={
+              playing
+                ? "Pause carousel autoplay"
+                : "Resume carousel autoplay"
+            }
             className="flex h-11 w-11 items-center justify-center border border-white/15 text-white transition-colors duration-300 hover:border-volt/70 hover:text-volt"
           >
-            {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+            {playing ? (
+              <Pause className="h-4 w-4" />
+            ) : (
+              <Play className="h-4 w-4" />
+            )}
           </button>
         </div>
 
-        {/* progress rail */}
+        {/* ==========================================================
+            PROGRESS RAIL
+           ========================================================== */}
+
         <div className="flex flex-1 items-center gap-2 overflow-hidden">
           {items.map((ev, i) => (
             <button
@@ -239,32 +448,64 @@ export function EventCarousel({ events }: { events?: FestEvent[] }) {
               type="button"
               onClick={() => setIndex(i)}
               aria-label={`Go to ${ev.name}`}
-              aria-current={i === index}
+              aria-current={
+                i === index
+              }
               className="group relative h-[3px] flex-1 overflow-hidden bg-white/12 transition-colors"
             >
               <motion.span
                 className="absolute inset-y-0 left-0"
-                style={{ background: accentOf(ev.accent).base }}
+                style={{
+                  background:
+                    accentOf(ev.accent)
+                      .base,
+                }}
                 initial={false}
-                animate={{ width: i === index ? "100%" : i < index ? "100%" : "0%" }}
-                transition={{ duration: i === index ? AUTOPLAY_MS / 1000 : 0.3, ease: "linear" }}
+                animate={{
+                  width:
+                    i === index
+                      ? "100%"
+                      : i < index
+                        ? "100%"
+                        : "0%",
+                }}
+                transition={{
+                  duration:
+                    i === index
+                      ? AUTOPLAY_MS / 1000
+                      : 0.3,
+                  ease: "linear",
+                }}
               />
             </button>
           ))}
         </div>
 
         <span className="hidden font-mono text-[10px] tracking-hud text-silver-dim sm:block">
-          <span className="text-white/90">{pad(index + 1)}</span> / {pad(count)}
+          <span className="text-white/90">
+            {pad(index + 1)}
+          </span>{" "}
+          / {pad(count)}
         </span>
       </div>
+
+      {/* ================================================================
+          ACCESSIBILITY STATUS
+         ================================================================ */}
 
       <AnimatePresence>
         <motion.p
           key={a.label}
           className="sr-only"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          exit={{
+            opacity: 0,
+          }}
         >
           Now showing {active.name}
         </motion.p>
