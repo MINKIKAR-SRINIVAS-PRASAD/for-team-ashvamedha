@@ -258,13 +258,21 @@ function merge(
  * Fetch the current bundle.
  */
 export async function getFestData(): Promise<FestData> {
+  /*
+   * During a local production build, always use the static data.
+   * This prevents Next.js from repeatedly trying to reach the
+   * backend while pre-rendering every event page.
+   */
+  if (process.env.NODE_ENV === "production") {
+    return STATIC_FEST_DATA;
+  }
+
   try {
     const res = await fetch(
       `${SERVER_API_URL}/api/public/bundle`,
       {
         next: {
-          revalidate:
-            REVALIDATE_SECONDS,
+          revalidate: REVALIDATE_SECONDS,
         },
       } as RequestInit,
     );
@@ -275,10 +283,9 @@ export async function getFestData(): Promise<FestData> {
       );
     }
 
-    const json =
-      (await res.json()) as Partial<FestData>;
-
-    return merge(json);
+    return merge(
+      (await res.json()) as Partial<FestData>,
+    );
   } catch (err) {
     console.warn(
       "[festData] API unavailable, using static data:",
