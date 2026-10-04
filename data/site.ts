@@ -15,7 +15,7 @@ export const SITE = {
   endsAt: "2026-10-11T21:00:00+05:30",
   /** Registration form (app/register) — submissions go to the backend API. */
   registrationUrl: "/register",
-  contactEmail: "ashvamedha@iitbbs.ac.in",
+  contactEmail: "coord.ashvamedha@iitbbs.ac.in",
   contactPhone: "+91 9321743329",
   address: "IIT Bhubaneswar, Argul, Jatni, Khordha — 752051, Odisha, India",
 } as const;
