@@ -21,6 +21,8 @@ content in `data/*.ts`, so it never breaks.
 | `data/site.ts` | `registrationUrl` → `/register` |
 | `app/events/[slug]/page.tsx` | Register button → `/register?event=<slug>`; new events render on demand |
 | Pages & components using `data/*` | Import swapped for `getFestData()` (server) or `useFestData()` (client) |
+| `app/login/page.tsx`, `components/LoginPanel.tsx` | One login page with a User / Admin toggle |
+| `app/admin/page.tsx`, `components/AdminDashboard.tsx`, `lib/adminApi.ts` | Sport-admin control room: live scores and match details, limited to the admin's sport |
 | `next.config.mjs` | Allows images served by a local backend (`http://localhost`) |
 
 Design, layout and animations are untouched. `data/*.ts` is still used for types,

@@ -19,7 +19,7 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
-from sqlalchemy import delete, select
+from sqlalchemy import delete, func, select
 from sqlalchemy.orm import Session
 
 from app.config import settings
@@ -322,6 +322,26 @@ def ensure_admin(db: Session) -> None:
         )
         db.commit()
         print(f"[seed] created admin user '{settings.admin_username}'")
+
+
+def ensure_sport_admins(db: Session) -> None:
+    """Create the sport admins listed in SPORT_ADMINS (existing accounts are left alone)."""
+    for sport, username, password in settings.sport_admin_list:
+        if db.get(Event, sport) is None:
+            print(f"[seed] skipped sport admin '{username}': unknown sport '{sport}'")
+            continue
+        if db.scalar(select(User.id).where(func.lower(User.username) == username.lower())):
+            continue
+        db.add(
+            User(
+                username=username,
+                password_hash=hash_password(password),
+                role="coordinator",
+                event_slugs=[sport],
+            )
+        )
+        db.commit()
+        print(f"[seed] created {sport} admin '{username}'")
 
 
 def _find_existing_event(
@@ -657,6 +677,7 @@ def seed_if_empty(db: Session) -> None:
     sync_rulebook_events(db)
 
     ensure_admin(db)
+    ensure_sport_admins(db)
 
 
 def main() -> None:

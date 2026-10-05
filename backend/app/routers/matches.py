@@ -6,6 +6,7 @@ import re
 from typing import Any
 
 from fastapi import APIRouter, Body, Depends, HTTPException
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -45,6 +46,15 @@ def _get(db: Session, match_id: str) -> Match:
     if m is None:
         raise HTTPException(404, "Match not found")
     return m
+
+
+@router.get("", summary="Matches the logged-in user can manage")
+def list_my_matches(db: Session = Depends(get_db), user: User = Depends(get_current_user)):
+    q = select(Match).order_by(Match.sort_order, Match.created_at.desc())
+    if user.role != "admin":
+        q = q.where(Match.event_slug.in_(user.event_slugs or []))
+    ev = events_map(db)
+    return [match_out(m, ev) for m in db.scalars(q)]
 
 
 @router.post("", status_code=201)

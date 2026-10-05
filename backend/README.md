@@ -8,7 +8,7 @@ Returns data in exactly the shapes the Next.js frontend already uses.
 Requires Python 3.10+.
 
 ```bash
-cd ashvamedha-backend
+cd backend
 python -m venv .venv
 # Windows: .venv\Scripts\activate      macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
@@ -34,7 +34,18 @@ Then run the frontend with `NEXT_PUBLIC_API_URL=http://localhost:8000` (see its 
 - **coordinator** — only the events listed in their `eventSlugs`: manage those matches,
   change those schedule slots, view/update those registrations.
 
-Create a coordinator: `/docs` → `POST /api/auth/login` → copy `accessToken` → **Authorize** →
+**Sport admins (several per sport).** List them in `.env` and they are created on startup:
+
+```
+SPORT_ADMINS=basketball:basketball-admin1:pass-1;basketball:basketball-admin2:pass-2;football:football-admin:pass-3
+```
+
+Each one is a coordinator for that sport only. They sign in on the website at `/login`
+(Admin tab) and land on `/admin`, where they add matches, start/finish them, change scores
+and edit match details for their sport. Existing accounts are never overwritten, so to change
+a password use `PATCH /api/admin/users/{id}`.
+
+Or create a coordinator by hand: `/docs` → `POST /api/auth/login` → copy `accessToken` → **Authorize** →
 `POST /api/admin/users` with
 `{"username": "football-coord", "password": "min-8-chars", "role": "coordinator", "eventSlugs": ["football"]}`.
 
