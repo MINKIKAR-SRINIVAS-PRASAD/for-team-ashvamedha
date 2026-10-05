@@ -53,7 +53,7 @@
 
 <script>
 const API = location.origin;
-const state = { token: localStorage.getItem("asv_token"), user: null, events: [], teams: [], tab: "scores", eventFilter: "" };
+const state = { token: sessionStorage.getItem("asv_token"), user: null, events: [], teams: [], tab: "scores", eventFilter: "" };
 
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -79,7 +79,7 @@ async function api(path, opts = {}) {
   return type.includes("json") ? res.json() : res.blob();
 }
 
-function logout() { localStorage.removeItem("asv_token"); state.token = null; state.user = null; render(); }
+function logout() { sessionStorage.removeItem("asv_token"); state.token = null; state.user = null; render(); }
 
 async function boot() {
   if (!state.token) return render();
@@ -112,7 +112,7 @@ function render() {
       const f = new FormData(ev.target);
       try {
         const r = await api("/api/auth/login", { method: "POST", body: { username: f.get("username"), password: f.get("password") } });
-        state.token = r.accessToken; localStorage.setItem("asv_token", r.accessToken); boot();
+        state.token = r.accessToken; sessionStorage.setItem("asv_token", r.accessToken); boot();
       } catch (e) { toast(e.message, true); }
     };
     return;
@@ -132,8 +132,12 @@ function render() {
   state.tab === "scores" ? renderScores() : renderRegs();
 }
 
+// A sport admin with a single sport gets that sport pre-selected and locked.
+const lockedSport = () => (state.user && state.user.role !== "admin" && myEvents().length === 1 ? myEvents()[0].slug : null);
+const lockAttr = () => (lockedSport() ? "disabled" : "");
+
 const eventOptions = (selected, includeAll) =>
-  (includeAll ? `<option value="">All my events</option>` : "") +
+  (includeAll && !lockedSport() ? `<option value="">All my events</option>` : "") +
   myEvents().map((e) => `<option value="${esc(e.slug)}" ${e.slug === selected ? "selected" : ""}>${esc(e.name)}</option>`).join("");
 
 // ── Live scores ─────────────────────────────────────────────────────────────
@@ -141,11 +145,11 @@ async function renderScores() {
   const body = $("#tabBody");
   body.innerHTML = `
     <div class="row" style="margin-top:14px">
-      <select id="evFilter">${eventOptions(state.eventFilter, true)}</select>
+      <select id="evFilter" ${lockAttr()}>${eventOptions(lockedSport() || state.eventFilter, true)}</select>
       <button id="refreshBtn" class="ghost">↻ Refresh</button>
       <details style="flex-basis:100%"><summary>+ New match</summary>
         <form id="newMatch" class="card grid" style="margin-top:10px">
-          <select name="eventSlug" required>${eventOptions(state.eventFilter || (myEvents()[0] || {}).slug)}</select>
+          <select name="eventSlug" required ${lockAttr()}>${eventOptions(lockedSport() || state.eventFilter || (myEvents()[0] || {}).slug)}</select>
           <div class="row">
             <input name="homeName" list="teamList" placeholder="Home team / player" required style="flex:1" />
             <span class="muted">vs</span>
@@ -172,7 +176,7 @@ async function renderScores() {
     const stage = f.get("stage"), venue = f.get("venue");
     try {
       await api("/api/admin/matches", { method: "POST", body: {
-        eventSlug: f.get("eventSlug"), homeName: f.get("homeName"), awayName: f.get("awayName"),
+        eventSlug: lockedSport() || f.get("eventSlug"), homeName: f.get("homeName"), awayName: f.get("awayName"),
         homeTeamSlug: teamSlug(f.get("homeName")), awayTeamSlug: teamSlug(f.get("awayName")),
         stage, detail: [stage, venue].filter(Boolean).join(" · "), clock: f.get("clock"),
         status: "upcoming", countsForStandings: !!f.get("counts"),
@@ -270,7 +274,7 @@ function renderRegs() {
   const body = $("#tabBody");
   body.innerHTML = `
     <div class="row" style="margin-top:14px">
-      <select id="rEvent">${eventOptions(regFilter.event, true)}</select>
+      <select id="rEvent" ${lockAttr()}>${eventOptions(lockedSport() || regFilter.event, true)}</select>
       <select id="rStatus">
         ${["", "submitted", "confirmed", "rejected", "cancelled"].map((s) => `<option value="${s}" ${s === regFilter.status ? "selected" : ""}>${s || "Any status"}</option>`).join("")}
       </select>

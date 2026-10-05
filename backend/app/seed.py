@@ -325,7 +325,18 @@ def ensure_admin(db: Session) -> None:
 
 
 def ensure_sport_admins(db: Session) -> None:
-    """Create the sport admins listed in SPORT_ADMINS (existing accounts are left alone)."""
+    """
+    First-time setup: create the sport admins listed in SPORT_ADMINS.
+
+    Runs only while no sport admin exists yet. After that, sport admins are
+    managed by the main admin on the website (/admin), so renames and password
+    changes made there are not undone by the .env on the next restart.
+    """
+    if not settings.sport_admin_list:
+        return
+    if db.scalar(select(User.id).where(User.role == "coordinator").limit(1)) is not None:
+        print("[seed] sport admins already exist; SPORT_ADMINS ignored (manage them on /admin)")
+        return
     for sport, username, password in settings.sport_admin_list:
         if db.get(Event, sport) is None:
             print(f"[seed] skipped sport admin '{username}': unknown sport '{sport}'")

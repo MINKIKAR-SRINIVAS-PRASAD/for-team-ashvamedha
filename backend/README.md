@@ -42,8 +42,14 @@ SPORT_ADMINS=basketball:basketball-admin1:pass-1;basketball:basketball-admin2:pa
 
 Each one is a coordinator for that sport only. They sign in on the website at `/login`
 (Admin tab) and land on `/admin`, where they add matches, start/finish them, change scores
-and edit match details for their sport. Existing accounts are never overwritten, so to change
-a password use `PATCH /api/admin/users/{id}`.
+and edit match details for their sport; their sport is shown locked.
+
+`SPORT_ADMINS` is only used for first-time setup (while no sport admin exists). After that
+the main admin manages them on `/admin` → **Sport admins**: rename, set a new password,
+add another admin for a sport, disable or remove one.
+
+Logins last for the browser tab: opening `/admin` in a new tab or browser asks for the
+username and password again.
 
 Or create a coordinator by hand: `/docs` → `POST /api/auth/login` → copy `accessToken` → **Authorize** →
 `POST /api/admin/users` with

@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LogOut, Minus, Play, Plus, RotateCcw, Square, Trash2 } from "lucide-react";
+import { Lock, LogOut, Minus, Play, Plus, RotateCcw, Square, Trash2 } from "lucide-react";
+import { SportAdminsPanel } from "@/components/SportAdminsPanel";
 import { useFestData } from "@/components/FestDataProvider";
 import {
   ApiError,
@@ -19,7 +20,6 @@ import {
   type AdminUser,
   type MatchStatus,
 } from "@/lib/adminApi";
-import { PUBLIC_API_URL } from "@/lib/festData";
 import { cn } from "@/lib/utils";
 
 const REFRESH_MS = 15_000;
@@ -40,6 +40,7 @@ export function AdminDashboard() {
   const [user, setUser] = useState<AdminUser | null>(null);
   const [matches, setMatches] = useState<AdminMatch[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [tab, setTab] = useState<"scores" | "admins">("scores");
 
   const handleError = useCallback(
     (err: unknown) => {
@@ -128,21 +129,36 @@ export function AdminDashboard() {
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          {user.role === "admin" && (
-            <a
-              href={`${PUBLIC_API_URL}/docs`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-ghost clip-notch !py-2.5"
-            >
-              Manage accounts (API)
-            </a>
-          )}
           <button type="button" onClick={onLogout} className="btn btn-ghost clip-notch !py-2.5">
             <LogOut className="h-4 w-4" /> Log out
           </button>
         </div>
       </div>
+
+      {user.role === "admin" && (
+        <div role="tablist" aria-label="Control room sections" className="flex border-b border-white/10">
+          {(
+            [
+              ["scores", "Live scores"],
+              ["admins", "Sport admins"],
+            ] as const
+          ).map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={tab === id}
+              onClick={() => setTab(id)}
+              className={cn(
+                "-mb-px border-b-2 px-4 py-3 font-mono text-[11px] uppercase tracking-hud transition-colors",
+                tab === id ? "border-crimson text-white" : "border-transparent text-silver-dim hover:text-white",
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {error && (
         <p role="alert" className="border border-crimson/50 bg-crimson/10 px-4 py-3 text-sm text-white">
@@ -150,6 +166,10 @@ export function AdminDashboard() {
         </p>
       )}
 
+      {user.role === "admin" && tab === "admins" ? (
+        <SportAdminsPanel events={events} onError={handleError} />
+      ) : (
+        <>
       {sports.length > 0 && (
         <NewMatchForm sports={sports} eventName={eventName} onCreated={refresh} onError={handleError} />
       )}
@@ -170,6 +190,9 @@ export function AdminDashboard() {
             />
           ))}
         </div>
+      )}
+
+        </>
       )}
 
       <p className="text-sm text-silver-dim">
@@ -441,18 +464,23 @@ function NewMatchForm({
     <details className="panel p-5">
       <summary className="hud cursor-pointer hover:text-white">+ Add a match</summary>
       <form onSubmit={submit} className="mt-4 grid gap-3 sm:grid-cols-2">
-        {sports.length > 1 && (
-          <label className="block sm:col-span-2">
-            <span className={labelCls}>Sport</span>
-            <select className={inputCls} value={eventSlug} onChange={(e) => setEventSlug(e.target.value)}>
-              {sports.map((s) => (
-                <option key={s} value={s}>
-                  {eventName(s)}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
+        <label className="block sm:col-span-2">
+          <span className={cn(labelCls, "flex items-center gap-1.5")}>
+            Sport {sports.length === 1 && <Lock className="h-3 w-3" aria-label="locked" />}
+          </span>
+          <select
+            className={cn(inputCls, sports.length === 1 && "cursor-not-allowed opacity-70")}
+            value={eventSlug}
+            disabled={sports.length === 1}
+            onChange={(e) => setEventSlug(e.target.value)}
+          >
+            {sports.map((s) => (
+              <option key={s} value={s}>
+                {eventName(s)}
+              </option>
+            ))}
+          </select>
+        </label>
         <label className="block">
           <span className={labelCls}>Home team</span>
           <input className={inputCls} required value={homeName} onChange={(e) => setHomeName(e.target.value)} />

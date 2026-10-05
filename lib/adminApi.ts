@@ -1,8 +1,8 @@
 /**
  * ADMIN API — login session + authenticated calls to the backend.
  *
- * The token from POST /api/auth/login is kept in localStorage so a sport
- * admin stays logged in across refreshes until it expires (TOKEN_EXPIRE_HOURS).
+ * The token from POST /api/auth/login is kept in sessionStorage: it survives a
+ * refresh, but opening the site in a new tab or browser asks for the login again.
  */
 
 import { PUBLIC_API_URL } from "@/lib/festData";
@@ -50,7 +50,7 @@ export class ApiError extends Error {
 
 export function getToken(): string | null {
   try {
-    return localStorage.getItem(TOKEN_KEY);
+    return sessionStorage.getItem(TOKEN_KEY);
   } catch {
     return null;
   }
@@ -58,8 +58,8 @@ export function getToken(): string | null {
 
 function setToken(token: string | null) {
   try {
-    if (token) localStorage.setItem(TOKEN_KEY, token);
-    else localStorage.removeItem(TOKEN_KEY);
+    if (token) sessionStorage.setItem(TOKEN_KEY, token);
+    else sessionStorage.removeItem(TOKEN_KEY);
   } catch {
     /* storage blocked: session lasts for this page only */
   }
@@ -134,3 +134,25 @@ export const createMatch = (data: Record<string, unknown>) =>
 
 export const deleteMatch = (id: string) =>
   adminFetch<void>(`/api/admin/matches/${encodeURIComponent(id)}`, { method: "DELETE" });
+
+/* Account management (main admin only) */
+
+export const fetchUsers = () => adminFetch<AdminUser[]>("/api/admin/users");
+
+export const createSportAdmin = (sport: string, username: string, password: string) =>
+  adminFetch<AdminUser>("/api/admin/users", {
+    method: "POST",
+    body: JSON.stringify({ username, password, role: "coordinator", eventSlugs: [sport] }),
+  });
+
+export const updateUser = (
+  id: number,
+  patch: { username?: string; password?: string; isActive?: boolean },
+) =>
+  adminFetch<AdminUser>(`/api/admin/users/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(patch),
+  });
+
+export const deleteUser = (id: number) =>
+  adminFetch<void>(`/api/admin/users/${id}`, { method: "DELETE" });

@@ -265,6 +265,7 @@ class UserCreate(CamelModel):
 
 
 class UserUpdate(CamelModel):
+    username: Optional[str] = Field(None, min_length=3, max_length=60)
     password: Optional[str] = Field(None, min_length=8, max_length=128)
     role: Optional[Role] = None
     event_slugs: Optional[list[str]] = None
