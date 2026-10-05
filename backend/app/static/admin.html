@@ -126,10 +126,13 @@ function render() {
     <div class="row tabs">
       <button data-tab="scores" class="${state.tab === "scores" ? "on" : ""}">Live scores</button>
       <button data-tab="regs" class="${state.tab === "regs" ? "on" : ""}">Registrations</button>
+      ${state.user.role === "admin" ? `<button data-tab="admins" class="${state.tab === "admins" ? "on" : ""}">Sport admins</button>` : ""}
     </div>
     <div id="tabBody"></div>`;
   app.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { state.tab = b.dataset.tab; render(); }));
-  state.tab === "scores" ? renderScores() : renderRegs();
+  if (state.tab === "admins" && state.user.role === "admin") renderAdmins();
+  else if (state.tab === "regs") renderRegs();
+  else renderScores();
 }
 
 // A sport admin with a single sport gets that sport pre-selected and locked.
@@ -323,6 +326,65 @@ async function loadRegs() {
       } catch (e) { toast(e.message, true); }
     }));
   } catch (e) { list.innerHTML = `<p class="muted">${esc(e.message)}</p>`; }
+}
+
+// ── Sport admins (main admin only) ──────────────────────────────────────────
+async function renderAdmins() {
+  const body = $("#tabBody");
+  body.innerHTML = `<p class="muted small" style="margin-top:14px">Each sport admin can only update matches of their own sport.
+    Change a username or type a new password and press Save; the old password stops working straight away.</p>
+    <div id="adminList" class="grid matches"><p class="muted">Loading…</p></div>`;
+  let users;
+  try { users = await api("/api/admin/users"); } catch (e) { $("#adminList").innerHTML = `<p class="muted">${esc(e.message)}</p>`; return; }
+  const admins = users.filter((u) => u.role === "coordinator");
+  $("#adminList").innerHTML = state.events.map((ev) => {
+    const mine = admins.filter((u) => (u.eventSlugs || []).includes(ev.slug));
+    return `<div class="card">
+      <div class="row" style="justify-content:space-between"><b>${esc(ev.name)}</b><span class="pill">${mine.length} admin${mine.length === 1 ? "" : "s"}</span></div>
+      ${mine.map((u) => `<form class="grid" data-user="${u.id}" style="margin-top:10px; padding-top:10px; border-top:1px solid var(--line); ${u.isActive ? "" : "opacity:.55"}">
+        <div class="row">
+          <input name="username" value="${esc(u.username)}" required minlength="3" style="flex:1" aria-label="Username" />
+          <input name="password" type="password" minlength="8" placeholder="New password (blank = keep)" autocomplete="new-password" style="flex:1" aria-label="New password" />
+        </div>
+        <div class="row">
+          <button class="primary">Save</button>
+          <button type="button" class="ghost" data-act="toggle">${u.isActive ? "Disable" : "Enable"}</button>
+          <button type="button" class="ghost danger" data-act="delete" style="margin-left:auto">Remove</button>
+        </div>
+      </form>`).join("") || `<p class="muted small">No admin yet.</p>`}
+      <details style="margin-top:10px"><summary>+ Add ${esc(ev.name)} admin</summary>
+        <form class="row" data-add="${esc(ev.slug)}" style="margin-top:8px">
+          <input name="username" placeholder="Username" required minlength="3" style="flex:1" />
+          <input name="password" type="password" placeholder="Password (min 8)" required minlength="8" autocomplete="new-password" style="flex:1" />
+          <button class="primary">Add</button>
+        </form>
+      </details>
+    </div>`;
+  }).join("");
+
+  const run = async (fn, msg) => { try { await fn(); toast(msg); renderAdmins(); } catch (e) { toast(e.message, true); } };
+  body.querySelectorAll("form[data-user]").forEach((f) => {
+    const u = admins.find((x) => String(x.id) === f.dataset.user);
+    f.onsubmit = (ev) => {
+      ev.preventDefault();
+      const d = new FormData(f), patch = {};
+      const name = String(d.get("username")).trim();
+      if (name !== u.username) patch.username = name;
+      if (d.get("password")) patch.password = d.get("password");
+      if (!Object.keys(patch).length) return toast("Nothing changed");
+      run(() => api(`/api/admin/users/${u.id}`, { method: "PATCH", body: patch }), `Saved ${name}`);
+    };
+    f.querySelector('[data-act="toggle"]').onclick = () =>
+      run(() => api(`/api/admin/users/${u.id}`, { method: "PATCH", body: { isActive: !u.isActive } }), `${u.isActive ? "Disabled" : "Enabled"} ${u.username}`);
+    f.querySelector('[data-act="delete"]').onclick = () => {
+      if (confirm(`Remove admin '${u.username}'?`)) run(() => api(`/api/admin/users/${u.id}`, { method: "DELETE" }), `Removed ${u.username}`);
+    };
+  });
+  body.querySelectorAll("form[data-add]").forEach((f) => (f.onsubmit = (ev) => {
+    ev.preventDefault();
+    const d = new FormData(f), name = String(d.get("username")).trim();
+    run(() => api("/api/admin/users", { method: "POST", body: { username: name, password: d.get("password"), role: "coordinator", eventSlugs: [f.dataset.add] } }), `Added ${name}`);
+  }));
 }
 
 // Auto-refresh scores every 20 s unless someone is typing.

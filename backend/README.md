@@ -45,7 +45,7 @@ Each one is a coordinator for that sport only. They sign in on the website at `/
 and edit match details for their sport; their sport is shown locked.
 
 `SPORT_ADMINS` is only used for first-time setup (while no sport admin exists). After that
-the main admin manages them on `/admin` → **Sport admins**: rename, set a new password,
+the main admin manages them in the **Sport admins** tab (backend `/admin` or website `/admin`): rename, set a new password,
 add another admin for a sport, disable or remove one.
 
 Logins last for the browser tab: opening `/admin` in a new tab or browser asks for the
