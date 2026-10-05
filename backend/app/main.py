@@ -11,7 +11,7 @@ from pydantic import ValidationError
 from app.config import settings
 from app.database import Base, SessionLocal, engine
 from app.routers import auth, content, matches, public, registrations
-from app.seed import ensure_admin, seed_if_empty
+from app.seed import ensure_admin, ensure_sport_admins, seed_if_empty
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
@@ -24,6 +24,7 @@ async def lifespan(_: FastAPI):
             seed_if_empty(db)
         else:
             ensure_admin(db)
+            ensure_sport_admins(db)
     if settings.secret_key.startswith("dev-only") or settings.admin_password in {"admin123", "change-me-now"}:
         print("[warning] Using default SECRET_KEY or ADMIN_PASSWORD. Set real values in .env before deploying!")
     yield

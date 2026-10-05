@@ -191,6 +191,20 @@ export function Navbar() {
              ============================================================ */}
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            {/* Login (users + sport admins) */}
+            <Link
+              href="/login"
+              data-cursor-label="LOGIN"
+              className={cn(
+                "whitespace-nowrap px-2 py-2 font-mono text-[10px] uppercase tracking-hud transition-colors duration-300 xl:text-[11px]",
+                pathname === "/login" || pathname.startsWith("/admin")
+                  ? "text-white"
+                  : "text-silver-dim hover:text-white",
+              )}
+            >
+              Login
+            </Link>
+
             {/* Desktop Register */}
             <a
               href={SITE.registrationUrl}

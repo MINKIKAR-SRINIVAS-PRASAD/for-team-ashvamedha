@@ -63,6 +63,12 @@ def update_user(
         raise HTTPException(404, "User not found")
     if u.id == admin.id and (body.role == "coordinator" or body.is_active is False):
         raise HTTPException(400, "You cannot demote or deactivate yourself")
+    if body.username and body.username.lower() != u.username.lower():
+        if db.scalar(select(User).where(func.lower(User.username) == body.username.lower())):
+            raise HTTPException(409, "Username already taken")
+        u.username = body.username
+    elif body.username:
+        u.username = body.username
     if body.password:
         u.password_hash = hash_password(body.password)
     if body.role is not None:

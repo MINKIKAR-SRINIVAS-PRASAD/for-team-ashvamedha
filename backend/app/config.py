@@ -1,3 +1,4 @@
+import re
 from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -13,6 +14,9 @@ class Settings(BaseSettings):
 
     admin_username: str = "admin"
     admin_password: str = "admin123"
+    # Sport admins: "sport:username:password" entries separated by ";" or newlines.
+    # Each one can manage only that sport's matches; list several per sport if needed.
+    sport_admins: str = ""
 
     cors_origins: str = "http://localhost:3000"
     public_base_url: str = "http://localhost:8000"
@@ -31,6 +35,15 @@ class Settings(BaseSettings):
     @property
     def cors_origin_list(self) -> list[str]:
         return [o.strip().rstrip("/") for o in self.cors_origins.split(",") if o.strip()]
+
+    @property
+    def sport_admin_list(self) -> list[tuple[str, str, str]]:
+        out = []
+        for entry in re.split(r"[;\n]", self.sport_admins):
+            parts = [p.strip() for p in entry.split(":", 2)]
+            if len(parts) == 3 and all(parts):
+                out.append((parts[0], parts[1], parts[2]))
+        return out
 
     @property
     def sqlalchemy_url(self) -> str:
