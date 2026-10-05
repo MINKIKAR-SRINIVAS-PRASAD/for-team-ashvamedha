@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar, Clock, MapPin, Ticket, Trophy, Users } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, MapPin, Radio, Ticket, Trophy, Users } from "lucide-react";
 import { BattlefieldFrame } from "@/components/art/BattlefieldFrame";
 import { SportGlyph } from "@/components/art/SportGlyph";
 import { CTA } from "@/components/ui/CTA";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Schedule } from "@/components/Schedule";
+import { EventLiveScores } from "@/components/EventLiveScores";
 import { REGISTRATION_LABEL } from "@/data/events";
 import { findEvent, getFestData } from "@/lib/festData";
 import { accentOf } from "@/lib/accents";
@@ -124,6 +124,14 @@ export default async function EventDetailPage({
                 <CTA href="/schedule" variant="ghost" className="!px-7 !py-4">
                   See in Schedule
                 </CTA>
+                <CTA
+                  href="#live-scores"
+                  variant="ghost"
+                  className="!px-7 !py-4"
+                  icon={<Radio className="h-4 w-4" />}
+                >
+                  Live Score
+                </CTA>
               </div>
             </div>
 
@@ -169,22 +177,26 @@ export default async function EventDetailPage({
         <div className="hairline" />
       </div>
 
-      {/* event schedule block */}
-      <section className="section-pad" aria-label={`${event.name} schedule`}>
+      {/* live scores and results for this sport */}
+      <section
+        id="live-scores"
+        className="section-pad scroll-mt-[var(--nav-h)]"
+        aria-label={`${event.name} live scores`}
+      >
         <div className="shell">
           <SectionHeader
-            protocol="// SESSION_TIMELINE"
+            protocol="// LIVE_SCOREBOARD"
             title={
               <>
-                WHEN IT
+                LIVE SCORES
                 <br />
-                <span className="text-metal">GOES LIVE</span>
+                <span className="text-metal">&amp; RESULTS</span>
               </>
             }
-            description="All sessions for this event, with live status markers synced to the arena control room."
+            description={`Every ${event.name} match: live now, up next and finished, updated straight from the arena control room.`}
           />
           <div className="mt-10">
-            <Schedule />
+            <EventLiveScores eventSlug={event.slug} />
           </div>
         </div>
       </section>
