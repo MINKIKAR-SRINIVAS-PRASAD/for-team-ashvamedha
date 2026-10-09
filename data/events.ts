@@ -110,7 +110,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "FIBA rules; tournament type decided according to number of participating teams",
     accent: "volt",
-    image: null,
+    image: "/images2026/basketball.png",
     glyph: "basketball",
   },
 
@@ -133,7 +133,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "50-minute match (2 × 25 min); extra time 16 min (2 × 8 min); penalty shoot-out in tied knockout matches",
     accent: "crimson",
-    image: null,
+    image: "/images2026/football.png",
     glyph: "football",
   },
 
@@ -157,7 +157,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "League: best of 3 sets; semi-finals/finals: best of 5 sets; FIVB rules",
     accent: "gold",
-    image: null,
+    image: "/images2026/volleyball.png",
     glyph: "volleyball",
   },
 
@@ -181,7 +181,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "Knockout/elimination; singles, doubles, singles; best of 3 games to 21 points",
     accent: "gold",
-    image: null,
+    image: "/images2026/badminton.png",
     glyph: "badminton",
   },
 
@@ -204,7 +204,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "Best of 5; 5-match team order: Men's Singles, Women's Singles, Men's Doubles, Mixed Doubles, Men's Singles",
     accent: "volt",
-    image: null,
+    image: "/images2026/tabletennis.png",
     glyph: "tabletennis",
   },
 
@@ -227,7 +227,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "Two singles + one doubles; best of 3 sets; league and knockout formats as specified in the rulebook",
     accent: "gold",
-    image: null,
+    image: "/images2026/lawntennis.png",
     glyph: "lawn",
   },
 
@@ -250,7 +250,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "FIDE Swiss system; qualifier/knockout may precede the Swiss league depending on entries",
     accent: "violet",
-    image: null,
+    image: "/images2026/chess.png",
     glyph: "chess",
   },
 
@@ -297,7 +297,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "Two innings; 9-minute turns for Men and 7-minute turns for Women; knockout matches",
     accent: "violet",
-    image: null,
+    image: "/images2026/khokho.png",
     glyph: "kho-kho",
   },
 
