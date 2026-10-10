@@ -168,6 +168,12 @@ def match_out(m: Match, events: dict[str, Event]) -> dict:
     }
     if m.clock:
         out["clock"] = m.clock
+    if m.match_format:
+        out["format"] = m.match_format
+    if m.sets:
+        out["sets"] = [{"home": s.get("home", ""), "away": s.get("away", "")} for s in m.sets]
+    if m.participants:
+        out["participants"] = [{"name": p.get("name", ""), "score": _score(p.get("score", ""))} for p in m.participants]
     return out
 
 
@@ -178,6 +184,10 @@ def recent_result_out(m: Match, events: dict[str, Event]) -> dict:
     else:
         winner, loser, ws, ls = m.home_name, m.away_name, m.home_score, m.away_score
     score = m.result_summary or (f"{ws} – {ls}" if ws or ls else "")
+    if not m.result_summary and m.sets:
+        w = "away" if m.winner == "away" else "home"
+        l = "home" if w == "away" else "away"
+        score += " (" + ", ".join(f"{x.get(w, '')}-{x.get(l, '')}" for x in m.sets) + ")"
     return {
         "sport": ev.name if ev else m.event_slug,
         "winner": winner,
@@ -262,6 +272,10 @@ def list_events(db: Session) -> list[Event]:
     return list(db.scalars(select(Event).order_by(Event.sort_order, Event.name)))
 
 
+def _norm(s: str) -> str:
+    return re.sub(r"\s+", " ", (s or "").strip().lower())
+
+
 def compute_rankings(db: Session) -> list[dict]:
     """
     Standings = manual base values (standings table) + every finished match
@@ -281,18 +295,37 @@ def compute_rankings(db: Session) -> list[dict]:
         r = row_for(s.team_slug, s.team_name)
         r.update(matches=s.matches, wins=s.wins, losses=s.losses, points=s.points, winPct=s.win_pct)
 
+    # Admins type team names by hand, so link a side to a team by its slug, name or
+    # department; a name that matches no team still gets its own row.
+    lookup: dict[str, str] = {}
+    for t in teams.values():
+        for key in (t.slug, t.name, getattr(t, "department", "") or ""):
+            if key:
+                lookup.setdefault(_norm(key), t.slug)
+
+    def side_key(slug: str | None, name: str) -> str | None:
+        if slug:
+            return slug
+        n = _norm(name)
+        if not n or n in {"tbd", "tba", "-", "bye"}:
+            return None
+        return lookup.get(n) or n
+
     finals = db.scalars(
         select(Match).where(
             Match.status == "final",
             Match.winner.is_not(None),
             Match.counts_for_standings.is_(True),
-            Match.home_team_slug.is_not(None),
-            Match.away_team_slug.is_not(None),
         )
     )
     for m in finals:
-        home = row_for(m.home_team_slug, m.home_name)
-        away = row_for(m.away_team_slug, m.away_name)
+        if m.participants:
+            continue  # multi-team rounds (quiz) have no single winner/loser
+        hk, ak = side_key(m.home_team_slug, m.home_name), side_key(m.away_team_slug, m.away_name)
+        if not hk or not ak or hk == ak:
+            continue
+        home = row_for(hk, m.home_name.strip())
+        away = row_for(ak, m.away_name.strip())
         home["matches"] += 1
         away["matches"] += 1
         if m.winner == "draw":

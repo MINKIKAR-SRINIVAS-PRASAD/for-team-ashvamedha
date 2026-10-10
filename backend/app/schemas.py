@@ -165,6 +165,26 @@ class SponsorIn(CamelModel):
 # ── Matches ─────────────────────────────────────────────────────────────────
 
 
+class SetScore(CamelModel):
+    home: str = ""
+    away: str = ""
+
+    @field_validator("home", "away", mode="before")
+    @classmethod
+    def _to_str(cls, v: Any) -> str:
+        return "" if v is None else str(v).strip()
+
+
+class Participant(CamelModel):
+    name: str = Field(min_length=1, max_length=120)
+    score: str = ""
+
+    @field_validator("score", mode="before")
+    @classmethod
+    def _to_str(cls, v: Any) -> str:
+        return "" if v is None else str(v).strip()
+
+
 class MatchIn(CamelModel):
     id: str = Field(default_factory=lambda: new_id("m-"))
     event_slug: str
@@ -182,6 +202,23 @@ class MatchIn(CamelModel):
     result_summary: str = ""
     counts_for_standings: bool = True
     sort_order: int = 0
+    match_format: Literal["", "singles", "doubles", "mixed-doubles"] = ""
+    sets: list[SetScore] = Field(default_factory=list, max_length=7)
+    participants: list[Participant] = Field(default_factory=list, max_length=40)
+
+    @model_validator(mode="before")
+    @classmethod
+    def _names_from_participants(cls, data: Any) -> Any:
+        """A multi-team match only needs its team list; home/away mirror the first two."""
+        if isinstance(data, dict):
+            parts = data.get("participants") or []
+            if len(parts) >= 2:
+                data = dict(data)
+                first, second = (p.get("name") if isinstance(p, dict) else getattr(p, "name", "") for p in parts[:2])
+                for key, camel, val in (("home_name", "homeName", first), ("away_name", "awayName", second)):
+                    data.pop(camel, None)
+                    data[key] = val
+        return data
 
     @field_validator("home_score", "away_score", mode="before")
     @classmethod
@@ -192,8 +229,10 @@ class MatchIn(CamelModel):
 
 
 class ScoreDelta(CamelModel):
-    side: Literal["home", "away"]
+    side: Literal["home", "away"] = "home"
     delta: int = Field(ge=-100, le=100)
+    # Multi-team matches: which team in `participants` to change.
+    index: Optional[int] = Field(default=None, ge=0)
 
 
 # ── Registrations ───────────────────────────────────────────────────────────

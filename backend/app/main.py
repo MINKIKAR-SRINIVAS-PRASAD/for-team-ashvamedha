@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
 
 from app.config import settings
-from app.database import Base, SessionLocal, engine
+from app.database import Base, SessionLocal, add_missing_columns, engine
 from app.routers import auth, content, matches, public, registrations
 from app.seed import ensure_admin, ensure_sport_admins, seed_if_empty
 from app.services import cache
@@ -21,6 +21,7 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     Base.metadata.create_all(bind=engine)
+    add_missing_columns()
     with SessionLocal() as db:
         if settings.auto_seed:
             seed_if_empty(db)
