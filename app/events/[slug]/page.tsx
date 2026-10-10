@@ -180,7 +180,7 @@ export default async function EventDetailPage({
       {/* live scores and results for this sport */}
       <section
         id="live-scores"
-        className="section-pad scroll-mt-[var(--nav-h)]"
+        className="relative section-pad scroll-mt-[var(--nav-h)]"
         aria-label={`${event.name} live scores`}
       >
         <div className="shell">

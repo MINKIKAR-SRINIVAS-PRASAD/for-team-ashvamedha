@@ -13,7 +13,25 @@ export interface LiveMatch {
   clock?: string;
   detail: string;
   accent: "crimson" | "volt" | "violet" | "gold";
+  /** Racquet sports: singles | doubles | mixed-doubles. */
+  format?: MatchFormat;
+  /** Racquet sports: points per set; home/away score is then sets won. */
+  sets?: SetScore[];
+  /** Multi-team rounds (sports quiz): every team and its score. */
+  participants?: { name: string; score: number | string }[];
 }
+
+export type MatchFormat = "singles" | "doubles" | "mixed-doubles";
+export interface SetScore {
+  home: string;
+  away: string;
+}
+
+export const FORMAT_LABEL: Record<MatchFormat, string> = {
+  singles: "Singles",
+  doubles: "Doubles",
+  "mixed-doubles": "Mixed doubles",
+};
 
 export const LIVE_MATCHES: LiveMatch[] = [
   {

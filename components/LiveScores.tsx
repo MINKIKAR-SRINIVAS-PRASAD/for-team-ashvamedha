@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Radio } from "lucide-react";
 import Link from "next/link";
 import { useFestData } from "@/components/FestDataProvider";
-import type { LiveMatch } from "@/data/liveScores";
+import { FORMAT_LABEL, type LiveMatch } from "@/data/liveScores";
 import { useLiveFeed } from "@/lib/hooks/useLiveFeed";
 import { accentOf } from "@/lib/accents";
 import { EASE } from "@/lib/motion";
@@ -109,34 +109,59 @@ export function MatchCard({ m, i = 0, showLink = true }: { m: LiveMatch; i?: num
         <div className="flex items-center justify-between">
           <span className="font-mono text-[9px] tracking-hud text-silver-dim">
             {m.sport.toUpperCase()}
+            {m.format ? ` · ${FORMAT_LABEL[m.format].toUpperCase()}` : ""}
           </span>
           <Radio className="h-3.5 w-3.5 text-silver-dim" />
         </div>
 
-        {/* scoreline */}
-        <div className="mt-5 space-y-3">
-          {[m.home, m.away].map((side, si) => (
-            <div key={side.name} className="flex items-center justify-between gap-4">
-              <span
-                className={cn(
-                  "truncate text-[0.95rem]",
-                  si === 0 ? "text-white" : "text-silver",
-                )}
-              >
-                {side.name}
-              </span>
-              <span
-                className={cn(
-                  "font-display text-3xl leading-none tabular-nums",
-                  live ? "text-white" : "text-silver-dim",
-                )}
-                style={live && si === 0 ? { textShadow: `0 0 24px ${a.base}66` } : undefined}
-              >
-                {side.score}
-              </span>
+        {m.participants && m.participants.length > 2 ? (
+          <TeamTable m={m} live={live} />
+        ) : (
+          <>
+            {/* scoreline */}
+            <div className="mt-5 space-y-3">
+              {(["home", "away"] as const).map((key, si) => {
+                const side = m[key];
+                return (
+                  <div key={`${key}-${side.name}`} className="flex items-center justify-between gap-4">
+                    <span className={cn("min-w-0", si === 0 ? "text-white" : "text-silver")}>
+                      <span className="block truncate text-[0.95rem]">{side.name}</span>
+                      {m.sets && m.sets.length > 0 && (
+                        <span className="mt-1 flex flex-wrap gap-1.5 font-mono text-[10px] tabular-nums text-silver-dim">
+                          {m.sets.map((st, k) => (
+                            <span
+                              key={k}
+                              className={cn(
+                                "border border-white/10 px-1.5 py-0.5",
+                                Number(st[key]) > Number(st[key === "home" ? "away" : "home"]) && "text-white",
+                              )}
+                            >
+                              {st[key] || "0"}
+                            </span>
+                          ))}
+                        </span>
+                      )}
+                    </span>
+                    <span
+                      className={cn(
+                        "font-display text-3xl leading-none tabular-nums",
+                        live ? "text-white" : "text-silver-dim",
+                      )}
+                      style={live && si === 0 ? { textShadow: `0 0 24px ${a.base}66` } : undefined}
+                    >
+                      {side.score}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
+            {m.sets && m.sets.length > 0 && (
+              <p className="mt-3 font-mono text-[9px] tracking-hud text-silver-dim">
+                SETS WON{live ? ` · SET ${m.sets.length} IN PLAY` : ""}
+              </p>
+            )}
+          </>
+        )}
 
         <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-3.5">
           <span className="font-mono text-[9px] tracking-hud text-silver-dim">{m.detail}</span>
@@ -158,5 +183,31 @@ export function MatchCard({ m, i = 0, showLink = true }: { m: LiveMatch; i?: num
         style={{ background: `linear-gradient(90deg, transparent, ${a.base}, transparent)` }}
       />
     </motion.article>
+  );
+}
+
+/** Multi-team round (sports quiz): every team, highest score first. */
+function TeamTable({ m, live }: { m: LiveMatch; live: boolean }) {
+  const num = (v: number | string) => (typeof v === "number" ? v : Number.isNaN(Number(v)) ? -1 : Number(v));
+  const rows = [...(m.participants ?? [])].sort((x, y) => num(y.score) - num(x.score));
+  return (
+    <ol className="mt-5 space-y-1.5">
+      {rows.map((p, k) => (
+        <li key={`${p.name}-${k}`} className="flex items-center justify-between gap-4">
+          <span className={cn("flex min-w-0 items-center gap-2.5 text-[0.9rem]", k === 0 ? "text-white" : "text-silver")}>
+            <span className="w-5 font-mono text-[10px] text-silver-dim">{String(k + 1).padStart(2, "0")}</span>
+            <span className="truncate">{p.name}</span>
+          </span>
+          <span
+            className={cn(
+              "font-display text-xl leading-none tabular-nums",
+              live || k === 0 ? "text-white" : "text-silver-dim",
+            )}
+          >
+            {p.score}
+          </span>
+        </li>
+      ))}
+    </ol>
   );
 }

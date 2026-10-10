@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     upi_payee_name: str = "ASHVAMEDHA IIT Bhubaneswar"
 
     auto_seed: bool = True
+    # Put the frontend's sample live scores (made-up teams) into a new database.
+    # Off by default so a fresh database starts with no live matches.
+    seed_demo_matches: bool = False
     points_win: int = 3
     points_draw: int = 1
     points_loss: int = 0

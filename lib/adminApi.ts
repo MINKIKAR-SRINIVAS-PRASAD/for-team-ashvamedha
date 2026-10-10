@@ -5,6 +5,7 @@
  * refresh, but opening the site in a new tab or browser asks for the login again.
  */
 
+import type { MatchFormat, SetScore } from "@/data/liveScores";
 import { PUBLIC_API_URL } from "@/lib/festData";
 
 const TOKEN_KEY = "ashvamedha-admin-token";
@@ -37,6 +38,9 @@ export interface AdminMatch {
   winner: "home" | "away" | "draw" | null;
   resultSummary: string;
   updatedAt: string | null;
+  format?: MatchFormat;
+  sets?: SetScore[];
+  participants?: { name: string; score: number | string }[];
 }
 
 export class ApiError extends Error {
@@ -124,6 +128,13 @@ export const bumpScore = (id: string, side: "home" | "away", delta: number) =>
   adminFetch<AdminMatch>(`/api/admin/matches/${encodeURIComponent(id)}/score`, {
     method: "POST",
     body: JSON.stringify({ side, delta }),
+  });
+
+/** Multi-team matches (quiz): change the score of the team at `index`. */
+export const bumpTeamScore = (id: string, index: number, delta: number) =>
+  adminFetch<AdminMatch>(`/api/admin/matches/${encodeURIComponent(id)}/score`, {
+    method: "POST",
+    body: JSON.stringify({ index, delta }),
   });
 
 export const createMatch = (data: Record<string, unknown>) =>

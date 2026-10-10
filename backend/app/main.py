@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -9,9 +10,10 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
 
 from app.config import settings
-from app.database import Base, SessionLocal, engine
+from app.database import Base, SessionLocal, add_missing_columns, engine
 from app.routers import auth, content, matches, public, registrations
 from app.seed import ensure_admin, ensure_sport_admins, seed_if_empty
+from app.services import cache
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
@@ -19,6 +21,7 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     Base.metadata.create_all(bind=engine)
+    add_missing_columns()
     with SessionLocal() as db:
         if settings.auto_seed:
             seed_if_empty(db)
@@ -27,6 +30,12 @@ async def lifespan(_: FastAPI):
             ensure_sport_admins(db)
     if settings.secret_key.startswith("dev-only") or settings.admin_password in {"admin123", "change-me-now"}:
         print("[warning] Using default SECRET_KEY or ADMIN_PASSWORD. Set real values in .env before deploying!")
+    if settings.sqlalchemy_url.startswith("sqlite") and os.environ.get("RENDER"):
+        print(
+            "[warning] DATABASE_URL is not set, so data is kept in a SQLite file that Render wipes "
+            "on every restart or sleep. Live scores, sport admins and edits will be lost. "
+            "Set DATABASE_URL to a Postgres database."
+        )
     yield
 
 
@@ -49,6 +58,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(GZipMiddleware, minimum_size=1024)
+
+
+@app.middleware("http")
+async def clear_public_cache_on_admin_write(request: Request, call_next):
+    """Any successful admin change empties the public cache, so the site shows it at once."""
+    response = await call_next(request)
+    if (
+        request.method not in ("GET", "HEAD", "OPTIONS")
+        and request.url.path.startswith("/api/admin")
+        and response.status_code < 400
+    ):
+        cache.clear()
+    return response
 
 
 @app.exception_handler(ValidationError)

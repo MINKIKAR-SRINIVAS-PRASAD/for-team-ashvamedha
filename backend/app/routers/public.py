@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Event, GalleryItem, Match, ScheduleDay, ScheduleSlot, Sponsor
-from app.services import fest
+from app.services import cache, fest
 
 router = APIRouter(prefix="/api", tags=["public"])
 
@@ -20,7 +20,7 @@ def health(db: Session = Depends(get_db)):
 
 @router.get("/public/bundle", summary="Everything the website renders, in one call")
 def public_bundle(db: Session = Depends(get_db)):
-    return fest.bundle(db)
+    return cache.cached(("bundle",), lambda: fest.bundle(db))
 
 
 @router.get("/events")
@@ -60,7 +60,7 @@ def leaderboard(db: Session = Depends(get_db)):
 
 @router.get("/matches/live", summary="Live ticker: live, then upcoming, then just-finished")
 def matches_live(db: Session = Depends(get_db)):
-    return fest.live_matches(db, fest.events_map(db))
+    return cache.cached(("matches_live",), lambda: fest.live_matches(db, fest.events_map(db)))
 
 
 @router.get("/matches")
@@ -69,18 +69,21 @@ def matches(
     event: Optional[str] = None,
     db: Session = Depends(get_db),
 ):
-    q = select(Match).order_by(Match.sort_order, Match.created_at.desc())
-    if status:
-        q = q.where(Match.status == status)
-    if event:
-        q = q.where(Match.event_slug == event)
-    ev = fest.events_map(db)
-    return [fest.match_out(m, ev) for m in db.scalars(q)]
+    def compute():
+        q = select(Match).order_by(Match.sort_order, Match.created_at.desc())
+        if status:
+            q = q.where(Match.status == status)
+        if event:
+            q = q.where(Match.event_slug == event)
+        ev = fest.events_map(db)
+        return [fest.match_out(m, ev) for m in db.scalars(q)]
+
+    return cache.cached(("matches", status, event), compute)
 
 
 @router.get("/results/recent")
 def results_recent(limit: int = Query(8, ge=1, le=50), db: Session = Depends(get_db)):
-    return fest.recent_results(db, fest.events_map(db), limit)
+    return cache.cached(("results_recent", limit), lambda: fest.recent_results(db, fest.events_map(db), limit))
 
 
 @router.get("/gallery")

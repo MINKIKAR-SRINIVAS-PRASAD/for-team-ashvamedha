@@ -13,11 +13,11 @@ const GROUPS: { status: LiveMatch["status"]; label: string; empty: string }[] = 
 ];
 
 /**
- * Every match of one sport (live, upcoming and finished), refreshed every 15s.
+ * Every match of one sport (live, upcoming and finished), refreshed every 30s.
  * Starts from the server-rendered ticker so there's no empty flash, and keeps the
  * last good data if the API can't be reached.
  */
-export function EventLiveScores({ eventSlug, pollMs = 15_000 }: { eventSlug: string; pollMs?: number }) {
+export function EventLiveScores({ eventSlug, pollMs = 30_000 }: { eventSlug: string; pollMs?: number }) {
   const { liveMatches } = useFestData();
   const [matches, setMatches] = useState<LiveMatch[]>(() =>
     liveMatches.filter((m) => m.eventSlug === eventSlug),
@@ -78,7 +78,7 @@ export function EventLiveScores({ eventSlug, pollMs = 15_000 }: { eventSlug: str
       <p className="flex items-center gap-2 font-mono text-[10px] tracking-hud text-silver-dim">
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
         Feed synced {updatedAt ? updatedAt.toLocaleTimeString("en-IN", { hour12: false }) : "—"} · updates
-        every 15s
+        every 30s
       </p>
     </div>
   );

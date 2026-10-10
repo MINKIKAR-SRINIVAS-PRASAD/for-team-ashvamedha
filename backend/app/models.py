@@ -121,6 +121,12 @@ class Match(Base):
     result_summary: Mapped[str] = mapped_column(String(120), default="")
     counts_for_standings: Mapped[bool] = mapped_column(Boolean, default=True)
     sort_order: Mapped[int] = mapped_column(Integer, default=0)
+    # Racquet sports: singles | doubles | mixed-doubles, and per-set points [{"home": "11", "away": "7"}].
+    # When sets are given, home_score/away_score hold the number of sets won.
+    match_format: Mapped[str] = mapped_column(String(20), default="")
+    sets: Mapped[list[dict]] = mapped_column(JSON, default=list)
+    # Multi-team matches (sports quiz): [{"name": "...", "score": "12"}]. Not counted in standings.
+    participants: Mapped[list[dict]] = mapped_column(JSON, default=list)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow, onupdate=utcnow)
     finished_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)

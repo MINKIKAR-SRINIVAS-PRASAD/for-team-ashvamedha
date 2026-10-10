@@ -28,6 +28,37 @@ def _auto_winner(m: Match) -> str | None:
     return "home" if h > a else "away" if a > h else "draw"
 
 
+_NUM = re.compile(r"-?\d+")
+
+
+def _sync_sets(m: Match) -> None:
+    """With per-set scores, the match score is the number of sets each side has won."""
+    if m.participants and m.status != "upcoming" and any(not p.get("score") for p in m.participants):
+        m.participants = [{**p, "score": p.get("score") or "0"} for p in m.participants]
+    if m.match_format and not m.sets and m.status != "upcoming":
+        m.sets = [{"home": "0", "away": "0"}]
+    if not m.sets:
+        return
+    home = away = 0
+    for s in m.sets:
+        h, a = s.get("home", ""), s.get("away", "")
+        if _NUM.fullmatch(h) and _NUM.fullmatch(a) and h != a:
+            if int(h) > int(a):
+                home += 1
+            elif int(a) > int(h):
+                away += 1
+    if m.status == "live":
+        # The set being played doesn't count until it's over: leave it out while it's still going.
+        last = m.sets[-1]
+        h, a = last.get("home", ""), last.get("away", "")
+        if _NUM.fullmatch(h) and _NUM.fullmatch(a) and h != a:
+            if int(h) > int(a):
+                home -= 1
+            else:
+                away -= 1
+    m.home_score, m.away_score = str(home), str(away)
+
+
 def _apply_status_rules(m: Match, previous_status: str | None) -> None:
     if m.status == "final":
         if previous_status != "final" or m.finished_at is None:
@@ -65,6 +96,7 @@ def create_match(body: MatchIn, db: Session = Depends(get_db), user: User = Depe
     if db.get(Match, body.id):
         raise HTTPException(409, f"A match with id '{body.id}' already exists")
     m = Match(**body.model_dump())
+    _sync_sets(m)
     _apply_status_rules(m, None)
     if body.winner and body.status == "final":
         m.winner = body.winner
@@ -94,6 +126,7 @@ def update_match(
     explicit_winner = data["winner"] if "winner" in body else None
     for k, v in data.items():
         setattr(m, k, v)
+    _sync_sets(m)
     if m.status == "final":
         if previous != "final" or m.finished_at is None:
             m.finished_at = utcnow()
@@ -116,16 +149,41 @@ def bump_score(
 ):
     m = _get(db, match_id)
     ensure_event_access(user, m.event_slug)
-    attr = f"{body.side}_score"
-    raw = getattr(m, attr) or "0"
-    if not re.fullmatch(r"-?\d+", raw):
-        raise HTTPException(400, "This score isn't a plain number; edit it directly instead")
-    setattr(m, attr, str(max(0, int(raw) + body.delta)))
+    if m.match_format and not m.sets:
+        m.sets = [{"home": "0", "away": "0"}]
+    if m.participants:
+        if body.index is None or body.index >= len(m.participants):
+            raise HTTPException(400, "Pick which team's score to change")
+        parts = [dict(p) for p in m.participants]
+        raw = parts[body.index].get("score") or "0"
+        if not _NUM.fullmatch(raw):
+            raise HTTPException(400, "This score isn't a plain number; edit it directly instead")
+        parts[body.index]["score"] = str(max(0, int(raw) + body.delta))
+        m.participants = parts
+    elif m.sets:
+        # +/- changes the points of the set being played (the last one).
+        sets = [dict(x) for x in m.sets]
+        cur = sets[-1]
+        raw = cur.get(body.side) or "0"
+        if not _NUM.fullmatch(raw):
+            raise HTTPException(400, "This set's score isn't a plain number; edit it directly instead")
+        cur[body.side] = str(max(0, int(raw) + body.delta))
+        other = "away" if body.side == "home" else "home"
+        cur[other] = cur.get(other) or "0"
+        m.sets = sets
+    else:
+        attr = f"{body.side}_score"
+        raw = getattr(m, attr) or "0"
+        if not _NUM.fullmatch(raw):
+            raise HTTPException(400, "This score isn't a plain number; edit it directly instead")
+        setattr(m, attr, str(max(0, int(raw) + body.delta)))
     if m.status == "upcoming":
         m.status = "live"
-        other = "away_score" if body.side == "home" else "home_score"
-        if not getattr(m, other):
-            setattr(m, other, "0")
+        if not m.participants and not m.sets:
+            other = "away_score" if body.side == "home" else "home_score"
+            if not getattr(m, other):
+                setattr(m, other, "0")
+    _sync_sets(m)
     db.commit()
     return match_out(m, events_map(db))
 
