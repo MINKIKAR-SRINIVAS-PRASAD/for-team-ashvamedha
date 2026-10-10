@@ -12,6 +12,7 @@ from app.config import settings
 from app.database import Base, SessionLocal, engine
 from app.routers import auth, content, matches, public, registrations
 from app.seed import ensure_admin, ensure_sport_admins, seed_if_empty
+from app.services import cache
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
@@ -49,6 +50,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(GZipMiddleware, minimum_size=1024)
+
+
+@app.middleware("http")
+async def clear_public_cache_on_admin_write(request: Request, call_next):
+    """Any successful admin change empties the public cache, so the site shows it at once."""
+    response = await call_next(request)
+    if (
+        request.method not in ("GET", "HEAD", "OPTIONS")
+        and request.url.path.startswith("/api/admin")
+        and response.status_code < 400
+    ):
+        cache.clear()
+    return response
 
 
 @app.exception_handler(ValidationError)

@@ -20,7 +20,7 @@ async function fetchMatches(): Promise<LiveMatch[] | null> {
   }
 }
 
-export function useLiveFeed(pollMs = 15_000) {
+export function useLiveFeed(pollMs = 30_000) {
   const { liveMatches } = useFestData();
   const [matches, setMatches] = useState<LiveMatch[]>(liveMatches);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
