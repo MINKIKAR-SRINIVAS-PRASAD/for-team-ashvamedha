@@ -127,5 +127,7 @@ class RateLimiter:
             q.append(now)
 
 
-login_limiter = RateLimiter(limit=10, window_seconds=300)
-registration_limiter = RateLimiter(limit=8, window_seconds=600)
+# Limits are per IP, and a campus Wi-Fi shares one IP, so they allow a crowd
+# while still stopping scripted password guessing and spam.
+login_limiter = RateLimiter(limit=40, window_seconds=300)
+registration_limiter = RateLimiter(limit=100, window_seconds=600)
