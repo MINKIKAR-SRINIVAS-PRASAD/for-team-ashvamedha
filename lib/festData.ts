@@ -36,7 +36,6 @@ import {
 
 import {
   EVENT_CHAMPIONS,
-  LIVE_MATCHES,
   PODIUM_2025,
   PREVIOUS_EDITIONS,
   RECENT_RESULTS,
@@ -138,8 +137,9 @@ export const STATIC_FEST_DATA: FestData = {
   championSpotlight:
     CHAMPION_SPOTLIGHT,
 
-  liveMatches:
-    LIVE_MATCHES,
+  // No sample scores: when the backend is asleep or unreachable,
+  // show "no live matches" rather than made-up ones.
+  liveMatches: [],
 
   recentResults:
     RECENT_RESULTS,

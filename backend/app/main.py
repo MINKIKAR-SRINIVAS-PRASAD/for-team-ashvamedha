@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -28,6 +29,12 @@ async def lifespan(_: FastAPI):
             ensure_sport_admins(db)
     if settings.secret_key.startswith("dev-only") or settings.admin_password in {"admin123", "change-me-now"}:
         print("[warning] Using default SECRET_KEY or ADMIN_PASSWORD. Set real values in .env before deploying!")
+    if settings.sqlalchemy_url.startswith("sqlite") and os.environ.get("RENDER"):
+        print(
+            "[warning] DATABASE_URL is not set, so data is kept in a SQLite file that Render wipes "
+            "on every restart or sleep. Live scores, sport admins and edits will be lost. "
+            "Set DATABASE_URL to a Postgres database."
+        )
     yield
 
 

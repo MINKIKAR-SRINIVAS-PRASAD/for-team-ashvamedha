@@ -590,8 +590,8 @@ def seed(db: Session) -> None:
             )
         )
 
-    # Demo fixtures.
-    for i, m in enumerate(data["LIVE_MATCHES"]):
+    # Demo fixtures (sample teams); only when SEED_DEMO_MATCHES=true.
+    for i, m in enumerate(data["LIVE_MATCHES"] if settings.seed_demo_matches else []):
         home, away = m["home"], m["away"]
 
         db.add(
