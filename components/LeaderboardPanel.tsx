@@ -18,9 +18,10 @@ const numCls = cn(inputCls, "w-20 text-right tabular-nums");
 
 type NumKey = "matches" | "wins" | "losses" | "points";
 const NUM_KEYS: [NumKey, string][] = [
-  ["matches", "Matches"],
-  ["wins", "Wins"],
-  ["losses", "Losses"],
+  // Hidden while the public table shows points only; uncomment to edit them again.
+  // ["matches", "Matches"],
+  // ["wins", "Wins"],
+  // ["losses", "Losses"],
   ["points", "Points"],
 ];
 
@@ -174,7 +175,7 @@ export function LeaderboardPanel({ onError }: { onError: (err: unknown) => void 
           <tbody>
             {sorted.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-3 py-6 text-silver-dim">
+                <td colSpan={NUM_KEYS.length + 2} className="px-3 py-6 text-silver-dim">
                   No rows yet. Add a team below, or press &quot;Reset to default rows&quot;.
                 </td>
               </tr>

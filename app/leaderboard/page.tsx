@@ -8,7 +8,7 @@ import { LeaderboardStats } from "@/components/LeaderboardStats";
 export const metadata: Metadata = {
   title: "Leaderboard",
   description:
-    "ASHVAMEDHA 2026 championship standings — rank, matches, wins, losses, points and win percentage for every competing squad.",
+    "ASHVAMEDHA 2026 championship standings — rank and points for every competing squad.",
 };
 
 export default function LeaderboardPage() {
@@ -24,8 +24,8 @@ export default function LeaderboardPage() {
             <span className="text-metal">TABLE</span>
           </h1>
           <p className="mt-6 max-w-2xl text-[1rem] leading-relaxed text-silver-dim">
-            Standings are recalculated after every completed fixture. Sort by rank, points, wins or
-            win percentage — the podium is locked to gold, silver and bronze.
+            Standings are recalculated after every completed fixture. Sort by rank or points — the
+            podium is locked to gold, silver and bronze.
           </p>
 
           <LeaderboardStats />
