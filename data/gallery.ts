@@ -6,14 +6,12 @@
 export interface GalleryItem {
   id: string;
   title: string;
-  /** Real photo path, or null to render the procedural battlefield frame. */
   image: string | null;
   caption: string;
-  /** Masonry weight — controls how tall the frame renders. */
+  category?: string;
   span: "tall" | "wide" | "square";
   accent: "crimson" | "volt" | "violet" | "gold";
 }
-
 export const GALLERY: GalleryItem[] = [
   {
     id: "g1",

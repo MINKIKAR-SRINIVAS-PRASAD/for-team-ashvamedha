@@ -129,8 +129,8 @@ export function Gallery({ limit }: { limit?: number }) {
                 <BattlefieldFrame
                   seedKey={`gallery-${item.id}`}
                   accent={item.accent}
-                  glyph={CATEGORY_GLYPH[item.category]}
-                  label={item.category}
+                  glyph={CATEGORY_GLYPH[item.category as keyof typeof CATEGORY_GLYPH] ?? "football"}
+                  label={item.category ?? "MATCHDAY"}
                   className="absolute inset-0 h-full w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.08]"
                 />
 
@@ -186,7 +186,7 @@ export function Gallery({ limit }: { limit?: number }) {
                 <BattlefieldFrame
                   seedKey={`gallery-${active.id}`}
                   accent={active.accent}
-                  glyph={CATEGORY_GLYPH[active.category]}
+                  glyph={CATEGORY_GLYPH[active.category as keyof typeof CATEGORY_GLYPH] ?? "football" }
                   label={active.category}
                   className="h-[52vh] w-full sm:h-[64vh]"
                 />
