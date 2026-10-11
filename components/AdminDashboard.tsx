@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Lock, LogOut, Minus, Play, Plus, RotateCcw, Square, Trash2 } from "lucide-react";
+import { LeaderboardPanel } from "@/components/LeaderboardPanel";
 import { SportAdminsPanel } from "@/components/SportAdminsPanel";
 import { useFestData } from "@/components/FestDataProvider";
 import {
@@ -63,7 +64,7 @@ export function AdminDashboard() {
   const [user, setUser] = useState<AdminUser | null>(null);
   const [matches, setMatches] = useState<AdminMatch[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [tab, setTab] = useState<"scores" | "admins">("scores");
+  const [tab, setTab] = useState<"scores" | "leaderboard" | "admins">("scores");
 
   const handleError = useCallback(
     (err: unknown) => {
@@ -163,6 +164,7 @@ export function AdminDashboard() {
           {(
             [
               ["scores", "Live scores"],
+              ["leaderboard", "Leaderboard"],
               ["admins", "Sport admins"],
             ] as const
           ).map(([id, label]) => (
@@ -189,7 +191,9 @@ export function AdminDashboard() {
         </p>
       )}
 
-      {user.role === "admin" && tab === "admins" ? (
+      {user.role === "admin" && tab === "leaderboard" ? (
+        <LeaderboardPanel onError={handleError} />
+      ) : user.role === "admin" && tab === "admins" ? (
         <SportAdminsPanel events={events} onError={handleError} />
       ) : (
         <>

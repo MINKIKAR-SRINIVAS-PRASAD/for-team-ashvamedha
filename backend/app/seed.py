@@ -229,7 +229,7 @@ def seed(db: Database) -> None:
         write_record(db, "matches", doc)
 
     for i, gallery in enumerate(data.get("GALLERY", [])):
-        write_record(db, "gallery_items", {"id": gallery["id"], "title": gallery["title"], "category": gallery["category"],
+        write_record(db, "gallery_items", {"id": gallery.get("id") or f"g-{i}", "title": gallery.get("title") or "Photo", "category": gallery.get("category", ""),
             "image": gallery.get("image"), "caption": gallery.get("caption", ""), "span": gallery.get("span", "square"),
             "accent": gallery.get("accent", "crimson"), "sort_order": i})
 
