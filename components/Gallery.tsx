@@ -1,12 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, ZoomIn } from "lucide-react";
+import { X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+
 import { BattlefieldFrame } from "@/components/art/BattlefieldFrame";
-import { GALLERY_CATEGORIES, type GalleryItem } from "@/data/gallery";
+import type { GalleryItem } from "@/data/gallery";
 import { useFestData } from "@/components/FestDataProvider";
-import { accentOf } from "@/lib/accents";
 import { EASE } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -16,47 +17,50 @@ const SPAN_CLASS: Record<GalleryItem["span"], string> = {
   square: "h-[340px] sm:h-[400px]",
 };
 
-/** Glyph key per gallery category so each frame gets a fitting sigil. */
-const CATEGORY_GLYPH = {
+const CATEGORY_GLYPH: Record<string, string> = {
   MATCHDAY: "football",
   ATHLETES: "swimming",
   CROWD: "volleyball",
   CHAMPIONS: "basketball",
   CAMPUS: "swimming",
-  "BEHIND THE SCENES": "esportst",
-} as const;
+  "BEHIND THE SCENES": "esports",
+};
 
-/**
- * GALLERY — cinematic masonry with a fullscreen lightbox.
- * Scroll reveal, hover zoom, category filtering and keyboard-accessible lightbox
- * (Esc to close, ← / → to move between frames).
- */
 export function Gallery({ limit }: { limit?: number }) {
   const { gallery } = useFestData();
-  const [filter, setFilter] = useState<string>("ALL");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const items = useMemo(() => {
-    const list = filter === "ALL" ? gallery : gallery.filter((g) => g.category === filter);
-    return limit ? list.slice(0, limit) : list;
-  }, [filter, limit, gallery]);
+  const items = useMemo(
+    () => (limit ? gallery.slice(0, limit) : gallery),
+    [limit, gallery],
+  );
 
-  const close = useCallback(() => setOpenIndex(null), []);
+  const close = useCallback(() => {
+    setOpenIndex(null);
+  }, []);
+
   const step = useCallback(
-    (dir: number) =>
-      setOpenIndex((i) => (i === null ? null : (i + dir + items.length) % items.length)),
+    (direction: number) => {
+      setOpenIndex((index) => {
+        if (index === null || items.length === 0) return null;
+        return (index + direction + items.length) % items.length;
+      });
+    },
     [items.length],
   );
 
   useEffect(() => {
     if (openIndex === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowRight") step(1);
-      if (e.key === "ArrowLeft") step(-1);
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+      if (event.key === "ArrowRight") step(1);
+      if (event.key === "ArrowLeft") step(-1);
     };
+
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
@@ -67,170 +71,140 @@ export function Gallery({ limit }: { limit?: number }) {
 
   return (
     <div>
-      {!limit && (
-        <div
-          className="no-scrollbar -mx-[var(--shell)] mb-9 flex gap-2 overflow-x-auto px-[var(--shell)]"
-          role="tablist"
-          aria-label="Filter gallery by category"
-        >
-          {GALLERY_CATEGORIES.map((cat) => {
-            const isActive = filter === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => setFilter(cat)}
-                className={cn(
-                  "relative shrink-0 border px-4 py-2 font-mono text-[10px] uppercase tracking-hud transition-all duration-300",
-                  isActive
-                    ? "border-volt/60 bg-volt/10 text-white"
-                    : "border-white/12 text-silver-dim hover:border-white/30 hover:text-white",
-                )}
-              >
-                {cat}
-                {isActive && (
-                  <motion.span
-                    layoutId="gallery-filter"
-                    className="absolute inset-x-0 -bottom-px h-px bg-volt"
-                    style={{ boxShadow: "0 0 12px rgba(49,168,255,0.9)" }}
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {/* masonry via CSS columns — no JS layout measurement */}
+      {/* Photograph grid — no gallery filters, titles, or captions. */}
       <div className="columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5">
         <AnimatePresence mode="popLayout">
-          {items.map((item, i) => (
+          {items.map((item, index) => (
             <motion.figure
               key={item.id}
               layout
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -14 }}
-              transition={{ duration: 0.6, ease: EASE, delay: Math.min(i * 0.05, 0.4) }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{
+                duration: 0.5,
+                ease: EASE,
+                delay: Math.min(index * 0.04, 0.3),
+              }}
               className="group relative block break-inside-avoid"
             >
               <button
                 type="button"
-                onClick={() => setOpenIndex(i)}
+                onClick={() => setOpenIndex(index)}
                 className={cn(
-                  "relative block w-full overflow-hidden clip-notch border border-white/10",
+                  "relative block w-full overflow-hidden border border-white/10 bg-[#080a0c]",
                   SPAN_CLASS[item.span],
                 )}
-                data-cursor-label="OPEN"
-                aria-label={`Open ${item.title} fullscreen`}
+                aria-label={`Open photograph ${index + 1}`}
               >
-                <BattlefieldFrame
-                  seedKey={`gallery-${item.id}`}
-                  accent={item.accent}
-                  glyph={CATEGORY_GLYPH[item.category as keyof typeof CATEGORY_GLYPH] ?? "football"}
-                  label={item.category ?? "MATCHDAY"}
-                  className="absolute inset-0 h-full w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.08]"
-                />
+                {item.image ? (
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  />
+                ) : (
+                  <BattlefieldFrame
+                    seedKey={`gallery-${item.id}`}
+                    accent={item.accent}
+                    glyph={
+                      CATEGORY_GLYPH[item.category] ?? "football"
+                    }
+                    label=""
+                    className="absolute inset-0 h-full w-full"
+                  />
+                )}
 
-                {/* hover overlay */}
-                <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-void via-void/25 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-70" />
-                <span
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${accentOf(item.accent).base}, transparent)`,
-                  }}
-                />
-
-                <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 text-left">
-                  <span>
-                    <span className="block font-display text-lg leading-none text-white">
-                      {item.title}
-                    </span>
-                    <span className="mt-1 block font-mono text-[9px] tracking-hud text-silver-dim">
-                      {item.category}
-                    </span>
-                  </span>
-                  <ZoomIn className="h-4 w-4 shrink-0 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                </figcaption>
+                <span className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
               </button>
             </motion.figure>
           ))}
         </AnimatePresence>
       </div>
 
-      {/* ---- lightbox ---- */}
+      {/* Fullscreen photograph viewer — no title or caption. */}
       <AnimatePresence>
         {active && (
           <motion.div
-            className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-8"
+            className="fixed inset-0 z-[110] flex items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             role="dialog"
             aria-modal="true"
-            aria-label={`${active.title} — fullscreen view`}
+            aria-label="Fullscreen photograph viewer"
           >
-            <div className="absolute inset-0 bg-void/95 backdrop-blur-md" onClick={close} />
+            <button
+              type="button"
+              onClick={close}
+              aria-label="Close photograph"
+              className="absolute inset-0 bg-black/95 backdrop-blur-md"
+            />
 
             <motion.div
-              className="relative z-10 w-full max-w-5xl"
-              initial={{ scale: 0.94, opacity: 0 }}
+              className="relative z-10 h-[78vh] w-[92vw] sm:h-[84vh] sm:w-[88vw]"
+              initial={{ scale: 0.97, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.96, opacity: 0 }}
-              transition={{ duration: 0.4, ease: EASE }}
+              exit={{ scale: 0.98, opacity: 0 }}
+              transition={{ duration: 0.3, ease: EASE }}
             >
-              <div className="relative overflow-hidden clip-notch border border-white/15">
-                <BattlefieldFrame
-                  seedKey={`gallery-${active.id}`}
-                  accent={active.accent}
-                  glyph={CATEGORY_GLYPH[active.category as keyof typeof CATEGORY_GLYPH] ?? "football" }
-                  label={active.category}
-                  className="h-[52vh] w-full sm:h-[64vh]"
+              {active.image ? (
+                <Image
+                  src={active.image}
+                  alt={active.title}
+                  fill
+                  sizes="100vw"
+                  priority
+                  className="object-contain"
                 />
-              </div>
-
-              <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
-                <div>
-                  <h3 className="text-2xl text-white">{active.title}</h3>
-                  <p className="mt-1.5 max-w-xl text-[0.88rem] leading-relaxed text-silver-dim">
-                    {active.caption}
-                  </p>
+              ) : (
+                <div className="relative h-full w-full">
+                  <BattlefieldFrame
+                    seedKey={`gallery-${active.id}`}
+                    accent={active.accent}
+                    glyph={
+                      CATEGORY_GLYPH[active.category] ?? "football"
+                    }
+                    label=""
+                    className="h-full w-full"
+                  />
                 </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => step(-1)}
-                    className="btn btn-ghost clip-notch !px-4 !py-2.5"
-                    aria-label="Previous image"
-                  >
-                    ←
-                  </button>
-                  <span className="font-mono text-[10px] tracking-hud text-silver-dim">
-                    {String((openIndex ?? 0) + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => step(1)}
-                    className="btn btn-ghost clip-notch !px-4 !py-2.5"
-                    aria-label="Next image"
-                  >
-                    →
-                  </button>
-                </div>
-              </div>
+              )}
             </motion.div>
 
             <button
               type="button"
               onClick={close}
-              aria-label="Close fullscreen view"
-              className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center border border-white/20 text-white transition-colors hover:border-crimson/70 hover:text-crimson sm:right-8 sm:top-8"
+              aria-label="Close fullscreen viewer"
+              className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center border border-white/30 bg-black/40 text-white transition-colors hover:border-white sm:right-7 sm:top-7"
             >
               <X className="h-5 w-5" />
             </button>
+
+            {items.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => step(-1)}
+                  aria-label="Previous photograph"
+                  className="absolute left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center border border-white/25 bg-black/50 text-2xl text-white transition-colors hover:bg-white/15 sm:left-6"
+                >
+                  ‹
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => step(1)}
+                  aria-label="Next photograph"
+                  className="absolute right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center border border-white/25 bg-black/50 text-2xl text-white transition-colors hover:bg-white/15 sm:right-6"
+                >
+                  ›
+                </button>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
