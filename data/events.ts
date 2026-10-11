@@ -370,7 +370,7 @@ export const EVENTS: FestEvent[] = [
     prizePool: "TBA",
     format: "TBA",
     accent: "violet",
-    image: "/images2026/valorant.jpegg",
+    image: "/images2026/valorant.jpeg",
     glyph: "esportst",
   },
 
@@ -454,5 +454,6 @@ export const FEATURED_SLUGS = [
   "swimming",
   "kho-kho",
 ] as const;
+
 
 
