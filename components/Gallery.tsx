@@ -110,7 +110,8 @@ export function Gallery({ limit }: { limit?: number }) {
                     seedKey={`gallery-${item.id}`}
                     accent={item.accent}
                     glyph={
-CATEGORY_GLYPH[item.category as keyof typeof CATEGORY_GLYPH]                    }
+                      "football"
+                   }
                     label=""
                     className="absolute inset-0 h-full w-full"
                   />
