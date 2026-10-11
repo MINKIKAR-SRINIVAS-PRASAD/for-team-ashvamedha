@@ -5,6 +5,8 @@ import { Crown, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { LEADERBOARD_COLUMNS, winPercent, type RankingRow } from "@/data/leaderboard";
+
+// Matches, wins, losses and win % are hidden for now (commented out below), so points fill the row.
 import { useFestData } from "@/components/FestDataProvider";
 import { findTeam } from "@/lib/festData";
 import { EASE } from "@/lib/motion";
@@ -58,7 +60,7 @@ export function Leaderboard({ compact = false, rows: rowsProp }: { compact?: boo
     return copy;
   }, [rows, sort]);
 
-  const maxPct = 100;
+  // const maxPct = 100;
 
   return (
     <div className="panel clip-notch overflow-hidden">
@@ -73,8 +75,8 @@ export function Leaderboard({ compact = false, rows: rowsProp }: { compact?: boo
           {([
             ["rank", "Rank"],
             ["points", "Points"],
-            ["wins", "Wins"],
-            ["winPct", "Win %"],
+            // ["wins", "Wins"],
+            // ["winPct", "Win %"],
           ] as [SortKey, string][]).map(([key, label]) => (
             <button
               key={key}
@@ -96,7 +98,7 @@ export function Leaderboard({ compact = false, rows: rowsProp }: { compact?: boo
 
       {/* table (horizontally scrollable on small screens) */}
       <div className="no-scrollbar overflow-x-auto">
-        <table className="w-full min-w-[720px] border-collapse text-left">
+        <table className="w-full min-w-[420px] border-collapse text-left">
           <caption className="sr-only">
             ASHVAMEDHA 2026 championship standings — rank, team, matches, wins, losses, points
             and win percentage.
@@ -110,6 +112,7 @@ export function Leaderboard({ compact = false, rows: rowsProp }: { compact?: boo
                   className={cn(
                     "whitespace-nowrap px-4 py-3.5 font-mono text-[9px] font-normal uppercase tracking-hud text-silver-dim",
                     col === "Team" ? "text-left" : "text-center",
+                    col === "Points" && "w-1/2",
                   )}
                 >
                   {col}
@@ -120,7 +123,7 @@ export function Leaderboard({ compact = false, rows: rowsProp }: { compact?: boo
           <tbody>
             {sorted.map((row, i) => {
               const medal = MEDAL[row.rank];
-              const pct = winPercent(row);
+              // const pct = winPercent(row);
               const team = findTeam(teams, row.teamSlug);
 
               return (
@@ -179,17 +182,20 @@ export function Leaderboard({ compact = false, rows: rowsProp }: { compact?: boo
                     </div>
                   </td>
 
+                  {/* Hidden for now: matches, wins, losses.
                   <td className="px-4 py-4 text-center font-mono text-sm text-silver-dim">{row.matches}</td>
                   <td className="px-4 py-4 text-center font-mono text-sm text-white">{row.wins}</td>
                   <td className="px-4 py-4 text-center font-mono text-sm text-silver-dim">{row.losses}</td>
+                  */}
 
-                  <td className="px-4 py-4 text-center">
+                  <td className="w-1/2 px-4 py-4 text-center">
                     <span className={cn("font-display text-lg leading-none", medal ? medal.text : "text-white")}>
                       {row.points}
                     </span>
                   </td>
 
-                  {/* win % with rail */}
+                  {/* Hidden for now:
+                  win % with rail
                   <td className="px-4 py-4">
                     <div className="flex items-center justify-center gap-3">
                       <span className="hidden h-[3px] w-20 overflow-hidden bg-white/10 lg:block">
@@ -209,6 +215,7 @@ export function Leaderboard({ compact = false, rows: rowsProp }: { compact?: boo
                       </span>
                     </div>
                   </td>
+                  */}
                 </motion.tr>
               );
             })}

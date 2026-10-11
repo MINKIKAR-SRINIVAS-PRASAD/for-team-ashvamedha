@@ -31,11 +31,12 @@ export const RANKINGS: RankingRow[] = [
 export const LEADERBOARD_COLUMNS = [
   "Rank",
   "Team",
-  "Matches",
-  "Wins",
-  "Losses",
+  // Hidden for now; uncomment these (and the matching cells in components/Leaderboard.tsx) to show them again.
+  // "Matches",
+  // "Wins",
+  // "Losses",
   "Points",
-  "Win %",
+  // "Win %",
 ] as const;
 
 export function winPercent(row: RankingRow) {
