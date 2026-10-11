@@ -1,10 +1,10 @@
-/**
- * EVENT SYSTEM — fully data driven.
+﻿/**
+ * EVENT SYSTEM â€” fully data driven.
  *
  * Source of event facts:
  * ASHVAMEDHA 2026 RULEBOOK
  *
- * The rulebook gives the overall festival dates as Oct 9–11, 2026.
+ * The rulebook gives the overall festival dates as Oct 9â€“11, 2026.
  *
  * Sport-specific time/venue details are only filled where the rulebook
  * explicitly provides them. Otherwise they remain "TBA".
@@ -98,19 +98,19 @@ export const EVENTS: FestEvent[] = [
     tagline: "FIBA rules, five on court.",
     description:
       "Basketball will be conducted according to FIBA rules as adopted by the Basketball Federation of India. Teams must have a minimum of 5 and a maximum of 12 players.",
-    date: "09–11 Oct 2026",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "TBA",
-    teamSize: "5–12 players",
+    teamSize: "5â€“12 players",
     registration: "open",
-    entryFee: "Boys ₹3,500 / Girls ₹2,000",
+    entryFee: "Boys â‚¹3,500 / Girls â‚¹2,000",
     prizePool:
-      "Boys Winner ₹8,000 / Runner-up ₹5,000; Girls Winner ₹5,000 / Runner-up ₹2,500",
+      "Boys Winner â‚¹8,000 / Runner-up â‚¹5,000; Girls Winner â‚¹5,000 / Runner-up â‚¹2,500",
     format:
       "FIBA rules; tournament type decided according to number of participating teams",
     accent: "volt",
-    image: "/github-copy/components/images2026/basketball.jpeg",
+    image: "/images2026/basketball.jpeg",
     glyph: "basketball",
   },
 
@@ -122,18 +122,18 @@ export const EVENTS: FestEvent[] = [
     tagline: "Standard FIFA rules.",
     description:
       "Football follows standard FIFA rules. A team must consist of a minimum of 7 and maximum of 16 players, with ten outfield players and one goalkeeper in the stated playing formation.",
-    date: "09–11 Oct 2026",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "SAC Football Ground",
-    teamSize: "7–16 players",
+    teamSize: "7â€“16 players",
     registration: "open",
-    entryFee: "₹4,000 / team",
-    prizePool: "Winner ₹12,000 / Runner-up ₹8,000",
+    entryFee: "â‚¹4,000 / team",
+    prizePool: "Winner â‚¹12,000 / Runner-up â‚¹8,000",
     format:
-      "50-minute match (2 × 25 min); extra time 16 min (2 × 8 min); penalty shoot-out in tied knockout matches",
+      "50-minute match (2 Ã— 25 min); extra time 16 min (2 Ã— 8 min); penalty shoot-out in tied knockout matches",
     accent: "crimson",
-    image: "/github-copy/components/images2026/football.png",
+    image: "/images2026/football.png",
     glyph: "football",
   },
 
@@ -145,19 +145,19 @@ export const EVENTS: FestEvent[] = [
     tagline: "Six players. Rally scoring.",
     description:
       "Volleyball teams must contain a minimum of 6 and maximum of 12 members. League matches are best of 3 sets, while semi-finals and finals are best of 5 sets.",
-    date: "09–11 Oct 2026",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "TBA",
-    teamSize: "6–12 players",
+    teamSize: "6â€“12 players",
     registration: "open",
-    entryFee: "Boys ₹3,500 / Girls ₹2,000",
+    entryFee: "Boys â‚¹3,500 / Girls â‚¹2,000",
     prizePool:
-      "Boys Winner ₹9,000 / Runner-up ₹5,500; Girls Winner ₹4,000 / Runner-up ₹2,000",
+      "Boys Winner â‚¹9,000 / Runner-up â‚¹5,500; Girls Winner â‚¹4,000 / Runner-up â‚¹2,000",
     format:
       "League: best of 3 sets; semi-finals/finals: best of 5 sets; FIVB rules",
     accent: "gold",
-    image: "/github-copy/components/images2026/volleyball.jpeg",
+    image: "/images2026/volleyball.jpeg",
     glyph: "volleyball",
   },
 
@@ -169,19 +169,19 @@ export const EVENTS: FestEvent[] = [
     tagline: "Three games decide the tie.",
     description:
       "Badminton is a team event with a maximum of 4 players. The sequence is singles, doubles and singles, with a team winning when it takes 2 of the 3 games.",
-    date: "09–11 Oct 2026",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "TBA",
     teamSize: "Maximum 4 players",
     registration: "open",
-    entryFee: "₹1,500 / team",
+    entryFee: "â‚¹1,500 / team",
     prizePool:
-      "Boys Winner ₹5,000 / Runner-up ₹2,500; Girls Winner ₹5,000 / Runner-up ₹2,500",
+      "Boys Winner â‚¹5,000 / Runner-up â‚¹2,500; Girls Winner â‚¹5,000 / Runner-up â‚¹2,500",
     format:
       "Knockout/elimination; singles, doubles, singles; best of 3 games to 21 points",
     accent: "gold",
-    image: "/github-copy/components/images2026/badminton.jpeg",
+    image: "/images2026/badminton.jpeg",
     glyph: "badminton",
   },
 
@@ -192,19 +192,19 @@ export const EVENTS: FestEvent[] = [
     category: "Racquet",
     tagline: "Five matches. One team.",
     description:
-      "Table tennis matches are best of 5. Teams contain 3–4 boys and 1–2 girls, with men's singles, women's singles, men's doubles, mixed doubles and men's singles.",
-    date: "09–11 Oct 2026",
+      "Table tennis matches are best of 5. Teams contain 3â€“4 boys and 1â€“2 girls, with men's singles, women's singles, men's doubles, mixed doubles and men's singles.",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "TBA",
-    teamSize: "3–4 boys + 1–2 girls",
+    teamSize: "3â€“4 boys + 1â€“2 girls",
     registration: "open",
-    entryFee: "₹2,000 / team",
-    prizePool: "Winner ₹5,000 / Runner-up ₹2,500",
+    entryFee: "â‚¹2,000 / team",
+    prizePool: "Winner â‚¹5,000 / Runner-up â‚¹2,500",
     format:
       "Best of 5; 5-match team order: Men's Singles, Women's Singles, Men's Doubles, Mixed Doubles, Men's Singles",
     accent: "volt",
-    image: "/github-copy/components/images2026/tabletennis.jpeg",
+    image: "/images2026/table-tennis.jpeg",
     glyph: "tabletennis",
   },
 
@@ -215,19 +215,19 @@ export const EVENTS: FestEvent[] = [
     category: "Racquet",
     tagline: "Singles, doubles, reverse singles.",
     description:
-      "Lawn tennis follows AITA rules. Each team has 2–4 players and plays two singles and one doubles match, with reverse singles used when teams are tied at one match each.",
-    date: "09–11 Oct 2026",
+      "Lawn tennis follows AITA rules. Each team has 2â€“4 players and plays two singles and one doubles match, with reverse singles used when teams are tied at one match each.",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "TBA",
-    teamSize: "2–4 players",
+    teamSize: "2â€“4 players",
     registration: "open",
-    entryFee: "₹1,500 / team",
-    prizePool: "Winner ₹3,500 / Runner-up ₹2,500",
+    entryFee: "â‚¹1,500 / team",
+    prizePool: "Winner â‚¹3,500 / Runner-up â‚¹2,500",
     format:
       "Two singles + one doubles; best of 3 sets; league and knockout formats as specified in the rulebook",
     accent: "gold",
-    image: "/github-copy/components/images2026/lawntennis.jpeg",
+    image: "/images2026/lawn-tennis.jpeg",
     glyph: "lawn",
   },
 
@@ -238,19 +238,19 @@ export const EVENTS: FestEvent[] = [
     category: "Board & Mind",
     tagline: "FIDE Swiss team battle.",
     description:
-      "Chess is a team event conducted under FIDE laws and tournament rules. Each team must have 4–6 players, including up to 2 substitutes, with 4 players playing in a round.",
-    date: "09–11 Oct 2026",
+      "Chess is a team event conducted under FIDE laws and tournament rules. Each team must have 4â€“6 players, including up to 2 substitutes, with 4 players playing in a round.",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "TBA",
-    teamSize: "4–6 players (2 substitutes); 4 play per round",
+    teamSize: "4â€“6 players (2 substitutes); 4 play per round",
     registration: "open",
-    entryFee: "₹1,500 / team",
-    prizePool: "Winner ₹4,000 / Runner-up ₹2,500",
+    entryFee: "â‚¹1,500 / team",
+    prizePool: "Winner â‚¹4,000 / Runner-up â‚¹2,500",
     format:
       "FIDE Swiss system; qualifier/knockout may precede the Swiss league depending on entries",
     accent: "violet",
-    image: "/github-copy/components/images2026/chess.jpeg",
+    image: "/images2026/chess.jpeg",
     glyph: "chess",
   },
 
@@ -262,19 +262,19 @@ export const EVENTS: FestEvent[] = [
     tagline: "Three lifts. One DOTS score.",
     description:
       "Powerlifting uses the DOTS scoring system to compare lifters across body weights. Each participant performs squat, deadlift and bench press, with three attempts for each lift.",
-    date: "09–11 Oct 2026",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "TBA",
     teamSize: "Individual",
     registration: "open",
-    entryFee: "₹500 / person",
+    entryFee: "â‚¹500 / person",
     prizePool:
-      "Winner ₹1,500 / Runner-up ₹1,000 / 2nd Runner-up ₹800",
+      "Winner â‚¹1,500 / Runner-up â‚¹1,000 / 2nd Runner-up â‚¹800",
     format:
       "Squat + deadlift + bench press; DOTS scoring",
     accent: "crimson",
-    image: "/github-copy/components/images2026/powerlifting.jpeg",
+    image: "/images2026/power-lifting.jpeg",
     glyph: "gym events",
   },
 
@@ -286,18 +286,18 @@ export const EVENTS: FestEvent[] = [
     tagline: "Nine start. Twelve make the team.",
     description:
       "Each Kho-kho team consists of 12 players, with 9 taking the field at the beginning. Matches consist of two innings with chasing and defence turns.",
-    date: "09–11 Oct 2026",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "Hockey Ground",
     teamSize: "12 players (9 start)",
     registration: "open",
-    entryFee: "₹2,500 / team",
-    prizePool: "Winner ₹6,000 / Runner-up ₹4,000",
+    entryFee: "â‚¹2,500 / team",
+    prizePool: "Winner â‚¹6,000 / Runner-up â‚¹4,000",
     format:
       "Two innings; 9-minute turns for Men and 7-minute turns for Women; knockout matches",
     accent: "violet",
-    image: "/github-copy/components/images2026/khokho.jpeg",
+    image: "/images2026/kho-kho.jpeg",
     glyph: "kho-kho",
   },
 
@@ -309,19 +309,19 @@ export const EVENTS: FestEvent[] = [
     tagline: "Two rounds. One sports mind.",
     description:
       "The Sports Quiz consists of a preliminary round and a final round. Questions are from the world of sports, with the top 8 teams from prelims advancing to the finals.",
-    date: "09–11 Oct 2026",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "TBA",
-    teamSize: "2–3 participants or individual",
+    teamSize: "2â€“3 participants or individual",
     registration: "open",
-    entryFee: "₹200 / team",
+    entryFee: "â‚¹200 / team",
     prizePool:
-      "Winner ₹2,000 / Runner-up ₹1,500 / 2nd Runner-up ₹500",
+      "Winner â‚¹2,000 / Runner-up â‚¹1,500 / 2nd Runner-up â‚¹500",
     format:
-      "Two rounds: preliminary + final; prelims contain 20–30 questions; top 8 teams advance",
+      "Two rounds: preliminary + final; prelims contain 20â€“30 questions; top 8 teams advance",
     accent: "violet",
-    image: "/github-copy/components/images2026/sportsquiz.jpeg",
+    image: "/images2026/sports-quiz.jpeg",
     glyph: "sportsquiz",
   },
 
@@ -332,19 +332,19 @@ export const EVENTS: FestEvent[] = [
     category: "Team Sport",
     tagline: "Five overs. Five boys. Five girls.",
     description:
-      "Each Mixed Cricket team consists of 10 players — 5 boys and 5 girls. Matches use a tennis ball and bat, with at least one boy and one girl at the crease while girls remain available to bat.",
-    date: "09–11 Oct 2026",
+      "Each Mixed Cricket team consists of 10 players â€” 5 boys and 5 girls. Matches use a tennis ball and bat, with at least one boy and one girl at the crease while girls remain available to bat.",
+    date: "09â€“11 Oct 2026",
     day: 1,
     time: "TBA",
     venue: "TBA",
     teamSize: "10 players (5 boys + 5 girls)",
     registration: "open",
-    entryFee: "₹3,000 / team",
-    prizePool: "Winner ₹6,000 / Runner-up ₹4,500",
+    entryFee: "â‚¹3,000 / team",
+    prizePool: "Winner â‚¹6,000 / Runner-up â‚¹4,500",
     format:
       "5 overs per innings; tennis ball; Super Over for tied knockout matches",
     accent: "crimson",
-    image: "/github-copy/components/images2026/mixed cricket.jpeg",
+    image: "/images2026/mixed-cricket.jpeg",
     glyph: "football",
   },
 
@@ -370,7 +370,7 @@ export const EVENTS: FestEvent[] = [
     prizePool: "TBA",
     format: "TBA",
     accent: "violet",
-    image: "/github-copy/components/images2026/valorent.jpegg",
+    image: "/images2026/valorant.jpegg",
     glyph: "esportst",
   },
 
@@ -392,7 +392,7 @@ export const EVENTS: FestEvent[] = [
     prizePool: "TBA",
     format: "TBA",
     accent: "volt",
-    image: "/github-copy/components/images2026/BGMI.jpeg",
+    image: "/images2026/bgmi.jpeg",
     glyph: "esportst",
   },
 
@@ -414,7 +414,7 @@ export const EVENTS: FestEvent[] = [
     prizePool: "TBA",
     format: "TBA",
     accent: "crimson",
-    image: "/github-copy/components/images2026/free fire.jpeg",
+    image: "/images2026/free-fire.jpeg",
     glyph: "esportst",
   },
 ];
@@ -454,3 +454,5 @@ export const FEATURED_SLUGS = [
   "swimming",
   "kho-kho",
 ] as const;
+
+
