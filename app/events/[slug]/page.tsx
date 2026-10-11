@@ -1,7 +1,18 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar, Clock, MapPin, Radio, Ticket, Trophy, Users } from "lucide-react";
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  MapPin,
+  Radio,
+  Ticket,
+  Trophy,
+  Users,
+} from "lucide-react";
+
 import { BattlefieldFrame } from "@/components/art/BattlefieldFrame";
 import { SportGlyph } from "@/components/art/SportGlyph";
 import { CTA } from "@/components/ui/CTA";
@@ -12,13 +23,12 @@ import { REGISTRATION_OPEN } from "@/data/site";
 import { findEvent, getFestData } from "@/lib/festData";
 import { accentOf } from "@/lib/accents";
 
-/** Pre-render one static page per event — no runtime data fetching needed. */
-// Pages for events added later through the admin API are rendered on demand.
+/** Pre-render one static page per event. */
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const { events } = await getFestData();
-  return events.map((e) => ({ slug: e.slug }));
+  return events.map((event) => ({ slug: event.slug }));
 }
 
 export async function generateMetadata({
@@ -29,7 +39,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const { events } = await getFestData();
   const event = findEvent(events, slug);
-  if (!event) return { title: "Event not found" };
+
+  if (!event) {
+    return { title: "Event not found" };
+  }
 
   return {
     title: event.name,
@@ -43,12 +56,23 @@ export default async function EventDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { events: EVENTS } = await getFestData();
-  const event = findEvent(EVENTS, slug);
-  if (!event) notFound();
+  const { events } = await getFestData();
+  const event = findEvent(events, slug);
+
+  if (!event) {
+    notFound();
+  }
 
   const a = accentOf(event.accent);
-  const related = EVENTS.filter((e) => e.slug !== event.slug && e.category === event.category).slice(0, 3);
+
+  const related = events
+    .filter(
+      (item) =>
+        item.slug !== event.slug &&
+        item.category === event.category,
+    )
+    .slice(0, 3);
+
   const spec = [
     { icon: Calendar, k: "Date", v: event.date },
     { icon: Clock, k: "Start Time", v: event.time },
@@ -60,7 +84,7 @@ export default async function EventDetailPage({
 
   return (
     <>
-      {/* masthead */}
+      {/* Event masthead */}
       <section className="relative overflow-hidden pt-[calc(var(--nav-h)+2.5rem)] pb-12">
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-[70vh]"
@@ -79,12 +103,14 @@ export default async function EventDetailPage({
           </Link>
 
           <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-14">
+            {/* Event information */}
             <div className="lg:col-span-5">
               <div className="flex items-center gap-3">
                 <span
                   className="h-px w-10"
                   style={{ background: a.base }}
                 />
+
                 <span className="hud" style={{ color: a.base }}>
                   {"// "}
                   {event.arena.toUpperCase()}
@@ -95,20 +121,36 @@ export default async function EventDetailPage({
                 {event.name}
               </h1>
 
-              <p className="mt-5 text-[1rem] leading-relaxed text-silver-dim">{event.tagline}</p>
-              <p className="mt-4 text-[0.95rem] leading-relaxed text-silver-dim">{event.description}</p>
+              <p className="mt-5 text-[1rem] leading-relaxed text-silver-dim">
+                {event.tagline}
+              </p>
+
+              <p className="mt-4 text-[0.95rem] leading-relaxed text-silver-dim">
+                {event.description}
+              </p>
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <span
                   className="tag"
-                  style={{ borderColor: `${a.base}66`, color: a.base }}
+                  style={{
+                    borderColor: `${a.base}66`,
+                    color: a.base,
+                  }}
                 >
                   <span
                     className="h-1.5 w-1.5 rounded-full"
                     style={{ background: a.base }}
                   />
-                  {REGISTRATION_LABEL[REGISTRATION_OPEN ? event.registration : "closed"]}
+
+                  {
+                    REGISTRATION_LABEL[
+                      REGISTRATION_OPEN
+                        ? event.registration
+                        : "closed"
+                    ]
+                  }
                 </span>
+
                 <span className="tag">{event.category}</span>
                 <span className="tag">{event.format}</span>
               </div>
@@ -118,13 +160,25 @@ export default async function EventDetailPage({
                   href={`/register?event=${event.slug}`}
                   variant="primary"
                   className="!px-7 !py-4"
-                  disabled={!REGISTRATION_OPEN || event.registration === "closed"}
+                  disabled={
+                    !REGISTRATION_OPEN ||
+                    event.registration === "closed"
+                  }
                 >
-                  {!REGISTRATION_OPEN || event.registration === "closed" ? "Entries Closed" : "Register Now"}
+                  {!REGISTRATION_OPEN ||
+                  event.registration === "closed"
+                    ? "Entries Closed"
+                    : "Register Now"}
                 </CTA>
-                <CTA href="/schedule" variant="ghost" className="!px-7 !py-4">
+
+                <CTA
+                  href="/schedule"
+                  variant="ghost"
+                  className="!px-7 !py-4"
+                >
                   See in Schedule
                 </CTA>
+
                 <CTA
                   href="#live-scores"
                   variant="ghost"
@@ -136,30 +190,50 @@ export default async function EventDetailPage({
               </div>
             </div>
 
-            {/* key visual */}
+            {/* Event image — use the real photograph when available */}
             <div className="lg:col-span-7">
               <div
-                className="relative overflow-hidden clip-notch border border-white/10"
-                style={{ boxShadow: `0 40px 120px -60px ${a.base}` }}
+                className="relative h-[280px] w-full overflow-hidden clip-notch border border-white/10 sm:h-[360px] lg:h-[440px]"
+                style={{
+                  boxShadow: `0 40px 120px -60px ${a.base}`,
+                }}
               >
-                <BattlefieldFrame
-                  seedKey={`detail-${event.slug}`}
-                  accent={event.accent}
-                  glyph={event.glyph}
-                  label={event.category.toUpperCase()}
-                  className="h-[280px] w-full sm:h-[360px] lg:h-[440px]"
-                />
+                {event.image ? (
+                  <Image
+                    src={event.image}
+                    alt={`${event.name} event`}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <BattlefieldFrame
+                    seedKey={`detail-${event.slug}`}
+                    accent={event.accent}
+                    glyph={event.glyph}
+                    label={event.category.toUpperCase()}
+                    className="h-full w-full"
+                  />
+                )}
               </div>
 
-              {/* spec grid */}
+              {/* Event details */}
               <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-6 sm:grid-cols-3">
                 {spec.map((row) => (
                   <div key={row.k}>
                     <dt className="flex items-center gap-2 font-mono text-[9px] tracking-hud text-silver-dim">
-                      <row.icon className="h-3.5 w-3.5" style={{ color: a.base }} />
+                      <row.icon
+                        className="h-3.5 w-3.5"
+                        style={{ color: a.base }}
+                      />
+
                       {row.k.toUpperCase()}
                     </dt>
-                    <dd className="mt-1.5 text-[0.95rem] text-white">{row.v}</dd>
+
+                    <dd className="mt-1.5 text-[0.95rem] text-white">
+                      {row.v}
+                    </dd>
                   </div>
                 ))}
               </dl>
@@ -168,17 +242,26 @@ export default async function EventDetailPage({
         </div>
       </section>
 
-      {/* category sigil band */}
+      {/* Category division */}
       <div className="shell">
         <div className="hairline" />
+
         <div className="flex items-center justify-between gap-6 py-6">
-          <span className="hud">{`// ${event.category.toUpperCase()} DIVISION`}</span>
-          <SportGlyph glyph={event.glyph} className="h-8 w-8" strokeWidth={1.2} />
+          <span className="hud">
+            {`// ${event.category.toUpperCase()} DIVISION`}
+          </span>
+
+          <SportGlyph
+            glyph={event.glyph}
+            className="h-8 w-8"
+            strokeWidth={1.2}
+          />
         </div>
+
         <div className="hairline" />
       </div>
 
-      {/* live scores and results for this sport */}
+      {/* Live scores and results */}
       <section
         id="live-scores"
         className="relative section-pad scroll-mt-[var(--nav-h)]"
@@ -196,43 +279,72 @@ export default async function EventDetailPage({
             }
             description={`Every ${event.name} match: live now, up next and finished, updated straight from the arena control room.`}
           />
+
           <div className="mt-10">
             <EventLiveScores eventSlug={event.slug} />
           </div>
         </div>
       </section>
 
-      {/* related */}
+      {/* Related events */}
       {related.length > 0 && (
-        <section className="section-pad pt-0" aria-label="Related events">
+        <section
+          className="section-pad pt-0"
+          aria-label="Related events"
+        >
           <div className="shell">
             <SectionHeader
               protocol="// SAME_DIVISION"
               title="ALSO IN THIS DIVISION"
               description={`Other ${event.category.toLowerCase()} events running across the three days.`}
             />
+
             <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((r) => {
-                const ra = accentOf(r.accent);
+              {related.map((item) => {
+                const relatedAccent = accentOf(item.accent);
+
                 return (
                   <Link
-                    key={r.slug}
-                    href={`/events/${r.slug}`}
+                    key={item.slug}
+                    href={`/events/${item.slug}`}
                     className="group relative overflow-hidden panel clip-notch transition-transform duration-500 hover:-translate-y-1.5"
                     data-cursor-label="VIEW"
                   >
-                    <BattlefieldFrame
-                      seedKey={r.slug}
-                      accent={r.accent}
-                      glyph={r.glyph}
-                      className="h-40 w-full transition-transform duration-700 group-hover:scale-[1.06]"
-                    />
+                    {/* Real related-event image with fallback */}
+                    <div className="relative h-40 w-full overflow-hidden">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={`${item.name} event`}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                        />
+                      ) : (
+                        <BattlefieldFrame
+                          seedKey={item.slug}
+                          accent={item.accent}
+                          glyph={item.glyph}
+                          className="h-40 w-full transition-transform duration-700 group-hover:scale-[1.06]"
+                        />
+                      )}
+                    </div>
+
                     <div className="p-5">
-                      <h3 className="text-xl text-white">{r.name}</h3>
-                      <p className="mt-2 font-mono text-[9px] tracking-hud" style={{ color: ra.base }}>
-                        {r.arena.toUpperCase()}
+                      <h3 className="text-xl text-white">
+                        {item.name}
+                      </h3>
+
+                      <p
+                        className="mt-2 font-mono text-[9px] tracking-hud"
+                        style={{ color: relatedAccent.base }}
+                      >
+                        {item.arena.toUpperCase()}
                       </p>
-                      <p className="mt-3 text-[0.85rem] leading-relaxed text-silver-dim">{r.tagline}</p>
+
+                      <p className="mt-3 text-[0.85rem] leading-relaxed text-silver-dim">
+                        {item.tagline}
+                      </p>
                     </div>
                   </Link>
                 );
