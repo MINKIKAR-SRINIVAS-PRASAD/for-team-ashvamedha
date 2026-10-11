@@ -1,715 +1,281 @@
-"""
-ASHVAMEDHA 2026 database seeding and event synchronization.
-
-The event facts below are synchronized from the official ASHVAMEDHA 2026
-Rule Book. Existing registrations and other database tables are preserved.
-
-Commands:
-
-  python -m app.seed
-      Seed missing data and synchronize the 12 official events.
-
-  python -m app.seed --reset
-      DROP everything and re-seed (destroys registrations!)
-"""
-
+"""Seed initial UI content and synchronize official ASHVAMEDHA event facts in MongoDB."""
 import json
-import re
-import sys
-from datetime import timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Any
 
-from sqlalchemy import delete, func, select
-from sqlalchemy.orm import Session
+from pymongo.database import Database
 
 from app.config import settings
-from app.database import Base, SessionLocal, engine
-from app.models import (
-    Event,
-    GalleryItem,
-    Match,
-    ScheduleDay,
-    ScheduleSlot,
-    Sponsor,
-    Standing,
-    Team,
-    User,
-    utcnow,
-)
+from app.database import find_records, get_record, next_sequence, write_record
+from app.models import Record
 from app.security import hash_password
-from app.services.fest import set_content
+from app.services.fest import set_content, utcnow
 
-
-SEED_FILE = Path(__file__).resolve().parent.parent / "seed_data" / "initial.json"
-
-
-# ---------------------------------------------------------------------------
-# OFFICIAL ASHVAMEDHA 2026 EVENTS
-# ---------------------------------------------------------------------------
-#
-# Factual event information comes from the official Rule Book.
-#
-# The following fields are site/UI fields:
-#   arena, category, tagline, accent, image, glyph
-#
-# Existing visual fields are preserved where possible so the website design
-# does not suddenly lose its existing artwork/styling.
-#
-# Exact event-specific schedule dates/times are NOT given in the Rule Book,
-# so those values are intentionally shown as TBA.
-#
-
-RULEBOOK_EVENTS = [
-    {
-        "slug": "basketball",
-        "name": "Basketball",
-        "team_size": "5–12 players",
-        "min_team_size": 5,
-        "max_team_size": 12,
-        "entry_fee": "Boys ₹3500 / Girls ₹2000",
-        "prize_pool": (
-            "Boys Winner ₹8000 / Runner-up ₹5000; "
-            "Girls Winner ₹5000 / Runner-up ₹2500"
-        ),
-        "format": "FIBA rules; tournament type depends on the number of participating teams.",
-        "description": (
-            "Team size is minimum 5 and maximum 12 players. "
-            "The tournament follows FIBA rules as adopted by the Basketball Federation of India."
-        ),
-    },
-    {
-        "slug": "volleyball",
-        "name": "Volleyball",
-        "team_size": "6–12 players",
-        "min_team_size": 6,
-        "max_team_size": 12,
-        "entry_fee": "Boys ₹3500 / Girls ₹2000",
-        "prize_pool": (
-            "Boys Winner ₹9000 / Runner-up ₹5500; "
-            "Girls Winner ₹4000 / Runner-up ₹2000"
-        ),
-        "format": (
-            "League: best of 3 sets; semi-finals/final: best of 5 sets; "
-            "sets to 25 points, final set to 15; FIVB rules."
-        ),
-        "description": (
-            "Teams consist of 6–12 players. League matches are best of 3 sets, "
-            "while semi-finals and final are best of 5 sets."
-        ),
-    },
-    {
-        "slug": "football",
-        "name": "Football",
-        "team_size": "7–16 players",
-        "min_team_size": 7,
-        "max_team_size": 16,
-        "entry_fee": "₹4000 per team",
-        "prize_pool": "Winner ₹12000 / Runner-up ₹8000",
-        "format": (
-            "50-minute match (2×25); extra time 16 minutes (2×8); "
-            "penalty shoot-out for tied knockouts."
-        ),
-        "description": (
-            "Each team must have 7–16 players. Matches are 50 minutes "
-            "with 25-minute halves. Extra time and penalties apply as specified "
-            "in the rule book."
-        ),
-        "venue": "SAC Football Ground",
-    },
-    {
-        "slug": "badminton",
-        "name": "Badminton",
-        "team_size": "Maximum 4 players",
-        "min_team_size": 1,
-        "max_team_size": 4,
-        "entry_fee": "₹1500 per team",
-        "prize_pool": (
-            "Boys Winner ₹5000 / Runner-up ₹2500; "
-            "Girls Winner ₹5000 / Runner-up ₹2500"
-        ),
-        "format": (
-            "Knockout/elimination; singles, doubles, singles; "
-            "best of 3 games to 21 points."
-        ),
-        "description": (
-            "Each team can have up to 4 players. The match sequence is "
-            "singles, doubles and singles, with a team needing 2 wins out of 3."
-        ),
-    },
-    {
-        "slug": "table-tennis",
-        "name": "Table Tennis",
-        "team_size": "3–4 boys + 1–2 girls",
-        "min_team_size": 4,
-        "max_team_size": 6,
-        "entry_fee": "₹2000 per team",
-        "prize_pool": "Winner ₹5000 / Runner-up ₹2500",
-        "format": (
-            "Best of 5; Men Singles, Women Singles, Men Doubles, "
-            "Mixed Doubles, Men Singles."
-        ),
-        "description": (
-            "A team consists of 3–4 boys and 1–2 girls. "
-            "Matches follow the five-game team sequence specified in the rule book."
-        ),
-    },
-    {
-        "slug": "lawn-tennis",
-        "name": "Lawn Tennis",
-        "team_size": "2–4 players",
-        "min_team_size": 2,
-        "max_team_size": 4,
-        "entry_fee": "₹1500 per team",
-        "prize_pool": "Winner ₹3500 / Runner-up ₹2500",
-        "format": (
-            "2 singles + 1 doubles; each best of 3 sets; "
-            "reverse singles if tied; AITA rules."
-        ),
-        "description": (
-            "Teams must have 2–4 players. Each tie consists of two singles "
-            "and one doubles match. The tournament uses a synthetic court and Dunlop balls."
-        ),
-    },
-    {
-        "slug": "chess",
-        "name": "Chess",
-        "team_size": "4–6 players",
-        "min_team_size": 4,
-        "max_team_size": 6,
-        "entry_fee": "₹1500 per team",
-        "prize_pool": "Winner ₹4000 / Runner-up ₹2500",
-        "format": (
-            "Swiss system; FIDE laws/rules; 4 players play each round; "
-            "qualifier/knockout may be used depending on entries."
-        ),
-        "description": (
-            "Each team has 4–6 players including 2 substitutes. "
-            "Four players compete in each round under FIDE rules."
-        ),
-    },
-    {
-        "slug": "powerlifting",
-        "name": "Powerlifting",
-        "team_size": "Individual",
-        "min_team_size": 1,
-        "max_team_size": 1,
-        "entry_fee": "₹500 per person",
-        "prize_pool": (
-            "Winner ₹1500 / Runner-up ₹1000 / 2nd Runner-up ₹800"
-        ),
-        "format": (
-            "Squat, deadlift and bench press; 3 attempts for each lift; DOTS scoring."
-        ),
-        "description": (
-            "Powerlifting is an individual event consisting of squat, deadlift "
-            "and bench press, with three attempts for each lift."
-        ),
-    },
-    {
-        "slug": "kho-kho",
-        "name": "Kho-Kho",
-        "team_size": "12 players",
-        "min_team_size": 12,
-        "max_team_size": 12,
-        "entry_fee": "₹2500 per team",
-        "prize_pool": "Winner ₹6000 / Runner-up ₹4000",
-        "format": (
-            "2 innings; chasing/defence turns are 9 minutes for men "
-            "and 7 minutes for women; knockout format."
-        ),
-        "description": (
-            "Each team has 12 players, with 9 starting players. "
-            "Matches consist of two innings and follow the standard rules specified."
-        ),
-        "venue": "Hockey Ground",
-    },
-    {
-        "slug": "swimming",
-        "name": "Swimming",
-        "team_size": "Individual",
-        "min_team_size": 1,
-        "max_team_size": 1,
-        "entry_fee": "₹1500 single event / ₹2500 both events",
-        "prize_pool": (
-            "Winner ₹5500 / Runner-up ₹3500 / 2nd Runner-up ₹2500"
-        ),
-        "format": (
-            "100 m Freestyle and 100 m Breaststroke."
-        ),
-        "description": (
-            "The swimming events are 100 m Freestyle and 100 m Breaststroke. "
-            "Participants must remain within their designated lane."
-        ),
-    },
-    {
-        "slug": "sports-quiz",
-        "name": "Sports Quiz",
-        "team_size": "1–3 participants",
-        "min_team_size": 1,
-        "max_team_size": 3,
-        "entry_fee": "₹200 per team",
-        "prize_pool": (
-            "Winner ₹2000 / Runner-up ₹1500 / 2nd Runner-up ₹500"
-        ),
-        "format": (
-            "Two preliminary rounds and a final; approximately 20–30 preliminary questions; "
-            "top 8 teams advance to the final."
-        ),
-        "description": (
-            "Teams may have three participants, two participants or a lone participant. "
-            "The quiz has two preliminary rounds followed by a final."
-        ),
-    },
-    {
-        "slug": "mixed-cricket",
-        "name": "Mixed Cricket",
-        "team_size": "10 players (5 boys + 5 girls)",
-        "min_team_size": 10,
-        "max_team_size": 10,
-        "entry_fee": "₹3000 per team",
-        "prize_pool": "Winner ₹6000 / Runner-up ₹4500",
-        "format": (
-            "5 overs per innings; tennis ball and bat; "
-            "mixed batting and bowling participation rules as specified."
-        ),
-        "description": (
-            "Each team consists of 10 players: 5 boys and 5 girls. "
-            "Each innings is 5 overs and uses a tennis ball and bat. "
-            "At least 2 girls must bowl in every innings."
-        ),
-    },
-]
-
-
-# Legacy slugs used by the old database/frontend.
-# These are only aliases for migrating existing visual metadata.
+ROOT = Path(__file__).resolve().parent.parent
+SEED_FILE = ROOT / "seed_data" / "initial.json"
+RULEBOOK_FILE = ROOT / "seed_data" / "rulebook_events.json"
+ESPORTS_FILE = ROOT / "seed_data" / "esports_events.json"
 LEGACY_SLUGS = {
-    "lawn-tennis": ["Lawn Tennis-tennis", "lawn"],
+    "lawn-tennis": ["Lawn Tennis-tennis", "Lawn Tennis Tennis", "lawn"],
     "powerlifting": ["Power Lifting", "gym", "gym-events"],
     "kho-kho": ["Kho-Kho", "Kho kho"],
     "badminton": ["Badminton"],
     "table-tennis": ["tabletennis", "Table Tennis"],
-    "mixed-cricket": ["Mixed Cricket", "cricket"],
+    "mixed-cricket": ["Mixed Cricket", "Mixed cricket", "cricket"],
     "sports-quiz": ["Sports quiz", "sportsquiz"],
     "swimming": ["Swimming"],
-    "chess": ["chess"],
-    "volleyball": ["volleyball"],
-    "football": ["football"],
-    "basketball": ["basketball"],
+    "chess": ["Chess"],
+    "volleyball": ["Vollyball", "volleyball"],
+    "football": ["Football", "football"],
+    "basketball": ["Basketball", "basketball"],
 }
 
 
-def _guess_limits(team_size: str) -> tuple[int, int]:
-    nums = [int(n) for n in re.findall(r"\d+", team_size or "")]
-    if not nums:
-        return 1, 1
-
-    if "+" in team_size and "relay" not in team_size.lower() and len(nums) >= 2:
-        return nums[0], nums[0] + nums[1]
-
-    return min(nums), max(nums)
+def _canonical_aliases() -> dict[str, str]:
+    return {alias: canonical for canonical, aliases in LEGACY_SLUGS.items() for alias in aliases}
 
 
-def ensure_admin(db: Session) -> None:
-    if db.scalar(select(User.id).limit(1)) is None:
-        db.add(
-            User(
-                username=settings.admin_username,
-                password_hash=hash_password(settings.admin_password),
-                role="admin",
-                event_slugs=[],
-            )
-        )
-        db.commit()
+def ensure_admin(db: Database) -> None:
+    if db.users.count_documents({}) == 0:
+        now = utcnow()
+        user = {
+            "id": next_sequence(db, "users", "users"),
+            "username": settings.admin_username,
+            "username_lower": settings.admin_username.lower(),
+            "password_hash": hash_password(settings.admin_password),
+            "role": "admin", "event_slugs": [], "is_active": True, "created_at": now,
+        }
+        write_record(db, "users", user)
         print(f"[seed] created admin user '{settings.admin_username}'")
 
 
-def ensure_sport_admins(db: Session) -> None:
-    """
-    First-time setup: create the sport admins listed in SPORT_ADMINS.
-
-    Runs only while no sport admin exists yet. After that, sport admins are
-    managed by the main admin on the website (/admin), so renames and password
-    changes made there are not undone by the .env on the next restart.
-    """
+def ensure_sport_admins(db: Database) -> None:
     if not settings.sport_admin_list:
         return
-    if db.scalar(select(User.id).where(User.role == "coordinator").limit(1)) is not None:
+    if db.users.find_one({"role": "coordinator"}, {"_id": 1}):
         print("[seed] sport admins already exist; SPORT_ADMINS ignored (manage them on /admin)")
         return
     for sport, username, password in settings.sport_admin_list:
-        if db.get(Event, sport) is None:
+        if get_record(db, "events", sport) is None:
             print(f"[seed] skipped sport admin '{username}': unknown sport '{sport}'")
             continue
-        if db.scalar(select(User.id).where(func.lower(User.username) == username.lower())):
+        if db.users.find_one({"username_lower": username.lower()}, {"_id": 1}):
             continue
-        db.add(
-            User(
-                username=username,
-                password_hash=hash_password(password),
-                role="coordinator",
-                event_slugs=[sport],
-            )
-        )
-        db.commit()
-        print(f"[seed] created {sport} admin '{username}'")
+        user = {
+            "id": next_sequence(db, "users", "users"), "username": username,
+            "username_lower": username.lower(), "password_hash": hash_password(password),
+            "role": "coordinator", "event_slugs": [sport], "is_active": True, "created_at": utcnow(),
+        }
+        write_record(db, "users", user)
+        print(f"[seed] created {sport} coordinator '{username}'")
 
 
-def _find_existing_event(
-    existing: dict[str, Event],
-    slug: str,
-) -> Event | None:
-    """
-    Find an existing event by canonical slug or one of the old legacy slugs.
-    This lets us preserve old visual metadata while replacing factual data.
-    """
-    candidates = [slug, *LEGACY_SLUGS.get(slug, [])]
-
-    for candidate in candidates:
-        event = existing.get(candidate)
-        if event is not None:
-            return event
-
-    return None
+def _visual_lookup(seed_data: dict) -> dict[str, dict]:
+    lookup = {event.get("slug", ""): event for event in seed_data.get("EVENTS", [])}
+    canonical: dict[str, dict] = {}
+    for slug, source in lookup.items():
+        target = _canonical_aliases().get(slug, slug)
+        canonical.setdefault(target, source)
+    return canonical
 
 
-def sync_rulebook_events(db: Session) -> None:
-    """
-    Synchronize the Event table to exactly the 12 official Rule Book events.
+def sync_rulebook_events(db: Database, seed_data: dict | None = None) -> None:
+    """Upsert official 12 event records, retaining only existing visual/UI metadata."""
+    if seed_data is None:
+        seed_data = json.loads(SEED_FILE.read_text(encoding="utf-8"))
+    visuals = _visual_lookup(seed_data)
+    # Sports Quiz was added to the current frontend after the older JSON seed export.
+    # These values are presentation metadata taken from data/events.ts, not rulebook facts.
+    visuals.setdefault("sports-quiz", {
+        "arena": "Quiz Arena", "category": "Board & Mind",
+        "tagline": "Two rounds. One sports mind.", "accent": "violet",
+        "image": None, "glyph": "sportsquiz",
+    })
+    existing_docs = list(db.events.find({}))
+    existing_by_slug = {doc.get("slug"): doc for doc in existing_docs}
+    aliases = _canonical_aliases()
+    official = json.loads(RULEBOOK_FILE.read_text(encoding="utf-8"))
+    esports = json.loads(ESPORTS_FILE.read_text(encoding="utf-8"))
+    official_slugs = {event["slug"] for event in official}
+    retained_slugs = official_slugs | {event["slug"] for event in esports}
 
-    Registrations are stored independently using event_slug, so no registration
-    rows are deleted here.
-    """
-    canonical_slugs = {event["slug"] for event in RULEBOOK_EVENTS}
+    # Move references from known legacy event slugs before removing duplicate legacy event records.
+    for old_slug, canonical in aliases.items():
+        if old_slug == canonical or old_slug in official_slugs:
+            continue
+        if old_slug not in existing_by_slug:
+            continue
+        db.registrations.update_many({"event_slug": old_slug}, {"$set": {"event_slug": canonical}})
+        db.matches.update_many({"event_slug": old_slug}, {"$set": {"event_slug": canonical}})
+        db.schedule_slots.update_many({"event_slug": old_slug}, {"$set": {"event_slug": canonical}})
+        for user in db.users.find({"event_slugs": old_slug}):
+            slugs = [canonical if slug == old_slug else slug for slug in user.get("event_slugs", [])]
+            user["event_slugs"] = list(dict.fromkeys(slugs))
+            db.users.replace_one({"_id": user["_id"]}, user)
 
-    # Capture existing events first so their visual metadata can be reused.
-    existing_events = {
-        event.slug: event
-        for event in db.scalars(select(Event)).all()
-    }
+    for order, source in enumerate(official, start=1):
+        slug = source["slug"]
+        current = existing_by_slug.get(slug)
+        visual = current or visuals.get(slug)
+        if visual is None:
+            for alias in LEGACY_SLUGS.get(slug, []):
+                if alias in existing_by_slug:
+                    visual = existing_by_slug[alias]
+                    break
+        doc: dict[str, Any] = {
+            "slug": slug,
+            "name": source["name"],
+            "arena": (visual or {}).get("arena", ""),
+            "category": (visual or {}).get("category", ""),
+            "tagline": (visual or {}).get("tagline", ""),
+            "description": source["description"],
+            "date": "Oct 9–11, 2026",
+            "day": 1,
+            "time": "TBA",
+            "venue": source.get("venue", ""),
+            "team_size": source["team_size"],
+            "min_team_size": source["min_team_size"],
+            "max_team_size": source["max_team_size"],
+            "registration": "open",
+            "entry_fee": source["entry_fee"],
+            "prize_pool": source["prize_pool"],
+            "format": source["format"],
+            "accent": (visual or {}).get("accent", "crimson"),
+            "image": (visual or {}).get("image"),
+            "glyph": (visual or {}).get("glyph", slug),
+            "sort_order": order,
+        }
+        db.events.replace_one({"_id": slug}, {**doc, "_id": slug}, upsert=True)
 
-    # Remove obsolete event rows such as Gym, Valorant, Athletics, etc.
-    obsolete_slugs = [
-        slug
-        for slug in existing_events
-        if slug not in canonical_slugs
-    ]
-
-    if obsolete_slugs:
-        db.execute(
-            delete(Event).where(Event.slug.in_(obsolete_slugs))
-        )
-        print(
-            "[seed] removed obsolete events: "
-            + ", ".join(obsolete_slugs)
-        )
-
-    for sort_order, source in enumerate(RULEBOOK_EVENTS, start=1):
-        event = db.get(Event, source["slug"])
-
-        # If canonical row doesn't exist, look for an old alias.
-        visual_source = event or _find_existing_event(
-            existing_events,
-            source["slug"],
-        )
-
-        if event is None:
-            event = Event(
-                slug=source["slug"],
-                name=source["name"],
-                arena="",
-                category="",
-                tagline="",
-                description="",
-                date="Oct 9–11, 2026",
-                day=1,
-                time="TBA",
-                venue="",
-                team_size="",
-                min_team_size=1,
-                max_team_size=1,
-                registration="open",
-                entry_fee="",
-                prize_pool="",
-                format="",
-                accent="crimson",
-                image=None,
-                glyph=source["slug"],
-                sort_order=sort_order,
-            )
-            db.add(event)
-
-        # -------------------------------------------------------------------
-        # FACTUAL FIELDS — overwritten from the Rule Book
-        # -------------------------------------------------------------------
-        event.slug = source["slug"]
-        event.name = source["name"]
-        event.team_size = source["team_size"]
-        event.min_team_size = source["min_team_size"]
-        event.max_team_size = source["max_team_size"]
-        event.entry_fee = source["entry_fee"]
-        event.prize_pool = source["prize_pool"]
-        event.format = source["format"]
-        event.description = source["description"]
-
-        # Overall fest dates are on the Rule Book cover.
-        # Event-specific schedule times are not specified in the Rule Book.
-        event.date = "Oct 9–11, 2026"
-        event.day = 1
-        event.time = "TBA"
-
-        # Explicit venues stated in the Rule Book.
-        event.venue = source.get(
-            "venue",
-            visual_source.venue if visual_source else "",
-        )
-
-        # Registration is a website state, not a Rule Book fact.
-        event.registration = "open"
-
-        # -------------------------------------------------------------------
-        # VISUAL/UI FIELDS — preserve existing design data where available.
-        # These are not used as the source for event facts.
-        # -------------------------------------------------------------------
-        if visual_source is not None:
-            event.arena = visual_source.arena or ""
-            event.category = visual_source.category or ""
-            event.tagline = visual_source.tagline or ""
-            event.accent = visual_source.accent or "crimson"
-            event.image = visual_source.image
-            event.glyph = visual_source.glyph or source["slug"]
+    # The frontend also includes three supplemental esports registrations. They are
+    # not listed in the official rulebook, so their event-specific facts stay TBA.
+    for event in esports:
+        slug = event["slug"]
+        existing = existing_by_slug.get(slug)
+        if existing:
+            # These entries have no rulebook facts. Preserve any details entered by an
+            # admin after first seed rather than resetting them to TBA on each startup.
+            doc = dict(existing)
         else:
-            event.arena = ""
-            event.category = ""
-            event.tagline = ""
-            event.accent = "crimson"
-            event.image = None
-            event.glyph = source["slug"]
+            doc = dict(event)
+        doc["_id"] = slug
+        db.events.replace_one({"_id": slug}, doc, upsert=True)
 
-        event.sort_order = sort_order
-
-    db.commit()
-
-    print("[seed] synchronized official ASHVAMEDHA 2026 events")
-    print(
-        "[seed] official events: "
-        + ", ".join(event["name"] for event in RULEBOOK_EVENTS)
-    )
+    # Keep only the 12 official rulebook events plus the 3 existing form-backed esports entries.
+    # Registrations/matches remain in their own collections and are never deleted here.
+    db.events.delete_many({"slug": {"$nin": list(retained_slugs)}})
+    print("[seed] synchronized the 12 official rulebook events and 3 form-backed esports events")
 
 
-def seed(db: Session) -> None:
+def seed(db: Database) -> None:
     data = json.loads(SEED_FILE.read_text(encoding="utf-8"))
-
-    # Existing project seed content.
-    # Event facts are synchronized again below from the official Rule Book.
-    for i, e in enumerate(data["EVENTS"]):
-        lo, hi = _guess_limits(e.get("teamSize", ""))
-
-        db.add(
-            Event(
-                slug=e["slug"],
-                name=e["name"],
-                arena=e.get("arena", ""),
-                category=e["category"],
-                tagline=e.get("tagline", ""),
-                description=e.get("description", ""),
-                date=e.get("date", ""),
-                day=e.get("day", 1),
-                time=e.get("time", ""),
-                venue=e.get("venue", ""),
-                team_size=e.get("teamSize", ""),
-                min_team_size=lo,
-                max_team_size=hi,
-                registration=e.get("registration", "open"),
-                entry_fee=e.get("entryFee", ""),
-                prize_pool=e.get("prizePool", ""),
-                format=e.get("format", ""),
-                accent=e.get("accent", "crimson"),
-                image=e.get("image"),
-                glyph=e.get("glyph", "football"),
-                sort_order=i,
-            )
-        )
-
+    now = utcnow()
     team_slug_by_name: dict[str, str] = {}
 
-    for i, t in enumerate(data["TEAMS"]):
-        team_slug_by_name[t["name"]] = t["slug"]
+    # Seed all non-event collections only when the events collection is empty.
+    for i, team in enumerate(data.get("TEAMS", [])):
+        team_slug_by_name[team["name"]] = team["slug"]
+        doc = {
+            "slug": team["slug"], "name": team["name"], "institution": team.get("institution", ""),
+            "department": team.get("department", ""), "captain": team.get("captain", ""),
+            "sport": team.get("sport", ""), "accent": team.get("accent", "crimson"),
+            "crest": team.get("crest") or ["#e11d2e", "#4a0710"], "motto": team.get("motto", ""), "sort_order": i,
+        }
+        write_record(db, "teams", doc)
 
-        db.add(
-            Team(
-                slug=t["slug"],
-                name=t["name"],
-                institution=t.get("institution", ""),
-                department=t.get("department", ""),
-                captain=t.get("captain", ""),
-                sport=t.get("sport", ""),
-                accent=t.get("accent", "crimson"),
-                crest=t.get("crest") or ["#e11d2e", "#4a0710"],
-                motto=t.get("motto", ""),
-                sort_order=i,
-            )
-        )
+    for row in data.get("RANKINGS", []):
+        doc = {"team_slug": row["teamSlug"], "team_name": row["team"], "matches": row.get("matches", 0),
+               "wins": row.get("wins", 0), "losses": row.get("losses", 0), "points": row.get("points", 0),
+               "win_pct": row.get("winPct")}
+        write_record(db, "standings", doc)
 
-    for r in data["RANKINGS"]:
-        db.add(
-            Standing(
-                team_slug=r["teamSlug"],
-                team_name=r["team"],
-                matches=r["matches"],
-                wins=r["wins"],
-                losses=r["losses"],
-                points=r["points"],
-                win_pct=r.get("winPct"),
-            )
-        )
+    for day in data.get("DAYS", []):
+        write_record(db, "schedule_days", {"day": day["day"], "label": day["label"], "date": day["date"],
+            "headline": day.get("headline", ""), "note": day.get("note", "")})
 
-    for d in data["DAYS"]:
-        db.add(
-            ScheduleDay(
-                day=d["day"],
-                label=d["label"],
-                date=d["date"],
-                headline=d.get("headline", ""),
-                note=d.get("note", ""),
-            )
-        )
+    for slot in data.get("SCHEDULE", []):
+        doc = {"id": slot["id"], "day": slot["day"], "time": slot["time"], "title": slot["title"],
+               "venue": slot.get("venue", ""), "event_slug": slot.get("eventSlug"), "stage": slot.get("stage", ""),
+               "status": slot.get("status", "scheduled"), "duration": slot.get("duration", "")}
+        write_record(db, "schedule_slots", doc)
 
-    for s in data["SCHEDULE"]:
-        db.add(
-            ScheduleSlot(
-                id=s["id"],
-                day=s["day"],
-                time=s["time"],
-                title=s["title"],
-                venue=s.get("venue", ""),
-                event_slug=s.get("eventSlug"),
-                stage=s.get("stage", ""),
-                status=s.get("status", "scheduled"),
-                duration=s.get("duration", ""),
-            )
-        )
+    if settings.seed_demo_matches:
+        for i, match in enumerate(data.get("LIVE_MATCHES", [])):
+            home, away = match["home"], match["away"]
+            canonical_event_slug = _canonical_aliases().get(match["eventSlug"], match["eventSlug"])
+            doc = {"id": match["id"], "event_slug": canonical_event_slug, "home_name": home["name"],
+                   "home_team_slug": team_slug_by_name.get(home["name"]),
+                   "home_score": "" if home.get("score") == "—" else str(home.get("score", "")),
+                   "away_name": away["name"], "away_team_slug": team_slug_by_name.get(away["name"]),
+                   "away_score": "" if away.get("score") == "—" else str(away.get("score", "")),
+                   "status": match["status"], "clock": match.get("clock", ""), "detail": match.get("detail", ""),
+                   "stage": match.get("detail", "").split("·")[0].strip(), "winner": None, "result_summary": "",
+                   "counts_for_standings": False, "sort_order": i, "match_format": "", "sets": [], "participants": [],
+                   "created_at": now, "updated_at": now, "finished_at": None}
+            write_record(db, "matches", doc)
 
-    # Demo fixtures (sample teams); only when SEED_DEMO_MATCHES=true.
-    for i, m in enumerate(data["LIVE_MATCHES"] if settings.seed_demo_matches else []):
-        home, away = m["home"], m["away"]
+    event_slug_by_name = {e["name"]: e["slug"] for e in data.get("EVENTS", [])}
+    for index, result in enumerate(data.get("RECENT_RESULTS", []), start=1):
+        event_slug = event_slug_by_name.get(result["sport"], aliases_for_result(result["sport"]))
+        event_slug = _canonical_aliases().get(event_slug, event_slug)
+        doc = {"id": f"seed-result-{index}", "event_slug": event_slug, "home_name": result["winner"],
+               "home_team_slug": team_slug_by_name.get(result["winner"]), "home_score": "", "away_name": result["loser"],
+               "away_team_slug": team_slug_by_name.get(result["loser"]), "away_score": "", "status": "final", "clock": "",
+               "detail": result.get("stage", ""), "stage": result.get("stage", ""), "winner": "home",
+               "result_summary": result.get("score", ""), "counts_for_standings": False, "sort_order": index,
+               "match_format": "", "sets": [], "participants": [], "created_at": now, "updated_at": now,
+               "finished_at": now - timedelta(hours=3, minutes=index)}
+        write_record(db, "matches", doc)
 
-        db.add(
-            Match(
-                id=m["id"],
-                event_slug=m["eventSlug"],
-                home_name=home["name"],
-                home_team_slug=team_slug_by_name.get(home["name"]),
-                home_score="" if home["score"] == "—" else str(home["score"]),
-                away_name=away["name"],
-                away_team_slug=team_slug_by_name.get(away["name"]),
-                away_score="" if away["score"] == "—" else str(away["score"]),
-                status=m["status"],
-                clock=m.get("clock", ""),
-                detail=m.get("detail", ""),
-                stage=m.get("detail", "").split("·")[0].strip(),
-                counts_for_standings=False,
-                sort_order=i,
-            )
-        )
+    for i, gallery in enumerate(data.get("GALLERY", [])):
+        write_record(db, "gallery_items", {"id": gallery["id"], "title": gallery["title"], "category": gallery["category"],
+            "image": gallery.get("image"), "caption": gallery.get("caption", ""), "span": gallery.get("span", "square"),
+            "accent": gallery.get("accent", "crimson"), "sort_order": i})
 
-    slug_by_event_name = {
-        e["name"]: e["slug"]
-        for e in data["EVENTS"]
-    }
+    for i, sponsor in enumerate(data.get("SPONSORS", []), start=1):
+        write_record(db, "sponsors", {"id": next_sequence(db, "sponsors", "sponsors"), "name": sponsor["name"],
+            "logo": sponsor.get("logo"), "wordmark": sponsor.get("wordmark", sponsor["name"].upper()),
+            "tier": sponsor.get("tier", "partner"), "note": sponsor.get("note"), "sort_order": i - 1})
 
-    now = utcnow()
-
-    for i, r in enumerate(data["RECENT_RESULTS"]):
-        db.add(
-            Match(
-                id=f"seed-result-{i + 1}",
-                event_slug=slug_by_event_name.get(
-                    r["sport"],
-                    r["sport"].lower(),
-                ),
-                home_name=r["winner"],
-                home_team_slug=team_slug_by_name.get(r["winner"]),
-                away_name=r["loser"],
-                away_team_slug=team_slug_by_name.get(r["loser"]),
-                status="final",
-                winner="home",
-                result_summary=r["score"],
-                stage=r.get("stage", ""),
-                detail=r.get("stage", ""),
-                counts_for_standings=False,
-                finished_at=now - timedelta(hours=3, minutes=i),
-            )
-        )
-
-    for i, g in enumerate(data["GALLERY"]):
-        db.add(
-            GalleryItem(
-                id=g["id"],
-                title=g["title"],
-                category=g["category"],
-                image=g.get("image"),
-                caption=g.get("caption", ""),
-                span=g.get("span", "square"),
-                accent=g.get("accent", "crimson"),
-                sort_order=i,
-            )
-        )
-
-    for i, s in enumerate(data["SPONSORS"]):
-        db.add(
-            Sponsor(
-                name=s["name"],
-                logo=s.get("logo"),
-                wordmark=s.get("wordmark", s["name"].upper()),
-                tier=s.get("tier", "partner"),
-                note=s.get("note"),
-                sort_order=i,
-            )
-        )
-
-    set_content(db, "featuredSlugs", data["FEATURED_SLUGS"])
-    set_content(db, "championSpotlight", data["CHAMPION_SPOTLIGHT"])
-    set_content(db, "eventChampions", data["EVENT_CHAMPIONS"])
-    set_content(db, "podium2025", data["PODIUM_2025"])
-    set_content(db, "previousEditions", data["PREVIOUS_EDITIONS"])
-
-    db.commit()
-
-    print("[seed] loaded frontend content into the database")
+    aliases = _canonical_aliases()
+    featured = list(dict.fromkeys(aliases.get(slug, slug) for slug in data.get("FEATURED_SLUGS", [])))
+    set_content(db, "featuredSlugs", featured)
+    set_content(db, "championSpotlight", data.get("CHAMPION_SPOTLIGHT", {}))
+    set_content(db, "eventChampions", data.get("EVENT_CHAMPIONS", []))
+    set_content(db, "podium2025", data.get("PODIUM_2025", []))
+    set_content(db, "previousEditions", data.get("PREVIOUS_EDITIONS", []))
+    print("[seed] loaded website content into MongoDB")
 
 
-def seed_if_empty(db: Session) -> None:
-    # Preserve the old behavior for the rest of the site's seed data.
-    if db.scalar(select(Event.slug).limit(1)) is None:
+def aliases_for_result(sport: str) -> str:
+    aliases = _canonical_aliases()
+    return aliases.get(sport, sport.lower().replace(" ", "-"))
+
+
+def seed_if_empty(db: Database) -> None:
+    data = json.loads(SEED_FILE.read_text(encoding="utf-8"))
+    if db.events.count_documents({}) == 0:
         seed(db)
-
-    # ALWAYS synchronize event data, even when the DB already contains events.
-    sync_rulebook_events(db)
-
+    sync_rulebook_events(db, data)
     ensure_admin(db)
     ensure_sport_admins(db)
 
 
 def main() -> None:
-    reset = "--reset" in sys.argv
-
+    from app.database import connect_database
+    db = connect_database()
+    reset = "--reset" in __import__("sys").argv
     if reset:
-        answer = input(
-            "This DELETES ALL DATA including registrations. "
-            "Type 'yes' to continue: "
-        )
-
+        answer = input("This DELETES ALL DATA including registrations. Type 'yes' to continue: ")
         if answer.strip().lower() != "yes":
             print("Aborted.")
             return
-
-        Base.metadata.drop_all(bind=engine)
-
-    Base.metadata.create_all(bind=engine)
-
-    with SessionLocal() as db:
-        seed_if_empty(db)
+        for name in ["events", "teams", "standings", "schedule_days", "schedule_slots", "matches", "gallery_items",
+                     "sponsors", "content_blocks", "registrations", "users", "counters"]:
+            db[name].delete_many({})
+    seed_if_empty(db)
+    print(f"[seed] MongoDB database '{settings.mongodb_db_name}' is ready")
 
 
 if __name__ == "__main__":

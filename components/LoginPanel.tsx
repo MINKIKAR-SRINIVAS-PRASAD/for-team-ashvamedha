@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { REGISTRATION_OPEN } from "@/data/site";
 import { useRouter } from "next/navigation";
 import { ArrowUpRight, ShieldCheck, User } from "lucide-react";
 import { login } from "@/lib/adminApi";
@@ -67,16 +68,22 @@ export function LoginPanel() {
       {mode === "user" ? (
         <div className="mt-8">
           <p className="text-[0.95rem] leading-relaxed text-silver-dim">
-            Spectators and players don&apos;t need an account. Follow live scores, the schedule and
-            results, or register your team.
+            Spectators and players don&apos;t need an account. Follow live scores, the schedule,
+            results and festival updates. Registration is currently closed.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/" className="btn btn-primary clip-notch">
               Continue to site <ArrowUpRight className="h-4 w-4" />
             </Link>
-            <Link href="/register" className="btn btn-ghost clip-notch">
-              Register a team
-            </Link>
+            {REGISTRATION_OPEN ? (
+              <Link href="/register" className="btn btn-ghost clip-notch">
+                Register a team
+              </Link>
+            ) : (
+              <span className="btn btn-ghost clip-notch cursor-not-allowed opacity-60" aria-disabled="true">
+                Registration Closed
+              </span>
+            )}
           </div>
         </div>
       ) : (

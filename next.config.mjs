@@ -1,11 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  poweredByHeader: false,
+    reactStrictMode: true,
+poweredByHeader: false,
 
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+eslint: {
+  ignoreDuringBuilds: true,
+},
+
+experimental: {
+  cpus: 1,
+  webpackMemoryOptimizations: true,
+},
 
   /*
    * Make Next.js use this project directory as the tracing root.

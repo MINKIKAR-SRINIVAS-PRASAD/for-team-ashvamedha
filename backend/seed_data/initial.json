@@ -7,7 +7,7 @@
       "category": "Team Sport",
       "tagline": "Eleven against the storm.",
       "description": "The flagship battle of ASHVAMEDHA, played across a full 90-minute war of endurance and structure. Group stages run on the main ground before the floodlit final decides who lifts the Ashvamedha Shield.",
-      "date": "09-11 oct 2026",
+      "date": "09–11 oct 2026",
       "day": 1,
       "time": "09:00 onwards",
       "venue": "Main Ground",
@@ -27,7 +27,7 @@
       "category": "Team Sport",
       "tagline": "Four quarters. No retreat.",
       "description": "Fast-break basketball under the arena lights with a shot-clock enforced at 24 seconds. Played 5v5 across four ten-minute quarters with a knockout bracket for the top eight squads.",
-      "date": "14–15 Oct 2026",
+      "date": "11– Oct 2026",
       "day": 2,
       "time": "10:30 onwards",
       "venue": "Court 01",
@@ -47,7 +47,7 @@
       "category": "Racquet",
       "tagline": "Speed you can hear.",
       "description": "Singles and doubles combat on four regulation courts with BWF-scoring to 21. Quarter-final losers enter a repechage ladder so no campaign ends without a second strike.",
-      "date": "13–14 Oct 2026",
+      "date": "09–11 Oct 2026",
       "day": 1,
       "time": "11:30 onwards",
       "venue": "Indoor Hall",
@@ -67,9 +67,9 @@
       "category": "Racquet",
       "tagline": "Reflex is a weapon.",
       "description": "Eight tables running in parallel, best-of-five to 11 points. Known across the circuit for upsets — the shortest distance between an underdog and a trophy.",
-      "date": "13 Oct 2026",
+      "date": "09 Oct 2026",
       "day": 1,
-      "time": "14:00 onwards",
+      "time": "11:00 onwards",
       "venue": "Indoor Hall — Bay 2",
       "teamSize": "1 or 2",
       "registration": "open",
@@ -87,14 +87,14 @@
       "category": "Racquet",
       "tagline": "Long rallies break hearts.",
       "description": "Hard-court tennis with pro-set scoring in the early rounds and best-of-three sets from the semi-finals. Played under the open Odisha sky with a dedicated medical bay on standby.",
-      "date": "14 Oct 2026",
+      "date": "11 Oct 2026",
       "day": 2,
       "time": "07:00 onwards",
       "venue": "Lawn Tennis Courts",
       "teamSize": "1 or 2",
       "registration": "closing",
       "entryFee": "₹300 / player",
-      "prizePool": "₹15,000",
+      "prizePool": "₹,000",
       "format": "Pro-set then best of 3",
       "accent": "gold",
       "image": null,
@@ -107,15 +107,15 @@
       "category": "Board & Mind",
       "tagline": "Silence, then devastation.",
       "description": "FIDE standard blitz and rapid formats in a sound-controlled hall, arbiter-monitored throughout. Nine rounds of Swiss pairings decide the grandmaster of ASHVAMEDHA.",
-      "date": "09-11 oct 2026",
+      "date": "09 Oct 2026",
       "day": 1,
       "time": "09:30 onwards",
-      "venue": "Lecture Hall Complex",
+      "venue": "hockey ground",
       "teamSize": "1",
       "registration": "open",
-      "entryFee": "",
-      "prizePool": "",
-      "format": "5 rounds",
+      "entryFee": "₹0 / player",
+      "prizePool": "₹10,000",
+      "format": "Swiss, 9 rounds",
       "accent": "violet",
       "image": null,
       "glyph": "Kho-Kho"
@@ -127,19 +127,20 @@
       "category": "Power & Fitness",
       "tagline": "Against gravity, and yourself.",
       "description": "Raw strength benchmarks across squat, bench press and deadlift judged on bodyweight multipliers. Technique is audited by certified spotters — form beats ego every time.",
-      "date": "15 Oct 2026",
+      "date": " Oct 2026",
       "day": 3,
       "time": "08:00 onwards",
       "venue": "Strength & Conditioning Centre",
       "teamSize": "1",
       "registration": "open",
       "entryFee": "₹200 / athlete",
-      "prizePool": "₹14,000",
+      "prizePool": "₹11,000",
       "format": "3-lift total",
       "accent": "crimson",
       "image": null,
       "glyph": "Power Lifting"
     },
+  
     {
       "slug": "chess",
       "name": "chess",
@@ -167,13 +168,13 @@
       "category": "Power & Fitness",
       "tagline": "Milliseconds define legacies.",
       "description": "100m, 200m, 400m, 4x100m relay plus long jump and shot put. Electronic timing with photo-finish review ensures every podium is beyond dispute.",
-      "date": "14 Oct 2026",
+      "date": "11 Oct 2026",
       "day": 2,
       "time": "06:30 onwards",
       "venue": "Swimming Track",
       "teamSize": "Individual + relay of 4",
       "registration": "open",
-      "entryFee": "₹150 / event",
+      "entryFee": "₹0 / event",
       "prizePool": "₹22,000",
       "format": "Heats + finals",
       "accent": "volt",
@@ -187,9 +188,9 @@
       "category": "Team Sport",
       "tagline": "Six hands, one wall.",
       "description": "Six-a-side volleyball played to 25 points with rally scoring. Rotation discipline decides the tight sets — the final has gone to five sets three years running.",
-      "date": "14–15 Oct 2026",
+      "date": "11– Oct 2026",
       "day": 2,
-      "time": "15:30 onwards",
+      "time": ":30 onwards",
       "venue": "Court 02",
       "teamSize": "6 + 4 subs",
       "registration": "open",
@@ -207,9 +208,9 @@
       "category": "Team Sport",
       "tagline": "Ten overs of chaos.",
       "description": "T10 knockout Mixed Cricket with a hard ball, played across two days on the main oval. Powerplay restrictions and a super-over for ties keep the campaign brutally fast.",
-      "date": "13 Oct 2026",
+      "date": "09 Oct 2026",
       "day": 1,
-      "time": "13:00 onwards",
+      "time": "09:00 onwards",
       "venue": "Main Ground",
       "teamSize": "11 + 4 subs",
       "registration": "closed",
@@ -231,8 +232,8 @@
   ],
   "TEAMS": [
     {
-      "slug": "phoenix-brigade",
-      "name": "Phoenix Brigade",
+      "slug": "IIT BBS-A",
+      "name": "IIT BBS-A",
       "institution": "IIT Bhubaneswar",
       "department": "School of Mechanical Sciences",
       "captain": "A. Mahapatra",
@@ -246,8 +247,8 @@
       "motto": "Rise. Repeat. Reign."
     },
     {
-      "slug": "titan-syndicate",
-      "name": "Titan Syndicate",
+      "slug": "IIT BBS-B",
+      "name": "IIT BBS-B",
       "institution": "IIT Bhubaneswar",
       "department": "School of Electrical Sciences",
       "captain": "R. Nayak",
@@ -261,8 +262,8 @@
       "motto": "Above the rim, beyond the noise."
     },
     {
-      "slug": "obsidian-order",
-      "name": "Obsidian Order",
+      "slug": "NIT RKL",
+      "name": "NIT RKL",
       "institution": "NIT Rourkela",
       "department": "Department of Computer Science",
       "captain": "S. Patel",
@@ -276,8 +277,8 @@
       "motto": "Every site is ours."
     },
     {
-      "slug": "iron-veil",
-      "name": "Iron Veil",
+      "slug": "IIT BBS",
+      "name": "IIT BBS",
       "institution": "IIT Bhubaneswar",
       "department": "School of Infrastructure",
       "captain": "K. Das",
@@ -291,8 +292,8 @@
       "motto": "Weight is only a rumour."
     },
     {
-      "slug": "silver-lance",
-      "name": "Silver Lance",
+      "slug": "KIIT BBS",
+      "name": "KIIT BBS",
       "institution": "KIIT Bhubaneswar",
       "department": "School of Law",
       "captain": "P. Mohanty",
@@ -306,8 +307,8 @@
       "motto": "Placed, not played."
     },
     {
-      "slug": "stormforge",
-      "name": "Stormforge",
+      "slug": "IIT BBS",
+      "name": "IIT BBS",
       "institution": "IIT Bhubaneswar",
       "department": "School of Basic Sciences",
       "captain": "N. Behera",
@@ -321,8 +322,8 @@
       "motto": "Smash first, doubt later."
     },
     {
-      "slug": "quiet-war",
-      "name": "The Quiet War",
+      "slug": "IIT BBS",
+      "name": "IIT BBS",
       "institution": "IIT Bhubaneswar",
       "department": "School of Humanities",
       "captain": "A. Rout",
@@ -336,8 +337,8 @@
       "motto": "We win it in silence."
     },
     {
-      "slug": "red-meridian",
-      "name": "Red Meridian",
+      "slug": "CET BBS",
+      "name": "CET BBS",
       "institution": "CET Bhubaneswar",
       "department": "Department of Civil Engineering",
       "captain": "V. Sahu",
@@ -351,8 +352,8 @@
       "motto": "Milliseconds are ours."
     },
     {
-      "slug": "walled-court",
-      "name": "Walled Court",
+      "slug": "IIT BBS",
+      "name": "IIT BBS",
       "institution": "IIT Bhubaneswar",
       "department": "School of Minerals",
       "captain": "D. Panda",
@@ -409,27 +410,1005 @@
         "#3f2d03"
       ],
       "motto": "All five trials. No excuses."
+    },
+    {
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita autonomous college Bhubaneswar",
+      "department": "Department of Civil Engineering",
+      "captain": "sukant priyadarshi",
+      "sport": "Chess",
+      "rank": 8,
+      "accent": "crimson",
+      "crest": [
+        "#ff3b57",
+        "#46060f"
+      ],
+      "motto": "Milliseconds are ours."
+    },
+    {
+      "slug": "AIIMS",
+      "name": "AIIMS",
+      "institution": "AIIMS BHUBANESWAR",
+      "department": "Department of Civil Engineering",
+      "captain": "Shravan Yogesh Pithwa",
+      "sport": "Chess",
+      "rank": 8,
+      "accent": "crimson",
+      "crest": [
+        "#ff3b57",
+        "#46060f"
+      ],
+      "motto": "Milliseconds are ours."
+    },
+    {
+      "slug": "NISER",
+      "name": "NISER",
+      "institution": "NISER",
+      "department": "Department of Civil Engineering",
+      "captain": "Kushagra Tyagi",
+      "sport": "Chess",
+      "rank": 8,
+      "accent": "crimson",
+      "crest": [
+        "#ff3b57",
+        "#46060f"
+      ],
+      "motto": "Milliseconds are ours."
+    },
+    {
+      "slug": "OUTR",
+      "name": "OUTR",
+      "institution": "Odisha University of Technology and Research, Ghatikia, BBSR",
+      "department": "Department of Civil Engineering",
+      "captain": "Pratyush Mohapatra",
+      "sport": "Chess",
+      "rank": 8,
+      "accent": "crimson",
+      "crest": [
+        "#ff3b57",
+        "#46060f"
+      ],
+      "motto": "Milliseconds are ours."
+    },
+
+    {
+      "slug": "MKCG",
+      "name": "MKCG",
+      "institution": "MKCG Medical College",
+      "department": "Department of Civil Engineering",
+      "captain": "sourav mohapatra",
+      "sport": "Chess",
+      "rank": 8,
+      "accent": "crimson",
+      "crest": [
+        "#ff3b57",
+        "#46060f"
+      ],
+      "motto": "Milliseconds are ours."
+    },
+
+
+
+{
+
+      "slug": "ICT",
+      "name": "ICT",
+      "institution": "Institute of chemical Technology,Indian oil odisha campus,BHUBANESWA",
+      "department": "School of Basic Sciences",
+      "captain": "Pranjal Upadhyay ",
+      "sport": "Sports Quiz",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+{
+
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita autonomous college Bhubaneswar ",
+      "department": "School of Basic Sciences",
+      "captain": "Somesh Pradhan",
+      "sport": "Sports Quiz",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+{
+
+      "slug": "CV Raman",
+      "name": "CV Raman",
+      "institution": "C.V Raman Global University ",
+      "department": "School of Basic Sciences",
+      "captain": "Khirod Kumar Patro",
+      "sport": "Sports Quiz",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+{
+
+      "slug": "ICT IOC",
+      "name": "ICT IOC",
+      "institution": "Ict Ioc Bhubaneswar ",
+      "department": "School of Basic Sciences",
+      "captain": "Kumar Shaurya ",
+      "sport": "Sports Quiz",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+{
+
+      "slug": "Silicon",
+      "name": "Silicon",
+      "institution": "Silicon University ",
+      "department": "School of Basic Sciences",
+      "captain": "Priyanshu Das ",
+      "sport": "Sports Quiz",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+{
+
+      "slug": "Silicon",
+      "name": "Silicon",
+      "institution": "Silicon University ",
+      "department": "School of Basic Sciences",
+      "captain": "Adyasha Mishra",
+      "sport": "Sports Quiz",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+{
+
+      "slug": "ICT ",
+      "name": "ICT ",
+      "institution": " ICT Mumbai ",
+      "department": "School of Basic Sciences",
+      "captain": "SHIVAM SHARMA ",
+      "sport": "Sports Quiz",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+{
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita Autonomous College",
+      "department": "",
+      "captain": "Omkar Mishra",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+
+
+{
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita Autonomous College",
+      "department": "",
+      "captain": "NITISH KUMAR SWAIN",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+
+{
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita Autonomous College",
+      "department": "",
+      "captain": "Pranjal Kumar",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+
+{
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita Autonomous College",
+      "department": "",
+      "captain": "Aman kumar",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita Autonomous College",
+      "department": "",
+      "captain": "Abhisek Dash",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+{
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita Autonomous College",
+      "department": "",
+      "captain": "Swetangini Singhdeo",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita Autonomous College",
+      "department": "",
+      "captain": "Aniepriya Mohanta",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+
+
+{
+      "slug": "AIIMS",
+      "name": "AIIMS",
+      "institution": "AIIMS BHUBANESWAR",
+      "department": "",
+      "captain": "SHIFA P K",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+{
+      "slug": "AIIMS",
+      "name": "AIIMS",
+      "institution": "AIIMS BHUBANESWAR",
+      "department": "",
+      "captain": "Liniya Binet",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+
+{
+      "slug": "MEHER",
+      "name": "MEHER",
+      "institution": "Niushree Meher",
+      "department": "",
+      "captain": "Niushree Meher",
+      "sport": "GYM EVENT",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+{
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita autonomous college Bhubaneswar",
+      "department": "",
+      "captain": "Sukant Priyadarshi",
+      "sport": "TABLE TENNIS",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+
+{
+      "slug": "ICT",
+      "name": "ICT",
+      "institution": "ICT IOCB",
+      "department": "",
+      "captain": "Mrinmoy Das",
+      "sport": "TABLE TENNIS",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+{
+      "slug": "XIM",
+      "name": "XIM",
+      "institution": "XIM UNIVERSITY, HARIRAJPUR, JATNI CAMPUS",
+      "department": "",
+      "captain": "RITESH NAYAK",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+{
+      "slug": "XIM",
+      "name": "XIM",
+      "institution": "XIM UNIVERSITY, HARIRAJPUR, JATNI CAMPUS",
+      "department": "",
+      "captain": "Ruhi Deavan Raisoni",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+{
+      "slug": "SSU",
+      "name": "SSU",
+      "institution": "Sri Sri university ",
+      "department": "",
+      "captain": "Ananya Sahu",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+{
+      "slug": "SSU",
+      "name": "SSU",
+      "institution": "Sri Sri university ",
+      "department": "",
+      "captain": "Sovan Kumar Pradhan",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+{
+      "slug": "NISER",
+      "name": "NISER",
+      "institution": "NISER",
+      "department": "",
+      "captain": "Srishti",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+{
+      "slug": "NISER",
+      "name": "NISER",
+      "institution": "NISER",
+      "department": "",
+      "captain": "Uday Singh",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+{
+      "slug": "CGU",
+      "name": "CGU",
+      "institution": "CV RAMAN GLOBAL UNIVERSITY BHUBANESWAR",
+      "department": "",
+      "captain": "Sharishtha Shreya",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "CGU",
+      "name": "CGU",
+      "institution": "CV RAMAN GLOBAL UNIVERSITY BHUBANESWAR",
+      "department": "",
+      "captain": "MRUTYUNJAYA MAHARANA",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+{
+      "slug": "SILICON",
+      "name": "SILICON",
+      "institution": "Silicon University",
+      "department": "",
+      "captain": "Ayushman Parida",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "KIIT",
+      "name": "KIIT",
+      "institution": "KIIT University",
+      "department": "",
+      "captain": "Anshuman Biswal",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "GIFT",
+      "name": "GIFT",
+      "institution": "GIFT AUTONOMOUS BBSR",
+      "department": "",
+      "captain": "Nishanta Pradhan",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "CHIRST",
+      "name": "CHRIST",
+      "institution": "Christ College",
+      "department": "",
+      "captain": "Samarpana Nayak",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "AIIMS",
+      "name": "AIIMS",
+      "institution": "AIIMS BBSR",
+      "department": "",
+      "captain": "Akshit Tyagi",
+      "sport": "BASKETBALL",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+{
+      "slug": "XIM",
+      "name": "XIM",
+      "institution": "XIM UNIVERSITY, HARIRAJPUR,JATNI CAMPUS",
+      "department": "",
+      "captain": "PRATHUSH RATHORE",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "XIM",
+      "name": "XIM",
+      "institution": "XIM UNIVERSITY, HARIRAJPUR,JATNI CAMPUS",
+      "department": "",
+      "captain": "K R Nisha",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "AIIMS",
+      "name": "AIIMS",
+      "institution": "AIIMS Bhubaneswar",
+      "department": "",
+      "captain": "Drishti",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+{
+      "slug": "NISER",
+      "name": "NISER",
+      "institution": "NISER",
+      "department": "",
+      "captain": "NISHANT KUMAR",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+{
+      "slug": "SILICON",
+      "name": "SILICON",
+      "institution": "Silicon University, Bhubaneswar",
+      "department": "",
+      "captain": "Arpit Sarangi",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "SILICON",
+      "name": "SILICON",
+      "institution": "Silicon University, Bhubaneswar",
+      "department": "",
+      "captain": "Srishty Mishra",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "SSU",
+      "name": "SSU",
+      "institution": "Sri Sri University",
+      "department": "",
+      "captain": "Mohit Kedia",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "SSU",
+      "name": "SSU",
+      "institution": "Sri Sri University",
+      "department": "",
+      "captain": "Satya Sagar barik",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "SSU",
+      "name": "SSU",
+      "institution": "Sri Sri University",
+      "department": "",
+      "captain": "Naresh Kumar Naik",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "SSU",
+      "name": "SSU",
+      "institution": "Sri Sri University",
+      "department": "",
+      "captain": "Shreya Patel",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "ITER",
+      "name": "ITER",
+      "institution": "ITER",
+      "department": "",
+      "captain": "Shreya Biswal",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "ITER",
+      "name": "ITER",
+      "institution": "ITER",
+      "department": "",
+      "captain": "Sheshank Patro",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+
+
+
+
+{
+      "slug": "MKCG",
+      "name": "MKCG",
+      "institution": "MKCG MEDICAL COLLEGE & HOSPITAL",
+      "department": "",
+      "captain": "Dhruti Mohan Rout",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+{
+      "slug": "OUTR",
+      "name": "OUTR",
+      "institution": "ODISHA UNIVERSITY OF TECHNOLOGY AND RESEARCH",
+      "department": "",
+      "captain": "SREEYA SANSKRUTI SWAIN",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+    {
+      "slug": "TATB",
+      "name": "TATB",
+      "institution": "Trident Academy of Technology Bhubaneswar",
+      "department": "",
+      "captain": "Abhilipsa Sahoo",
+      "sport": "BADMINTON",
+      "rank": 6,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+    {
+      "slug": "PRABHU",
+      "name": "PRABHU",
+      "institution": "Prabhupattnaik",
+      "department": "",
+      "captain": "Prabhu Krupa Pattnaik",
+      "sport": "BADMINTON",
+      "rank": 1,
+      "accent": "volt",
+      "crest": [
+        "#6fd0ff",
+        "#083246"
+      ],
+      "motto": "Smash first, doubt later."
+    },
+      {
+      "slug": "GITA",
+      "name": "GITA",
+      "institution": "Gita autonomous college Bhubaneswar ",
+      "department": "Department of Civil Engineering",
+      "captain": "sukant priyadarshi",
+      "sport": "Table Tennis",
+      "rank": 8,
+      "accent": "crimson",
+      "crest": [
+        "#ff3b57",
+        "#46060f"
+      ],
+      "motto": "Milliseconds are ours."
+    },
+    {
+      "slug": "ICT IOCB",
+      "name": "ICT IOCB",
+      "institution": "Institute of Chemical Technology - IndianOil Odisha Campus, Bhubaneswar",
+      "department": "Department of Civil Engineering",
+      "captain": "Mrinmoy Das",
+      "sport": "Table Tennis",
+      "rank": 8,
+      "accent": "crimson",
+      "crest": [
+        "#ff3b57",
+        "#46060f"
+      ],
+      "motto": "Milliseconds are ours."
     }
+
+	
   ],
-  "DAYS": [
+  "DAYS": [    
+
     {
       "day": 1,
       "label": "DAY 01",
-      "date": "13 OCT 2026",
+      "date": "09 OCT 2026",
       "headline": "IGNITION",
       "note": "Opening ceremony, group stages and the first eliminations."
     },
     {
       "day": 2,
       "label": "DAY 02",
-      "date": "14 OCT 2026",
+      "date": "10 OCT 2026",
       "headline": "ESCALATION",
       "note": "Semi-finals across the arena, track finals at first light."
     },
     {
       "day": 3,
       "label": "DAY 03",
-      "date": "15 OCT 2026",
+      "date": "11 OCT 2026",
       "headline": "FINAL STAND",
       "note": "Championship finals, podium ceremony and the closing arena."
     }
@@ -468,7 +1447,7 @@
       "duration": "2 hrs 30 min"
     },
     {
-      "id": "d1-1130-bd",
+      "id": "d1-1090-bd",
       "day": 1,
       "time": "11:30",
       "title": "Badminton — Round of 32",
@@ -479,9 +1458,9 @@
       "duration": "2 hrs"
     },
     {
-      "id": "d1-1300-cr",
+      "id": "d1-0900-cr",
       "day": 1,
-      "time": "13:00",
+      "time": "09:00",
       "title": "Mixed Cricket — T10 Knockout",
       "venue": "Main Ground",
       "eventSlug": "Mixed Cricket",
@@ -490,9 +1469,9 @@
       "duration": "4 hrs"
     },
     {
-      "id": "d1-1400-tt",
+      "id": "d1-1100-tt",
       "day": 1,
-      "time": "14:00",
+      "time": "11:00",
       "title": "Table Tennis — Prelims",
       "venue": "Indoor Hall — Bay 2",
       "eventSlug": "table-tennis",
@@ -521,17 +1500,7 @@
       "status": "completed",
       "duration": "30 min"
     },
-    {
-      "id": "d2-0630-at",
-      "day": 2,
-      "time": "06:30",
-      "title": "Swimming — Heats",
-      "venue": "Swimming Track",
-      "eventSlug": "Swimming",
-      "stage": "100m / 200m",
-      "status": "live",
-      "duration": "2 hrs"
-    },
+
     {
       "id": "d2-0700-lt",
       "day": 2,
@@ -540,7 +1509,7 @@
       "venue": "Lawn Tennis Courts",
       "eventSlug": "Lawn Tennis-tennis",
       "stage": "Pro-set",
-      "status": "live",
+      "status": "completed",
       "duration": "3 hrs"
     },
     {
@@ -551,7 +1520,7 @@
       "venue": "Indoor Hall — Bay 2",
       "eventSlug": "table-tennis",
       "stage": "Best of 5",
-      "status": "scheduled",
+      "status": "completed",
       "duration": "2 hrs"
     },
     {
@@ -562,40 +1531,29 @@
       "venue": "Court 01",
       "eventSlug": "basketball",
       "stage": "Round of 16",
-      "status": "scheduled",
+      "status": "completed",
       "duration": "3 hrs"
     },
     {
-      "id": "d2-1130-bd",
+      "id": "d2-1090-bd",
       "day": 2,
       "time": "11:30",
       "title": "Badminton — Quarter-finals",
       "venue": "Indoor Hall",
       "eventSlug": "Badminton",
       "stage": "Knockout",
-      "status": "scheduled",
+      "status": "completed",
       "duration": "2 hrs"
     },
     {
-      "id": "d2-1330-at",
+      "id": "d2-30-vb",
       "day": 2,
-      "time": "13:30",
-      "title": "Swimming — Track Finals",
-      "venue": "Swimming Track",
-      "eventSlug": "Swimming",
-      "stage": "400m · Relay · Jump",
-      "status": "scheduled",
-      "duration": "2 hrs 30 min"
-    },
-    {
-      "id": "d2-1530-vb",
-      "day": 2,
-      "time": "15:30",
+      "time": ":30",
       "title": "volleyball — Group Stage",
       "venue": "Court 02",
       "eventSlug": "volleyball",
       "stage": "Groups",
-      "status": "scheduled",
+      "status": "completed",
       "duration": "3 hrs"
     },
     {
@@ -606,7 +1564,7 @@
       "venue": "Main Ground",
       "eventSlug": "football",
       "stage": "Semi-final",
-      "status": "scheduled",
+      "status": "live",
       "duration": "2 hrs"
     },
     {
@@ -617,7 +1575,7 @@
       "venue": "Systems Lab — Chess Bay",
       "eventSlug": "chess",
       "stage": "Bo3",
-      "status": "scheduled",
+      "status": "completed",
       "duration": "2 hrs"
     },
     {
@@ -628,7 +1586,7 @@
       "venue": "Strength & Conditioning Centre",
       "eventSlug": "Power Lifting",
       "stage": "3-lift total",
-      "status": "scheduled",
+      "status": "completed",
       "duration": "3 hrs"
     },
     {
@@ -643,7 +1601,7 @@
       "duration": "2 hrs"
     },
     {
-      "id": "d3-1130-bb",
+      "id": "d3-1090-bb",
       "day": 3,
       "time": "11:30",
       "title": "basketball — Final",
@@ -654,9 +1612,9 @@
       "duration": "2 hrs"
     },
     {
-      "id": "d3-1400-vb",
+      "id": "d3-1100-vb",
       "day": 3,
-      "time": "14:00",
+      "time": "11:00",
       "title": "volleyball — Final",
       "venue": "Court 02",
       "eventSlug": "volleyball",
@@ -672,7 +1630,7 @@
       "venue": "Systems Lab — Chess Bay",
       "eventSlug": "chess",
       "stage": "Bo5",
-      "status": "scheduled",
+      "status": "completed",
       "duration": "3 hrs"
     },
     {
@@ -891,7 +1849,7 @@
         "score": "—"
       },
       "status": "upcoming",
-      "clock": "13:30",
+      "clock": "09:30",
       "detail": "400m Final · Swimming Track",
       "accent": "gold"
     }
@@ -991,167 +1949,114 @@
   "GALLERY": [
     {
       "id": "g1",
-      "title": "Floodlit Final",
-      "category": "MATCHDAY",
-      "image": null,
-      "caption": "The 2025 football final, decided in the 88th minute under the arena lights.",
+      "title": "",
+      "image": "/github-copy/components/glimpes/DSC_0009.jpg",
       "span": "tall",
       "accent": "crimson"
     },
     {
       "id": "g2",
-      "title": "Takeoff",
-      "category": "ATHLETES",
-      "image": null,
-      "caption": "Long jump final — a 6.4m leap that reset the campus record.",
+      "image": "/github-copy/components/glimpes/DSC_0014.jpg",
       "span": "square",
       "accent": "gold"
     },
     {
       "id": "g3",
-      "title": "The Wall",
-      "category": "CROWD",
-      "image": null,
-      "caption": "Three thousand voices behind the north stand during the basketball final.",
+      "image": "/github-copy/components/glimpes/DSC_0035.jpg",
       "span": "wide",
       "accent": "volt"
     },
     {
       "id": "g4",
-      "title": "Lifting the Shield",
-      "category": "CHAMPIONS",
-      "image": null,
-      "caption": "Phoenix Brigade collect the Ashvamedha Shield for the second straight year.",
+      "image": "/github-copy/components/glimpes/DSC_0056.jpg",
       "span": "tall",
       "accent": "gold"
     },
     {
       "id": "g5",
-      "title": "Campus at Dusk",
-      "category": "CAMPUS",
-      "image": null,
-      "caption": "The arena complex moments before the evening session begins.",
+      "image": "/github-copy/components/glimpes/DSC_0086.jpg",
       "span": "wide",
       "accent": "violet"
     },
     {
       "id": "g6",
-      "title": "Server War",
-      "category": "MATCHDAY",
-      "image": null,
-      "caption": "Chess bay, map three, both squads one round from elimination.",
+      "image": "/github-copy/components/glimpes/DSC_0097.jpg",
       "span": "square",
       "accent": "violet"
     },
     {
       "id": "g7",
-      "title": "Behind the Lens",
-      "category": "BEHIND THE SCENES",
-      "image": null,
-      "caption": "The production crew running the arena broadcast across four feeds.",
+      "image": "/github-copy/components/glimpes/DSC_1343.jpg",
       "span": "square",
       "accent": "volt"
     },
     {
       "id": "g8",
-      "title": "Match Point",
-      "category": "ATHLETES",
-      "image": null,
-      "caption": "Badminton singles final — the rally that lasted 41 shots.",
+      "image": "/github-copy/components/glimpes/DSC_1360.jpg",
       "span": "tall",
       "accent": "crimson"
     },
     {
       "id": "g9",
-      "title": "Track Start",
-      "category": "MATCHDAY",
-      "image": null,
-      "caption": "100m final set. Electronic timing, photo-finish review on standby.",
+      "image": "/github-copy/components/glimpes/DSC_1370.jpg",
       "span": "wide",
       "accent": "gold"
     },
     {
       "id": "g10",
-      "title": "Podium Protocol",
-      "category": "CHAMPIONS",
-      "image": null,
-      "caption": "Gold, silver and bronze on the closing night stage.",
+      "image": "/github-copy/components/glimpes/DSC_1542.jpg",
       "span": "square",
       "accent": "gold"
     },
     {
       "id": "g11",
-      "title": "Courtside",
-      "category": "CROWD",
-      "image": null,
-      "caption": "Court 01 at capacity during the semi-final double header.",
+      "image": "/github-copy/components/glimpes/DSC_1553.jpg",
       "span": "tall",
       "accent": "volt"
     },
     {
       "id": "g12",
-      "title": "Loading Dock",
-      "category": "BEHIND THE SCENES",
-      "image": null,
-      "caption": "12:40 AM — staging and rigging for the opening ceremony.",
+      "image": "/github-copy/components/glimpes/DSC_1583.jpg",
       "span": "square",
       "accent": "violet"
     }
   ],
   "SPONSORS": [
     {
-      "name": "Odisha Sports Authority",
+      "name": "IIT BHUBANESWAR",
       "logo": null,
-      "wordmark": "ODISHA SPORTS AUTHORITY",
+      "wordmark": "IIT BHUBANESWAR",
       "tier": "title",
       "note": "Title sponsor · Season 2026"
     },
     {
-      "name": "Bharat Heavy Alloys",
+      "name": "CANARA BANK",
       "logo": null,
-      "wordmark": "BHARAT HEAVY ALLOYS",
+      "wordmark": "CANARA BANK",
       "tier": "powered"
     },
     {
-      "name": "Cuttack Coffee Co.",
+      "name": "VIVO",
       "logo": null,
-      "wordmark": "CUTTACK COFFEE CO.",
+      "wordmark": "VIVO",
       "tier": "powered"
     },
     {
-      "name": "Konark Renewables",
+      "name": "TRENDS",
       "logo": null,
-      "wordmark": "KONARK RENEWABLES",
-      "tier": "powered"
-    },
-    {
-      "name": "Astra Athletic",
-      "logo": null,
-      "wordmark": "ASTRA ATHLETIC",
+      "wordmark": "TRENDS",
       "tier": "partner"
     },
     {
-      "name": "Bhubaneswar Metro Fit",
+      "name": "S16 SALOON",
       "logo": null,
-      "wordmark": "BBSR METRO FIT",
+      "wordmark": "S16 SALOON",
       "tier": "partner"
     },
     {
-      "name": "Kalinga Digital",
+      "name": "RESURGENCE LAN",
       "logo": null,
-      "wordmark": "KALINGA DIGITAL",
-      "tier": "partner"
-    },
-    {
-      "name": "Utkal Nutrition Labs",
-      "logo": null,
-      "wordmark": "UTKAL NUTRITION",
-      "tier": "partner"
-    },
-    {
-      "name": "Chilika Hydration",
-      "logo": null,
-      "wordmark": "CHILIKA HYDRATION",
+      "wordmark": "RESURGENCE LAN",
       "tier": "partner"
     }
   ]

@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { FileText, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { NAV_LINKS, SITE } from "@/data/site";
+import { NAV_LINKS, REGISTRATION_OPEN, SITE } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -206,15 +206,23 @@ export function Navbar() {
             </Link>
 
             {/* Desktop Register */}
-            <a
-              href={SITE.registrationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cursor-label="ENTER"
-              className="btn btn-primary clip-notch hidden !px-5 !py-2.5 md:inline-flex"
-            >
-              Register
-            </a>
+            {REGISTRATION_OPEN ? (
+              <a
+                href={SITE.registrationUrl}
+                data-cursor-label="ENTER"
+                className="btn btn-primary clip-notch hidden !px-5 !py-2.5 md:inline-flex"
+              >
+                Register
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                title="Registration is closed"
+                className="btn btn-primary clip-notch hidden cursor-not-allowed opacity-60 !px-5 !py-2.5 md:inline-flex"
+              >
+                Registration Closed
+              </span>
+            )}
 
             {/* Mobile menu button */}
             <button
@@ -398,14 +406,21 @@ export function Navbar() {
                   },
                 }}
               >
-                <a
-                  href={SITE.registrationUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary clip-notch flex w-full justify-center border border-white/20 bg-black/25"
-                >
-                  Register Now
-                </a>
+                {REGISTRATION_OPEN ? (
+                  <a
+                    href={SITE.registrationUrl}
+                    className="btn btn-primary clip-notch flex w-full justify-center border border-white/20 bg-black/25"
+                  >
+                    Register Now
+                  </a>
+                ) : (
+                  <span
+                    aria-disabled="true"
+                    className="btn btn-primary clip-notch flex w-full cursor-not-allowed justify-center border border-white/20 bg-black/25 opacity-70"
+                  >
+                    Registration Closed
+                  </span>
+                )}
               </motion.li>
             </motion.ul>
           </motion.div>

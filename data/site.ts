@@ -1,6 +1,9 @@
 /**
  * Global site configuration — one place to change dates, links and HUD strings.
  */
+
+/** Set true only when registrations should be accepted again. */
+export const REGISTRATION_OPEN = false;
 export const SITE = {
   name: "ASHVAMEDHA",
   year: "2026",

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { RegistrationForm } from "@/components/RegistrationForm";
+import { REGISTRATION_OPEN } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Register",
-  description: "Register your team or yourself for ASHVAMEDHA 2026 at IIT Bhubaneswar.",
+  title: "Registration",
+  description: "ASHVAMEDHA 2026 registration status and event information.",
 };
 
 export default async function RegisterPage({
@@ -19,13 +20,16 @@ export default async function RegisterPage({
       <div className="shell relative">
         <span className="hud text-crimson/90">{"// ENTRY_PROTOCOL"}</span>
         <h1 className="mt-4 text-[clamp(2.6rem,9vw,6.5rem)] leading-[0.88] text-white">
-          ENTER THE
-          <br />
-          <span className="text-metal">ARENA</span>
+          {REGISTRATION_OPEN ? (
+            <>ENTER THE<br /><span className="text-metal">ARENA</span></>
+          ) : (
+            <>REGISTRATION<br /><span className="text-metal">CLOSED</span></>
+          )}
         </h1>
         <p className="mt-6 max-w-2xl text-[1rem] leading-relaxed text-silver-dim">
-          Pick your battlefield, fill in your squad and lock your entry. You&apos;ll get a registration
-          code instantly — keep it for check-in at the venue.
+          {REGISTRATION_OPEN
+            ? "Pick your battlefield and complete the registration process."
+            : "Registration for ASHVAMEDHA 2026 is now closed. You can still explore events, schedules, results and the gallery."}
         </p>
 
         <div className="mt-12 max-w-3xl">

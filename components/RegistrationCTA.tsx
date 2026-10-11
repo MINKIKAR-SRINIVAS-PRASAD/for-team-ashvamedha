@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { CTA } from "@/components/ui/CTA";
-import { SITE } from "@/data/site";
+import { REGISTRATION_OPEN, SITE } from "@/data/site";
 
 /**
  * REGISTRATION CTA — the loudest moment on the site.
@@ -18,7 +18,7 @@ export function RegistrationCTA() {
           <Reveal y={14} blur={false}>
             <span className="flex items-center gap-2 border border-crimson/45 bg-crimson/10 px-3 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-crimson animate-live-pulse" />
-              <span className="hud text-white/90">REGISTRATION WINDOW OPEN</span>
+              <span className="hud text-white/90">{REGISTRATION_OPEN ? "REGISTRATION WINDOW OPEN" : "REGISTRATION WINDOW CLOSED"}</span>
             </span>
           </Reveal>
 
@@ -28,15 +28,27 @@ export function RegistrationCTA() {
               className="mt-6 text-[clamp(2.4rem,8vw,6.5rem)] leading-[0.88] text-white"
               style={{ textShadow: "0 0 70px rgba(225,29,46,0.45)" }}
             >
-              READY FOR
-              <br />
-              THE BATTLE?
+              {REGISTRATION_OPEN ? (
+                <>
+                  READY FOR
+                  <br />
+                  THE BATTLE?
+                </>
+              ) : (
+                <>
+                  ENTRIES ARE
+                  <br />
+                  CLOSED.
+                </>
+              )}
             </h2>
           </Reveal>
 
           <Reveal delay={0.16}>
             <p className="mt-6 font-display text-[clamp(0.95rem,2vw,1.35rem)] tracking-[0.14em] text-silver">
-              ENTER THE ARENA.&nbsp;&nbsp;MAKE YOUR MARK.
+              {REGISTRATION_OPEN
+                ? "ENTER THE ARENA.  MAKE YOUR MARK."
+                : "THANK YOU FOR YOUR INTEREST IN ASHVAMEDHA 2026."}
             </p>
           </Reveal>
 
@@ -46,9 +58,10 @@ export function RegistrationCTA() {
                 href={SITE.registrationUrl}
                 external
                 variant="primary"
+                disabled={!REGISTRATION_OPEN}
                 className="!px-9 !py-5 !text-[0.8rem]"
               >
-                Register Now →
+                {REGISTRATION_OPEN ? "Register Now →" : "Registration Closed"}
               </CTA>
               <CTA href="/events" variant="ghost" className="!px-7 !py-5">
                 Browse 10+ Sports
@@ -58,7 +71,7 @@ export function RegistrationCTA() {
 
           <Reveal delay={0.3}>
             <p className="mt-7 font-mono text-[10px] tracking-hud text-silver-dim">
-              Team entries close 08 OCT 2026 · Individual entries close 11 OCT 2026
+              {REGISTRATION_OPEN ? "Team entries close 08 OCT 2026 · Individual entries close 11 OCT 2026" : "ALL REGISTRATION WINDOWS ARE CLOSED"}
             </p>
           </Reveal>
         </div>

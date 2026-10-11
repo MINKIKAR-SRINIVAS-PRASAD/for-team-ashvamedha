@@ -5,6 +5,7 @@ import { CheckCircle2, ExternalLink, Plus, Trash2 } from "lucide-react";
 import type { FestEvent } from "@/data/events";
 import { useFestData } from "@/components/FestDataProvider";
 import { getGoogleFormUrl } from "@/lib/googleForms";
+import { REGISTRATION_OPEN } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 type ApiEvent = FestEvent & { minTeamSize?: number; maxTeamSize?: number };
@@ -108,10 +109,20 @@ export function RegistrationForm({ initialEvent }: { initialEvent?: string }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  if (!openEvents.length) {
+  if (!REGISTRATION_OPEN || !openEvents.length) {
     return (
-      <div className="panel clip-notch p-8 text-center text-silver-dim">
-        Registrations are closed for all events right now.
+      <div className="panel clip-notch p-8 text-center sm:p-12" role="status" aria-live="polite">
+        <p className="hud text-crimson/90">{"// ENTRY_PROTOCOL"}</p>
+        <h2 className="mt-4 text-[clamp(1.8rem,5vw,3rem)] leading-none text-white">
+          REGISTRATION CLOSED
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl leading-relaxed text-silver-dim">
+          Registration for ASHVAMEDHA 2026 is now closed. Thank you for your interest.
+          Please explore the event schedule, results and gallery for festival updates.
+        </p>
+        <a href="/events" className="btn btn-ghost clip-notch mt-7 inline-flex !px-6 !py-3">
+          Browse Events
+        </a>
       </div>
     );
   }

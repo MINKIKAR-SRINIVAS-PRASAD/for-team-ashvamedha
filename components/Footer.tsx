@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react";
-import { FOOTER_LINKS, HUD, SITE, SOCIALS } from "@/data/site";
+import { FOOTER_LINKS, HUD, REGISTRATION_OPEN, SITE, SOCIALS } from "@/data/site";
 
 const SOCIAL_ICON = {
   Instagram,
@@ -136,14 +136,21 @@ export function Footer() {
           {/* registration */}
           <div className="lg:col-span-2">
             <h2 className="text-sm tracking-[0.18em] text-white">Entry</h2>
-            <a
-              href={SITE.registrationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary clip-notch mt-5 w-full !px-4 !py-3"
-            >
-              Register
-            </a>
+            {REGISTRATION_OPEN ? (
+              <a
+                href={SITE.registrationUrl}
+                className="btn btn-primary clip-notch mt-5 w-full !px-4 !py-3"
+              >
+                Register
+              </a>
+            ) : (
+              <span
+                aria-disabled="true"
+                className="btn btn-primary clip-notch mt-5 flex w-full cursor-not-allowed justify-center !px-4 !py-3 opacity-65"
+              >
+                Registration Closed
+              </span>
+            )}
             <p className="mt-4 font-mono text-[9px] leading-relaxed tracking-hud text-silver-dim">
               {HUD.eventStatus}
               <br />

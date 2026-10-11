@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
 
 from app.config import settings
-from app.database import Base, SessionLocal, add_missing_columns, engine
+from app.database import close_database, connect_database
 from app.routers import auth, content, matches, public, registrations
 from app.seed import ensure_admin, ensure_sport_admins, seed_if_empty
 from app.services import cache
@@ -20,66 +20,49 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    Base.metadata.create_all(bind=engine)
-    add_missing_columns()
-    with SessionLocal() as db:
-        if settings.auto_seed:
-            seed_if_empty(db)
-        else:
-            ensure_admin(db)
-            ensure_sport_admins(db)
+    db = connect_database()
+    if settings.auto_seed:
+        seed_if_empty(db)
+    else:
+        ensure_admin(db)
+        ensure_sport_admins(db)
     if settings.secret_key.startswith("dev-only") or settings.admin_password in {"admin123", "change-me-now"}:
         print("[warning] Using default SECRET_KEY or ADMIN_PASSWORD. Set real values in .env before deploying!")
-    if settings.sqlalchemy_url.startswith("sqlite") and os.environ.get("RENDER"):
-        print(
-            "[warning] DATABASE_URL is not set, so data is kept in a SQLite file that Render wipes "
-            "on every restart or sleep. Live scores, sport admins and edits will be lost. "
-            "Set DATABASE_URL to a Postgres database."
-        )
+    if os.environ.get("RENDER") and not settings.mongodb_uri:
+        print("[warning] MONGODB_URI is missing; set it in your hosting environment.")
     yield
+    close_database()
 
 
 app = FastAPI(
     title="ASHVAMEDHA 2026 API",
-    version="1.0.0",
+    version="2.0.0",
     description=(
-        "Backend for the ASHVAMEDHA 2026 sports-fest website. "
+        "Backend for the ASHVAMEDHA 2026 sports-fest website using MongoDB Atlas. "
         "Public endpoints need no auth. For /api/admin/* routes, log in via POST /api/auth/login, "
-        "then click **Authorize** and paste the accessToken."
+        "then click Authorize and paste the accessToken."
     ),
     lifespan=lifespan,
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.cors_origin_list,
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app.add_middleware(CORSMiddleware, allow_origins=settings.cors_origin_list, allow_credentials=False,
+                   allow_methods=["*"], allow_headers=["*"])
 app.add_middleware(GZipMiddleware, minimum_size=1024)
 
 
 @app.middleware("http")
 async def clear_public_cache_on_admin_write(request: Request, call_next):
-    """Any successful admin change empties the public cache, so the site shows it at once."""
     response = await call_next(request)
-    if (
-        request.method not in ("GET", "HEAD", "OPTIONS")
-        and request.url.path.startswith("/api/admin")
-        and response.status_code < 400
-    ):
+    if request.method not in ("GET", "HEAD", "OPTIONS") and request.url.path.startswith("/api/admin") and response.status_code < 400:
         cache.clear()
     return response
 
 
 @app.exception_handler(ValidationError)
 async def pydantic_validation_handler(_: Request, exc: ValidationError):
-    """Validation errors raised inside route bodies (PATCH merges) -> clean 422."""
-    return JSONResponse(
-        status_code=422,
-        content={"detail": [{"loc": list(e["loc"]), "msg": e["msg"], "type": e["type"]} for e in exc.errors()]},
-    )
+    return JSONResponse(status_code=422, content={"detail": [
+        {"loc": list(error["loc"]), "msg": error["msg"], "type": error["type"]} for error in exc.errors()
+    ]})
 
 
 app.include_router(public.router)

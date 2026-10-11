@@ -1,3 +1,4 @@
+"""Authentication, authorization and request rate limits for the MongoDB backend."""
 import base64
 import hashlib
 import hmac
@@ -10,24 +11,21 @@ from threading import Lock
 import jwt
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy.orm import Session
+from pymongo.database import Database
 
 from app.config import settings
-from app.database import get_db
-from app.models import User
-
-# ── Passwords (PBKDF2-SHA256, stdlib only) ──────────────────────────────────
+from app.database import get_db, get_record
+from app.models import Record
 
 _ITERATIONS = 240_000
+_ALGO = "HS256"
 
 
 def hash_password(password: str) -> str:
     salt = secrets.token_bytes(16)
     digest = hashlib.pbkdf2_hmac("sha256", password.encode(), salt, _ITERATIONS)
     return "pbkdf2_sha256${}${}${}".format(
-        _ITERATIONS,
-        base64.b64encode(salt).decode(),
-        base64.b64encode(digest).decode(),
+        _ITERATIONS, base64.b64encode(salt).decode(), base64.b64encode(digest).decode()
     )
 
 
@@ -36,26 +34,24 @@ def verify_password(password: str, stored: str) -> bool:
         _algo, iterations, salt_b64, hash_b64 = stored.split("$")
         salt = base64.b64decode(salt_b64)
         expected = base64.b64decode(hash_b64)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError, AttributeError):
         return False
     digest = hashlib.pbkdf2_hmac("sha256", password.encode(), salt, int(iterations))
     return hmac.compare_digest(digest, expected)
 
 
-# ── Tokens ──────────────────────────────────────────────────────────────────
-
-_ALGO = "HS256"
-
-
-def create_token(user: User) -> str:
+def create_token(user: Record) -> str:
     now = datetime.now(timezone.utc)
-    payload = {
-        "sub": str(user.id),
-        "role": user.role,
-        "iat": now,
-        "exp": now + timedelta(hours=settings.token_expire_hours),
-    }
-    return jwt.encode(payload, settings.secret_key, algorithm=_ALGO)
+    return jwt.encode(
+        {
+            "sub": str(user.id),
+            "role": user.role,
+            "iat": now,
+            "exp": now + timedelta(hours=settings.token_expire_hours),
+        },
+        settings.secret_key,
+        algorithm=_ALGO,
+    )
 
 
 _bearer = HTTPBearer(auto_error=False)
@@ -63,8 +59,8 @@ _bearer = HTTPBearer(auto_error=False)
 
 def get_current_user(
     creds: HTTPAuthorizationCredentials | None = Depends(_bearer),
-    db: Session = Depends(get_db),
-) -> User:
+    db: Database = Depends(get_db),
+) -> Record:
     unauthorized = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Not logged in or session expired",
@@ -75,35 +71,27 @@ def get_current_user(
     try:
         payload = jwt.decode(creds.credentials, settings.secret_key, algorithms=[_ALGO])
         user_id = int(payload["sub"])
-    except (jwt.PyJWTError, KeyError, ValueError):
+    except (jwt.PyJWTError, KeyError, ValueError, TypeError):
         raise unauthorized
-    user = db.get(User, user_id)
+    user = get_record(db, "users", user_id)
     if user is None or not user.is_active:
         raise unauthorized
     return user
 
 
-def require_admin(user: User = Depends(get_current_user)) -> User:
+def require_admin(user: Record = Depends(get_current_user)) -> Record:
     if user.role != "admin":
         raise HTTPException(status_code=403, detail="Admin access required")
     return user
 
 
-def can_manage_event(user: User, event_slug: str | None) -> bool:
-    if user.role == "admin":
-        return True
-    return bool(event_slug) and event_slug in (user.event_slugs or [])
+def can_manage_event(user: Record, event_slug: str | None) -> bool:
+    return user.role == "admin" or (bool(event_slug) and event_slug in (user.event_slugs or []))
 
 
-def ensure_event_access(user: User, event_slug: str | None) -> None:
+def ensure_event_access(user: Record, event_slug: str | None) -> None:
     if not can_manage_event(user, event_slug):
-        raise HTTPException(
-            status_code=403,
-            detail=f"You are not a coordinator for event '{event_slug}'",
-        )
-
-
-# ── Tiny in-memory rate limiter (per process) ───────────────────────────────
+        raise HTTPException(status_code=403, detail=f"You are not a coordinator for event '{event_slug}'")
 
 
 class RateLimiter:
@@ -119,15 +107,13 @@ class RateLimiter:
         key = f"{request.url.path}:{ip}"
         now = time.monotonic()
         with self._lock:
-            q = self._hits[key]
-            while q and now - q[0] > self.window:
-                q.popleft()
-            if len(q) >= self.limit:
+            hits = self._hits[key]
+            while hits and now - hits[0] > self.window:
+                hits.popleft()
+            if len(hits) >= self.limit:
                 raise HTTPException(status_code=429, detail="Too many requests, please try again in a few minutes")
-            q.append(now)
+            hits.append(now)
 
 
-# Limits are per IP, and a campus Wi-Fi shares one IP, so they allow a crowd
-# while still stopping scripted password guessing and spam.
 login_limiter = RateLimiter(limit=40, window_seconds=300)
 registration_limiter = RateLimiter(limit=100, window_seconds=600)

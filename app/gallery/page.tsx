@@ -8,7 +8,7 @@ import { getFestData } from "@/lib/festData";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Matchday, athletes, crowd, champions and behind the scenes at ASHVAMEDHA — the arena archive from IIT Bhubaneswar.",
+    "ASHVAMEDHA — the arena archive from IIT Bhubaneswar.",
 };
 
 export default async function GalleryPage() {

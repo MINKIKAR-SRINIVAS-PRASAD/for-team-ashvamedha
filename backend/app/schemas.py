@@ -11,16 +11,17 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 from pydantic.alias_generators import to_camel
 
 Accent = Literal["crimson", "volt", "violet", "gold"]
-Category = Literal["Team Sport", "Racquet", "Board & Mind", "Power & Fitness", "Chess"]
+Category = Literal["Team Sport", "Racquet", "Board & Mind", "Power & Fitness", "Chess", "Esports"]
 RegistrationState = Literal["open", "closing", "closed"]
 Glyph = Literal[
     "football", "basketball", "Badminton", "tabletennis", "Lawn Tennis",
     "Kho-Kho", "Power Lifting", "chess", "Swimming", "volleyball",
+    "badminton", "table-tennis", "lawn-tennis", "powerlifting", "kho-kho",
+    "sports-quiz", "mixed-cricket", "valorant", "bgmi", "free-fire", "sportsquiz", "esportst",
 ]
 SlotStatus = Literal["scheduled", "live", "completed"]
 MatchStatus = Literal["upcoming", "live", "final"]
 Winner = Literal["home", "away", "draw"]
-GalleryCategory = Literal["MATCHDAY", "ATHLETES", "CROWD", "CHAMPIONS", "CAMPUS", "BEHIND THE SCENES"]
 Span = Literal["tall", "wide", "square"]
 SponsorTier = Literal["title", "powered", "partner"]
 PaymentStatus = Literal["pending", "submitted", "verified", "rejected", "not_required"]

@@ -1,31 +1,14 @@
-"""
-Everything that turns database rows into the exact JSON shapes the frontend
-already uses in data/*.ts.
-"""
+"""MongoDB queries and serializers; response shapes stay compatible with the frontend."""
 import re
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Any
 
-from sqlalchemy import select
-from sqlalchemy.orm import Session
+from pymongo.database import Database
 
 from app.config import settings
-from app.models import (
-    ContentBlock,
-    Event,
-    GalleryItem,
-    Match,
-    Registration,
-    ScheduleDay,
-    ScheduleSlot,
-    Sponsor,
-    Standing,
-    Team,
-    User,
-    utcnow,
-)
+from app.database import find_records, get_record, write_record
+from app.models import Record
 
-# Content blocks that are plain JSON (edited via /api/admin/content/{key})
 CONTENT_DEFAULTS: dict[str, Any] = {
     "featuredSlugs": [],
     "championSpotlight": {"reigning": "", "reigningSport": "", "streak": "", "contenders": []},
@@ -33,255 +16,173 @@ CONTENT_DEFAULTS: dict[str, Any] = {
     "podium2025": [],
     "previousEditions": [],
 }
-
-# Finished matches stay in the live ticker this long before dropping to "recent results".
 FINAL_VISIBLE_IN_TICKER = timedelta(hours=2)
 
 
+def utcnow() -> datetime:
+    return datetime.utcnow()
+
+
 def iso(dt) -> str | None:
-    return dt.isoformat(timespec="seconds") + "Z" if dt else None
+    if not dt:
+        return None
+    if isinstance(dt, str):
+        try:
+            dt = datetime.fromisoformat(dt.replace("Z", "+00:00"))
+        except ValueError:
+            return dt
+    return dt.isoformat(timespec="seconds").replace("+00:00", "") + "Z"
 
 
-# ── Content blocks ──────────────────────────────────────────────────────────
-
-
-def get_content(db: Session, key: str) -> Any:
-    row = db.get(ContentBlock, key)
+def get_content(db: Database, key: str) -> Any:
+    row = get_record(db, "content_blocks", key)
     return row.value if row is not None else CONTENT_DEFAULTS.get(key)
 
 
-def set_content(db: Session, key: str, value: Any) -> None:
-    row = db.get(ContentBlock, key)
-    if row is None:
-        db.add(ContentBlock(key=key, value=value))
-    else:
-        row.value = value
+def set_content(db: Database, key: str, value: Any) -> None:
+    write_record(db, "content_blocks", {"key": key, "value": value, "updated_at": utcnow()})
 
 
-# ── Serializers ─────────────────────────────────────────────────────────────
-
-
-def event_out(e: Event) -> dict:
+def event_out(e: Record) -> dict:
     return {
-        "slug": e.slug,
-        "name": e.name,
-        "arena": e.arena,
-        "category": e.category,
-        "tagline": e.tagline,
-        "description": e.description,
-        "date": e.date,
-        "day": e.day,
-        "time": e.time,
-        "venue": e.venue,
-        "teamSize": e.team_size,
-        "minTeamSize": e.min_team_size,
-        "maxTeamSize": e.max_team_size,
-        "registration": e.registration,
-        "entryFee": e.entry_fee,
-        "prizePool": e.prize_pool,
-        "format": e.format,
-        "accent": e.accent,
-        "image": e.image,
-        "glyph": e.glyph,
-        "sortOrder": e.sort_order,
+        "slug": e.slug, "name": e.name, "arena": e.get("arena", ""),
+        "category": e.get("category", ""), "tagline": e.get("tagline", ""),
+        "description": e.get("description", ""), "date": e.get("date", ""),
+        "day": e.get("day", 1), "time": e.get("time", ""), "venue": e.get("venue", ""),
+        "teamSize": e.get("team_size", ""), "minTeamSize": e.get("min_team_size", 1),
+        "maxTeamSize": e.get("max_team_size", 1), "registration": e.get("registration", "open"),
+        "entryFee": e.get("entry_fee", ""), "prizePool": e.get("prize_pool", ""),
+        "format": e.get("format", ""), "accent": e.get("accent", "crimson"),
+        "image": e.get("image"), "glyph": e.get("glyph", e.slug), "sortOrder": e.get("sort_order", 0),
     }
 
 
-def team_out(t: Team, rank: int | None = None) -> dict:
+def team_out(t: Record, rank: int | None = None) -> dict:
     return {
-        "slug": t.slug,
-        "name": t.name,
-        "institution": t.institution,
-        "department": t.department,
-        "captain": t.captain,
-        "sport": t.sport,
-        "rank": rank,
-        "accent": t.accent,
-        "crest": list(t.crest or ["#e11d2e", "#4a0710"]),
-        "motto": t.motto,
-        "sortOrder": t.sort_order,
+        "slug": t.slug, "name": t.name, "institution": t.get("institution", ""),
+        "department": t.get("department", ""), "captain": t.get("captain", ""),
+        "sport": t.get("sport", ""), "rank": rank, "accent": t.get("accent", "crimson"),
+        "crest": list(t.get("crest") or ["#e11d2e", "#4a0710"]),
+        "motto": t.get("motto", ""), "sortOrder": t.get("sort_order", 0),
     }
 
 
-def standing_out(s: Standing) -> dict:
-    return {
-        "teamSlug": s.team_slug,
-        "teamName": s.team_name,
-        "matches": s.matches,
-        "wins": s.wins,
-        "losses": s.losses,
-        "points": s.points,
-        "winPct": s.win_pct,
-    }
+def standing_out(s: Record) -> dict:
+    return {"teamSlug": s.team_slug, "teamName": s.team_name, "matches": s.matches,
+            "wins": s.wins, "losses": s.losses, "points": s.points, "winPct": s.get("win_pct")}
 
 
-def day_out(d: ScheduleDay) -> dict:
-    return {"day": d.day, "label": d.label, "date": d.date, "headline": d.headline, "note": d.note}
+def day_out(d: Record) -> dict:
+    return {"day": d.day, "label": d.label, "date": d.date,
+            "headline": d.get("headline", ""), "note": d.get("note", "")}
 
 
-def slot_out(s: ScheduleSlot) -> dict:
-    out = {
-        "id": s.id,
-        "day": s.day,
-        "time": s.time,
-        "title": s.title,
-        "venue": s.venue,
-        "stage": s.stage,
-        "status": s.status,
-        "duration": s.duration,
-    }
-    if s.event_slug:
+def slot_out(s: Record) -> dict:
+    out = {"id": s.id, "day": s.day, "time": s.time, "title": s.title,
+           "venue": s.get("venue", ""), "stage": s.get("stage", ""),
+           "status": s.get("status", "scheduled"), "duration": s.get("duration", "")}
+    if s.get("event_slug"):
         out["eventSlug"] = s.event_slug
     return out
 
 
-def _score(v: str) -> int | str:
-    v = (v or "").strip()
-    if v == "":
+def _score(value: Any) -> int | str:
+    value = str(value or "").strip()
+    if value == "":
         return "—"
-    return int(v) if re.fullmatch(r"-?\d+", v) else v
+    return int(value) if re.fullmatch(r"-?\d+", value) else value
 
 
-def match_out(m: Match, events: dict[str, Event]) -> dict:
+def match_out(m: Record, events: dict[str, Record]) -> dict:
     ev = events.get(m.event_slug)
     out = {
-        "id": m.id,
-        "sport": ev.name if ev else m.event_slug,
-        "eventSlug": m.event_slug,
-        "home": {"name": m.home_name, "score": _score(m.home_score)},
-        "away": {"name": m.away_name, "score": _score(m.away_score)},
-        "status": m.status,
-        "detail": m.detail,
-        "accent": ev.accent if ev else "crimson",
-        # extras (ignored by the public site, used by the admin panel)
-        "homeTeamSlug": m.home_team_slug,
-        "awayTeamSlug": m.away_team_slug,
-        "homeScoreRaw": m.home_score,
-        "awayScoreRaw": m.away_score,
-        "stage": m.stage,
-        "winner": m.winner,
-        "resultSummary": m.result_summary,
-        "countsForStandings": m.counts_for_standings,
-        "sortOrder": m.sort_order,
-        "updatedAt": iso(m.updated_at),
-        "finishedAt": iso(m.finished_at),
+        "id": m.id, "sport": ev.name if ev else m.event_slug, "eventSlug": m.event_slug,
+        "home": {"name": m.home_name, "score": _score(m.get("home_score"))},
+        "away": {"name": m.away_name, "score": _score(m.get("away_score"))},
+        "status": m.status, "detail": m.get("detail", ""),
+        "accent": ev.get("accent", "crimson") if ev else "crimson",
+        "homeTeamSlug": m.get("home_team_slug"), "awayTeamSlug": m.get("away_team_slug"),
+        "homeScoreRaw": m.get("home_score", ""), "awayScoreRaw": m.get("away_score", ""),
+        "stage": m.get("stage", ""), "winner": m.get("winner"),
+        "resultSummary": m.get("result_summary", ""),
+        "countsForStandings": m.get("counts_for_standings", True),
+        "sortOrder": m.get("sort_order", 0), "updatedAt": iso(m.get("updated_at")),
+        "finishedAt": iso(m.get("finished_at")),
     }
-    if m.clock:
+    if m.get("clock"):
         out["clock"] = m.clock
-    if m.match_format:
+    if m.get("match_format"):
         out["format"] = m.match_format
-    if m.sets:
-        out["sets"] = [{"home": s.get("home", ""), "away": s.get("away", "")} for s in m.sets]
-    if m.participants:
+    if m.get("sets"):
+        out["sets"] = [{"home": x.get("home", ""), "away": x.get("away", "")} for x in m.sets]
+    if m.get("participants"):
         out["participants"] = [{"name": p.get("name", ""), "score": _score(p.get("score", ""))} for p in m.participants]
     return out
 
 
-def recent_result_out(m: Match, events: dict[str, Event]) -> dict:
+def recent_result_out(m: Record, events: dict[str, Record]) -> dict:
     ev = events.get(m.event_slug)
-    if m.winner == "away":
+    if m.get("winner") == "away":
         winner, loser, ws, ls = m.away_name, m.home_name, m.away_score, m.home_score
     else:
         winner, loser, ws, ls = m.home_name, m.away_name, m.home_score, m.away_score
-    score = m.result_summary or (f"{ws} – {ls}" if ws or ls else "")
-    if not m.result_summary and m.sets:
-        w = "away" if m.winner == "away" else "home"
+    score = m.get("result_summary") or (f"{ws} – {ls}" if ws or ls else "")
+    if not m.get("result_summary") and m.get("sets"):
+        w = "away" if m.get("winner") == "away" else "home"
         l = "home" if w == "away" else "away"
         score += " (" + ", ".join(f"{x.get(w, '')}-{x.get(l, '')}" for x in m.sets) + ")"
-    return {
-        "sport": ev.name if ev else m.event_slug,
-        "winner": winner,
-        "loser": loser,
-        "score": score,
-        "stage": m.stage or m.detail,
-        "draw": m.winner == "draw",
-    }
+    return {"sport": ev.name if ev else m.event_slug, "winner": winner, "loser": loser,
+            "score": score, "stage": m.get("stage") or m.get("detail", ""),
+            "draw": m.get("winner") == "draw"}
 
 
-def gallery_out(g: GalleryItem) -> dict:
-    return {
-        "id": g.id,
-        "title": g.title,
-        "category": g.category,
-        "image": g.image,
-        "caption": g.caption,
-        "span": g.span,
-        "accent": g.accent,
-        "sortOrder": g.sort_order,
-    }
+def gallery_out(g: Record) -> dict:
+    return {"id": g.id, "title": g.title, "category": g.category, "image": g.get("image"),
+            "caption": g.get("caption", ""), "span": g.get("span", "square"),
+            "accent": g.get("accent", "crimson"), "sortOrder": g.get("sort_order", 0)}
 
 
-def sponsor_out(s: Sponsor) -> dict:
-    out = {
-        "id": s.id,
-        "name": s.name,
-        "logo": s.logo,
-        "wordmark": s.wordmark,
-        "tier": s.tier,
-        "sortOrder": s.sort_order,
-    }
-    if s.note:
+def sponsor_out(s: Record) -> dict:
+    out = {"id": s.id, "name": s.name, "logo": s.get("logo"), "wordmark": s.get("wordmark", ""),
+           "tier": s.get("tier", "partner"), "sortOrder": s.get("sort_order", 0)}
+    if s.get("note"):
         out["note"] = s.note
     return out
 
 
-def registration_out(r: Registration, events: dict[str, Event] | None = None) -> dict:
+def registration_out(r: Record, events: dict[str, Record] | None = None) -> dict:
     ev = (events or {}).get(r.event_slug)
-    return {
-        "id": r.id,
-        "code": r.code,
-        "eventSlug": r.event_slug,
-        "eventName": ev.name if ev else r.event_slug,
-        "teamName": r.team_name,
-        "captainName": r.captain_name,
-        "email": r.email,
-        "phone": r.phone,
-        "institution": r.institution,
-        "department": r.department,
-        "rollNumber": r.roll_number,
-        "members": r.members or [],
-        "participantCount": r.participant_count,
-        "paymentReference": r.payment_reference,
-        "paymentStatus": r.payment_status,
-        "status": r.status,
-        "adminNotes": r.admin_notes,
-        "createdAt": iso(r.created_at),
-        "updatedAt": iso(r.updated_at),
-    }
+    return {"id": r.id, "code": r.code, "eventSlug": r.event_slug,
+            "eventName": ev.name if ev else r.event_slug, "teamName": r.get("team_name"),
+            "captainName": r.captain_name, "email": r.email, "phone": r.phone,
+            "institution": r.institution, "department": r.get("department", ""),
+            "rollNumber": r.get("roll_number", ""), "members": r.get("members") or [],
+            "participantCount": r.get("participant_count", 1), "paymentReference": r.get("payment_reference", ""),
+            "paymentStatus": r.get("payment_status", "pending"), "status": r.get("status", "submitted"),
+            "adminNotes": r.get("admin_notes", ""), "createdAt": iso(r.get("created_at")),
+            "updatedAt": iso(r.get("updated_at"))}
 
 
-def user_out(u: User) -> dict:
-    return {
-        "id": u.id,
-        "username": u.username,
-        "role": u.role,
-        "eventSlugs": u.event_slugs or [],
-        "isActive": u.is_active,
-        "createdAt": iso(u.created_at),
-    }
+def user_out(u: Record) -> dict:
+    return {"id": u.id, "username": u.username, "role": u.role,
+            "eventSlugs": u.get("event_slugs") or [], "isActive": u.get("is_active", True),
+            "createdAt": iso(u.get("created_at"))}
 
 
-# ── Queries ─────────────────────────────────────────────────────────────────
+def events_map(db: Database) -> dict[str, Record]:
+    return {e.slug: e for e in find_records(db, "events")}
 
 
-def events_map(db: Session) -> dict[str, Event]:
-    return {e.slug: e for e in db.scalars(select(Event))}
+def list_events(db: Database) -> list[Record]:
+    return find_records(db, "events", sort=[("sort_order", 1), ("name", 1)])
 
 
-def list_events(db: Session) -> list[Event]:
-    return list(db.scalars(select(Event).order_by(Event.sort_order, Event.name)))
+def _norm(value: str) -> str:
+    return re.sub(r"\s+", " ", (value or "").strip().lower())
 
 
-def _norm(s: str) -> str:
-    return re.sub(r"\s+", " ", (s or "").strip().lower())
-
-
-def compute_rankings(db: Session) -> list[dict]:
-    """
-    Standings = manual base values (standings table) + every finished match
-    that has a winner, both team slugs, and countsForStandings=true.
-    """
-    teams = {t.slug: t for t in db.scalars(select(Team))}
+def compute_rankings(db: Database) -> list[dict]:
+    teams = {t.slug: t for t in find_records(db, "teams")}
     rows: dict[str, dict] = {}
 
     def row_for(slug: str, fallback_name: str) -> dict:
@@ -291,15 +192,13 @@ def compute_rankings(db: Session) -> list[dict]:
                           "losses": 0, "points": 0, "winPct": None}
         return rows[slug]
 
-    for s in db.scalars(select(Standing)):
-        r = row_for(s.team_slug, s.team_name)
-        r.update(matches=s.matches, wins=s.wins, losses=s.losses, points=s.points, winPct=s.win_pct)
-
-    # Admins type team names by hand, so link a side to a team by its slug, name or
-    # department; a name that matches no team still gets its own row.
+    for s in find_records(db, "standings"):
+        row_for(s.team_slug, s.team_name).update(matches=s.get("matches", 0), wins=s.get("wins", 0),
+                                                  losses=s.get("losses", 0), points=s.get("points", 0),
+                                                  winPct=s.get("win_pct"))
     lookup: dict[str, str] = {}
     for t in teams.values():
-        for key in (t.slug, t.name, getattr(t, "department", "") or ""):
+        for key in (t.slug, t.name, t.get("department", "")):
             if key:
                 lookup.setdefault(_norm(key), t.slug)
 
@@ -311,44 +210,33 @@ def compute_rankings(db: Session) -> list[dict]:
             return None
         return lookup.get(n) or n
 
-    finals = db.scalars(
-        select(Match).where(
-            Match.status == "final",
-            Match.winner.is_not(None),
-            Match.counts_for_standings.is_(True),
-        )
-    )
+    finals = find_records(db, "matches", {"status": "final", "winner": {"$ne": None}, "counts_for_standings": True})
     for m in finals:
-        if m.participants:
-            continue  # multi-team rounds (quiz) have no single winner/loser
-        hk, ak = side_key(m.home_team_slug, m.home_name), side_key(m.away_team_slug, m.away_name)
+        if m.get("participants"):
+            continue
+        hk, ak = side_key(m.get("home_team_slug"), m.home_name), side_key(m.get("away_team_slug"), m.away_name)
         if not hk or not ak or hk == ak:
             continue
-        home = row_for(hk, m.home_name.strip())
-        away = row_for(ak, m.away_name.strip())
-        home["matches"] += 1
-        away["matches"] += 1
+        home, away = row_for(hk, m.home_name.strip()), row_for(ak, m.away_name.strip())
+        home["matches"] += 1; away["matches"] += 1
         if m.winner == "draw":
-            home["points"] += settings.points_draw
-            away["points"] += settings.points_draw
+            home["points"] += settings.points_draw; away["points"] += settings.points_draw
         else:
             win, lose = (home, away) if m.winner == "home" else (away, home)
-            win["wins"] += 1
-            win["points"] += settings.points_win
-            lose["losses"] += 1
-            lose["points"] += settings.points_loss
+            win["wins"] += 1; win["points"] += settings.points_win
+            lose["losses"] += 1; lose["points"] += settings.points_loss
 
-    def pct(r: dict) -> float:
-        if r["winPct"] is not None:
-            return r["winPct"]
-        return r["wins"] / r["matches"] if r["matches"] else 0.0
+    def pct(row: dict) -> float:
+        if row["winPct"] is not None:
+            return row["winPct"]
+        return row["wins"] / row["matches"] if row["matches"] else 0.0
 
-    ordered = sorted(rows.values(), key=lambda r: (-r["points"], -r["wins"], -pct(r), r["team"]))
+    ordered = sorted(rows.values(), key=lambda row: (-row["points"], -row["wins"], -pct(row), row["team"]))
     result = []
-    for i, r in enumerate(ordered, start=1):
-        item = {"rank": i, **{k: v for k, v in r.items() if k != "winPct"}}
-        if r["winPct"] is not None:
-            item["winPct"] = r["winPct"]
+    for index, row in enumerate(ordered, start=1):
+        item = {"rank": index, **{k: v for k, v in row.items() if k != "winPct"}}
+        if row["winPct"] is not None:
+            item["winPct"] = row["winPct"]
         result.append(item)
     return result
 
@@ -357,64 +245,44 @@ def rank_map(rankings: list[dict]) -> dict[str, int]:
     return {r["teamSlug"]: r["rank"] for r in rankings}
 
 
-def list_teams(db: Session, rankings: list[dict] | None = None) -> list[dict]:
+def list_teams(db: Database, rankings: list[dict] | None = None) -> list[dict]:
     ranks = rank_map(rankings if rankings is not None else compute_rankings(db))
-    teams = db.scalars(select(Team).order_by(Team.sort_order, Team.name))
-    return [team_out(t, ranks.get(t.slug)) for t in teams]
+    teams = find_records(db, "teams", sort=[("sort_order", 1), ("name", 1)])
+    return [team_out(team, ranks.get(team.slug)) for team in teams]
 
 
-def live_matches(db: Session, events: dict[str, Event]) -> list[dict]:
-    """What the live ticker shows: live -> upcoming -> just-finished."""
-    live = db.scalars(select(Match).where(Match.status == "live").order_by(Match.sort_order, Match.updated_at.desc()))
-    upcoming = db.scalars(
-        select(Match).where(Match.status == "upcoming").order_by(Match.sort_order, Match.created_at)
-    )
+def live_matches(db: Database, events: dict[str, Record]) -> list[dict]:
+    live = find_records(db, "matches", {"status": "live"}, sort=[("sort_order", 1), ("updated_at", -1)])
+    upcoming = find_records(db, "matches", {"status": "upcoming"}, sort=[("sort_order", 1), ("created_at", 1)], limit=6)
     cutoff = utcnow() - FINAL_VISIBLE_IN_TICKER
-    finished = db.scalars(
-        select(Match)
-        .where(Match.status == "final", Match.finished_at.is_not(None), Match.finished_at >= cutoff)
-        .order_by(Match.finished_at.desc())
-    )
-    items = list(live) + list(upcoming)[:6] + list(finished)[:3]
-    return [match_out(m, events) for m in items[:9]]
+    finished = find_records(db, "matches", {"status": "final", "finished_at": {"$ne": None, "$gte": cutoff}},
+                            sort=[("finished_at", -1)], limit=3)
+    return [match_out(m, events) for m in (live + upcoming + finished)[:9]]
 
 
-def recent_results(db: Session, events: dict[str, Event], limit: int = 8) -> list[dict]:
-    q = (
-        select(Match)
-        .where(Match.status == "final", Match.winner.is_not(None))
-        .order_by(Match.finished_at.desc().nulls_last(), Match.updated_at.desc())
-        .limit(limit)
-    )
-    return [recent_result_out(m, events) for m in db.scalars(q)]
+def recent_results(db: Database, events: dict[str, Record], limit: int = 8) -> list[dict]:
+    rows = find_records(db, "matches", {"status": "final", "winner": {"$ne": None}},
+                        sort=[("finished_at", -1), ("updated_at", -1)], limit=limit)
+    return [recent_result_out(m, events) for m in rows]
 
 
-def bundle(db: Session) -> dict:
-    """Every piece of data the site renders, in one response."""
+def bundle(db: Database) -> dict:
     events = list_events(db)
     ev_map = {e.slug: e for e in events}
     rankings = compute_rankings(db)
     featured = [s for s in (get_content(db, "featuredSlugs") or []) if s in ev_map]
     return {
-        "events": [event_out(e) for e in events],
-        "featuredSlugs": featured,
+        "events": [event_out(e) for e in events], "featuredSlugs": featured,
         "teams": list_teams(db, rankings),
-        "days": [day_out(d) for d in db.scalars(select(ScheduleDay).order_by(ScheduleDay.day))],
-        "schedule": [
-            slot_out(s) for s in db.scalars(select(ScheduleSlot).order_by(ScheduleSlot.day, ScheduleSlot.time))
-        ],
-        "rankings": rankings,
-        "podium": rankings[:3],
+        "days": [day_out(d) for d in find_records(db, "schedule_days", sort=[("day", 1)])],
+        "schedule": [slot_out(s) for s in find_records(db, "schedule_slots", sort=[("day", 1), ("time", 1)])],
+        "rankings": rankings, "podium": rankings[:3],
         "championSpotlight": get_content(db, "championSpotlight"),
-        "liveMatches": live_matches(db, ev_map),
-        "recentResults": recent_results(db, ev_map),
-        "eventChampions": get_content(db, "eventChampions"),
-        "podium2025": get_content(db, "podium2025"),
+        "liveMatches": live_matches(db, ev_map), "recentResults": recent_results(db, ev_map),
+        "eventChampions": get_content(db, "eventChampions"), "podium2025": get_content(db, "podium2025"),
         "previousEditions": get_content(db, "previousEditions"),
-        "gallery": [
-            gallery_out(g) for g in db.scalars(select(GalleryItem).order_by(GalleryItem.sort_order, GalleryItem.id))
-        ],
-        "sponsors": [sponsor_out(s) for s in db.scalars(select(Sponsor).order_by(Sponsor.sort_order, Sponsor.id))],
+        "gallery": [gallery_out(g) for g in find_records(db, "gallery_items", sort=[("sort_order", 1), ("id", 1)])],
+        "sponsors": [sponsor_out(s) for s in find_records(db, "sponsors", sort=[("sort_order", 1), ("id", 1)])],
         "payment": {"upiId": settings.upi_id or None, "payeeName": settings.upi_payee_name or None},
         "generatedAt": iso(utcnow()),
     }
