@@ -110,8 +110,7 @@ export function Gallery({ limit }: { limit?: number }) {
                     seedKey={`gallery-${item.id}`}
                     accent={item.accent}
                     glyph={
-                      CATEGORY_GLYPH[item.category] ?? "football"
-                    }
+CATEGORY_GLYPH[item.category as keyof typeof CATEGORY_GLYPH]                    }
                     label=""
                     className="absolute inset-0 h-full w-full"
                   />
@@ -166,7 +165,7 @@ export function Gallery({ limit }: { limit?: number }) {
                     seedKey={`gallery-${active.id}`}
                     accent={active.accent}
                     glyph={
-                      CATEGORY_GLYPH[active.category] ?? "football"
+                      CATEGORY_GLYPH[active.category as keyof typeof CATEGORY_GLYPH] ?? "football"
                     }
                     label=""
                     className="h-full w-full"
