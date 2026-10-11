@@ -197,6 +197,11 @@ def compute_rankings(db: Database) -> list[dict]:
                                                   losses=s.get("losses", 0), points=s.get("points", 0),
                                                   winPct=s.get("win_pct"))
     lookup: dict[str, str] = {}
+    # Leaderboard rows first, so a finished match adds to the row with the same team name.
+    for s in find_records(db, "standings"):
+        for key in (s.team_slug, s.get("team_name", "")):
+            if key and _norm(key) not in {"-", "tbd", "tba", "bye"}:
+                lookup.setdefault(_norm(key), s.team_slug)
     for t in teams.values():
         for key in (t.slug, t.name, t.get("department", "")):
             if key:

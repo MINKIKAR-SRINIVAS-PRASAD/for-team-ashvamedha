@@ -167,3 +167,29 @@ export const updateUser = (
 
 export const deleteUser = (id: number) =>
   adminFetch<void>(`/api/admin/users/${id}`, { method: "DELETE" });
+
+/* Leaderboard rows (main admin only). Finished matches add points on top of these. */
+
+export interface StandingRow {
+  teamSlug: string;
+  teamName: string;
+  matches: number;
+  wins: number;
+  losses: number;
+  points: number;
+  winPct?: number | null;
+}
+
+export const fetchStandings = () => adminFetch<StandingRow[]>("/api/admin/standings");
+
+export const createStanding = (row: StandingRow) =>
+  adminFetch<StandingRow>("/api/admin/standings", { method: "POST", body: JSON.stringify(row) });
+
+export const updateStanding = (slug: string, patch: Partial<StandingRow>) =>
+  adminFetch<StandingRow>(`/api/admin/standings/${encodeURIComponent(slug)}`, {
+    method: "PATCH",
+    body: JSON.stringify(patch),
+  });
+
+export const deleteStanding = (slug: string) =>
+  adminFetch<void>(`/api/admin/standings/${encodeURIComponent(slug)}`, { method: "DELETE" });
