@@ -6,8 +6,8 @@
  * The backend contains the official event data.
  * Static frontend data remains the fallback.
  *
- * Additional frontend-only events are preserved even when the API
- * does not return them yet.
+ * Additional frontend-only events and gallery entries are
+ * preserved even when the API does not return them.
  */
 
 import {
@@ -115,18 +115,21 @@ export interface FestData {
   };
 }
 
+/**
+ * Static fallback data.
+ *
+ * Event and gallery images are defined in:
+ * data/events.ts
+ * data/gallery.ts
+ */
 export const STATIC_FEST_DATA: FestData = {
   events: EVENTS,
 
-  featuredSlugs: [
-    ...FEATURED_SLUGS,
-  ],
+  featuredSlugs: [...FEATURED_SLUGS],
 
   teams: TEAMS,
 
-  days: [
-    ...DAYS,
-  ],
+  days: [...DAYS],
 
   schedule: SCHEDULE,
 
@@ -134,30 +137,22 @@ export const STATIC_FEST_DATA: FestData = {
 
   podium: PODIUM,
 
-  championSpotlight:
-    CHAMPION_SPOTLIGHT,
+  championSpotlight: CHAMPION_SPOTLIGHT,
 
-  // No sample scores: when the backend is asleep or unreachable,
-  // show "no live matches" rather than made-up ones.
+  // Do not show invented scores when the backend is unavailable.
   liveMatches: [],
 
-  recentResults:
-    RECENT_RESULTS,
+  recentResults: RECENT_RESULTS,
 
-  eventChampions:
-    EVENT_CHAMPIONS,
+  eventChampions: EVENT_CHAMPIONS,
 
-  podium2025:
-    PODIUM_2025,
+  podium2025: PODIUM_2025,
 
-  previousEditions:
-    PREVIOUS_EDITIONS,
+  previousEditions: PREVIOUS_EDITIONS,
 
-  gallery:
-    GALLERY,
+  gallery: GALLERY,
 
-  sponsors:
-    SPONSORS,
+  sponsors: SPONSORS,
 
   payment: {
     upiId: null,
@@ -165,23 +160,20 @@ export const STATIC_FEST_DATA: FestData = {
   },
 };
 
-const trim = (url: string) =>
-  url.replace(/\/+$/, "");
+const trim = (url: string) => url.replace(/\/+$/, "");
 
 /**
  * Browser-side API URL.
  */
 export const PUBLIC_API_URL = trim(
-  process.env.NEXT_PUBLIC_API_URL ||
-    "http://localhost:8000",
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
 );
 
 /**
  * Server-side API URL.
  */
 const SERVER_API_URL = trim(
-  process.env.API_URL ||
-    PUBLIC_API_URL,
+  process.env.API_URL || PUBLIC_API_URL,
 );
 
 /**
@@ -192,10 +184,10 @@ const REVALIDATE_SECONDS = 15;
 /**
  * Merge API data with static fallback data.
  *
- * IMPORTANT:
- * If the backend returns only its official events,
- * frontend-only events such as Valorant, BGMI and Free Fire
- * are added back from EVENTS.
+ * - Keeps frontend-only events and gallery items.
+ * - Preserves static image paths when matching API items exist.
+ * - Prevents null image values from removing local photos.
+ * - Retains the rest of the API data.
  */
 function merge(
   json: Partial<FestData> | null | undefined,
@@ -208,44 +200,97 @@ function merge(
     return out;
   }
 
-  /*
-   * Merge all normal bundle fields.
+  /**
+   * Merge normal bundle fields.
+   *
+   * Events and gallery receive special handling below.
    */
   for (const key of Object.keys(
-  STATIC_FEST_DATA,
-) as (keyof FestData)[]) {
-  const value = json[key];
+    STATIC_FEST_DATA,
+  ) as (keyof FestData)[]) {
+    if (key === "events" || key === "gallery") {
+      continue;
+    }
 
-  if (
-    value !== undefined &&
-    value !== null
-  ) {
-    Object.assign(out, {
-      [key]: value,
-    });
+    const value = json[key];
+
+    if (value !== undefined && value !== null) {
+      Object.assign(out, {
+        [key]: value,
+      });
+    }
   }
-}
 
-  /*
-   * Special handling for events.
+  /**
+   * EVENTS
    *
    * API events remain first.
-   * Any static event missing from the API
-   * is appended afterwards.
+   * Static events missing from the API are appended.
+   * Static image paths take priority for matching events.
    */
   if (json.events) {
-    const apiSlugs = new Set(
-      json.events.map(
-        (event) => event.slug,
+    const staticBySlug = new Map(
+      STATIC_FEST_DATA.events.map(
+        (event) => [event.slug, event] as const,
       ),
     );
 
+    const apiSlugs = new Set(
+      json.events.map((event) => event.slug),
+    );
+
     out.events = [
-      ...json.events,
+      ...json.events.map((event) => {
+        const fallback = staticBySlug.get(event.slug);
+
+        return {
+          ...(fallback ?? {}),
+          ...event,
+
+          // Use the new local image when one is defined.
+          image: fallback?.image || event.image || null,
+        };
+      }),
 
       ...STATIC_FEST_DATA.events.filter(
-        (event) =>
-          !apiSlugs.has(event.slug),
+        (event) => !apiSlugs.has(event.slug),
+      ),
+    ];
+  }
+
+  /**
+   * GALLERY
+   *
+   * API gallery entries remain first.
+   * Static entries missing from the API are appended.
+   * New local gallery image paths take priority for matching IDs.
+   */
+  if (json.gallery) {
+    const staticById = new Map(
+      STATIC_FEST_DATA.gallery.map(
+        (item) => [item.id, item] as const,
+      ),
+    );
+
+    const apiIds = new Set(
+      json.gallery.map((item) => item.id),
+    );
+
+    out.gallery = [
+      ...json.gallery.map((item) => {
+        const fallback = staticById.get(item.id);
+
+        return {
+          ...(fallback ?? {}),
+          ...item,
+
+          // Keep the local gallery photo instead of an old API path.
+          image: fallback?.image || item.image || null,
+        };
+      }),
+
+      ...STATIC_FEST_DATA.gallery.filter(
+        (item) => !apiIds.has(item.id),
       ),
     ];
   }
@@ -258,10 +303,10 @@ function merge(
  * Fetch the current bundle.
  */
 export async function getFestData(): Promise<FestData> {
-  /*
-   * During a local production build, always use the static data.
-   * This prevents Next.js from repeatedly trying to reach the
-   * backend while pre-rendering every event page.
+  /**
+   * During production builds, use the static data.
+   * This avoids requiring the backend to be reachable
+   * while Next.js pre-renders the website.
    */
   if (process.env.NODE_ENV === "production") {
     return STATIC_FEST_DATA;
@@ -278,9 +323,7 @@ export async function getFestData(): Promise<FestData> {
     );
 
     if (!res.ok) {
-      throw new Error(
-        `API responded ${res.status}`,
-      );
+      throw new Error(`API responded ${res.status}`);
     }
 
     return merge(
@@ -298,7 +341,7 @@ export async function getFestData(): Promise<FestData> {
 
 /**
  * Browser-side:
- * Fetch the latest bundle.
+ * Fetch the latest bundle without caching.
  */
 export async function fetchFestDataClient(): Promise<FestData | null> {
   try {
@@ -313,8 +356,7 @@ export async function fetchFestDataClient(): Promise<FestData | null> {
       return null;
     }
 
-    const json =
-      (await res.json()) as Partial<FestData>;
+    const json = (await res.json()) as Partial<FestData>;
 
     return merge(json);
   } catch {
@@ -327,16 +369,10 @@ export async function fetchFestDataClient(): Promise<FestData | null> {
  */
 export function findTeam(
   teams: Team[],
-  slug:
-    | string
-    | undefined
-    | null,
+  slug: string | undefined | null,
 ): Team | undefined {
   return slug
-    ? teams.find(
-        (team) =>
-          team.slug === slug,
-      )
+    ? teams.find((team) => team.slug === slug)
     : undefined;
 }
 
@@ -347,8 +383,5 @@ export function findEvent(
   events: FestEvent[],
   slug: string,
 ): FestEvent | undefined {
-  return events.find(
-    (event) =>
-      event.slug === slug,
-  );
+  return events.find((event) => event.slug === slug);
 }
