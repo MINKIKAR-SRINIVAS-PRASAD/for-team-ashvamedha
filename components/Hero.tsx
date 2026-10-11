@@ -9,7 +9,7 @@ import { useArenaReady } from "@/lib/hooks/useArenaReady";
 import { useMouseParallax } from "@/lib/hooks/useMouseParallax";
 import { EASE } from "@/lib/motion";
 import type { MotionStyle } from "framer-motion";
-import { FEST_STATS, HUD, SITE } from "@/data/site";
+import { FEST_STATS, HUD, REGISTRATION_OPEN, SITE } from "@/data/site";
 
 /**
  * HERO — the strongest composition on the site.
@@ -342,9 +342,10 @@ export function Hero() {
                 href={SITE.registrationUrl}
                 external
                 variant="primary"
+                disabled={!REGISTRATION_OPEN}
                 className="!px-7 !py-4"
               >
-                Register Now
+                {REGISTRATION_OPEN ? "Register Now" : "Registration Closed"}
               </CTA>
 
               <CTA
@@ -472,7 +473,7 @@ export function Hero() {
 
               <div className="mt-6 flex items-center gap-3">
                 <span className="tag !border-crimson/40 !text-crimson/90">
-                  REGISTRATION OPEN
+                  {REGISTRATION_OPEN ? "REGISTRATION OPEN" : "REGISTRATION CLOSED"}
                 </span>
 
                 <Link

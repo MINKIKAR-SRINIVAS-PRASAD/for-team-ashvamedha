@@ -4,6 +4,7 @@ import { SportsGrid } from "@/components/SportsGrid";
 import { EventCarousel } from "@/components/EventCarousel";
 import { CTASection } from "@/components/sections/HomeSections";
 import { EVENT_CATEGORIES } from "@/data/events";
+import { REGISTRATION_OPEN } from "@/data/site";
 import { getFestData } from "@/lib/festData";
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default async function EventsPage() {
               { k: "Disciplines", v:"10+" },
              // { k: "Team Sports", v: String(EVENTS.filter((e) => e.category === "Team Sport").length) },
               { k: "Team Sports", v: "20+" },
-              { k: "Open Entries", v: String(EVENTS.filter((e) => e.registration !== "closed").length) },
+              { k: "Open Entries", v: REGISTRATION_OPEN ? String(EVENTS.filter((e) => e.registration !== "closed").length) : "0" },
               { k: "Total Prize", v: "₹2.8L" },
             ].map((s) => (
               <div key={s.k}>
@@ -69,7 +70,7 @@ export default async function EventsPage() {
           <SectionHeader
             protocol="// FULL_ROSTER"
             title="EVERY SPORT"
-            description="Every event carries a live registration status — closing dates are enforced by the arena control room."
+            description="Explore all ASHVAMEDHA 2026 events. Registration is currently closed; event details, schedule and results remain available."
           />
           <div className="mt-10">
             <SportsGrid />

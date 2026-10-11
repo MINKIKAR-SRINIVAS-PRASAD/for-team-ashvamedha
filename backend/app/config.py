@@ -7,15 +7,15 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    database_url: str = "sqlite:///./ashvamedha.db"
+    mongodb_uri: str = ""
+    mongodb_db_name: str = "ashvamedha2026"
 
     secret_key: str = "dev-only-insecure-secret-change-me"
     token_expire_hours: int = 12
 
     admin_username: str = "admin"
     admin_password: str = "admin123"
-    # Sport admins: "sport:username:password" entries separated by ";" or newlines.
-    # Each one can manage only that sport's matches; list several per sport if needed.
+    # sport:username:password entries separated by semicolons or newlines.
     sport_admins: str = ""
 
     cors_origins: str = "http://localhost:3000"
@@ -25,8 +25,8 @@ class Settings(BaseSettings):
     upi_payee_name: str = "ASHVAMEDHA IIT Bhubaneswar"
 
     auto_seed: bool = True
-    # Put the frontend's sample live scores (made-up teams) into a new database.
-    # Off by default so a fresh database starts with no live matches.
+    # Public registration is deliberately closed by default. Set REGISTRATIONS_OPEN=true to reopen.
+    registrations_open: bool = False
     seed_demo_matches: bool = False
     points_win: int = 3
     points_draw: int = 1
@@ -37,26 +37,16 @@ class Settings(BaseSettings):
 
     @property
     def cors_origin_list(self) -> list[str]:
-        return [o.strip().rstrip("/") for o in self.cors_origins.split(",") if o.strip()]
+        return [origin.strip().rstrip("/") for origin in self.cors_origins.split(",") if origin.strip()]
 
     @property
     def sport_admin_list(self) -> list[tuple[str, str, str]]:
-        out = []
+        out: list[tuple[str, str, str]] = []
         for entry in re.split(r"[;\n]", self.sport_admins):
-            parts = [p.strip() for p in entry.split(":", 2)]
+            parts = [part.strip() for part in entry.split(":", 2)]
             if len(parts) == 3 and all(parts):
                 out.append((parts[0], parts[1], parts[2]))
         return out
-
-    @property
-    def sqlalchemy_url(self) -> str:
-        url = self.database_url
-        # Render / Heroku style URLs -> SQLAlchemy + psycopg3 driver
-        if url.startswith("postgres://"):
-            url = "postgresql+psycopg://" + url[len("postgres://"):]
-        elif url.startswith("postgresql://"):
-            url = "postgresql+psycopg://" + url[len("postgresql://"):]
-        return url
 
 
 @lru_cache

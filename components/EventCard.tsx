@@ -7,16 +7,18 @@ import { ArrowRight, Calendar, Clock, MapPin, Users } from "lucide-react";
 import { BattlefieldFrame } from "@/components/art/BattlefieldFrame";
 import { SportGlyph } from "@/components/art/SportGlyph";
 import { REGISTRATION_LABEL, type FestEvent } from "@/data/events";
+import { REGISTRATION_OPEN } from "@/data/site";
 import { accentOf } from "@/lib/accents";
 import { EASE } from "@/lib/motion";
 import { cn, pad } from "@/lib/utils";
 
 /** Small status chip: open / closing soon / closed. */
 function StatusChip({ state }: { state: FestEvent["registration"] }) {
+  const shownState = REGISTRATION_OPEN ? state : "closed";
   const tone =
-    state === "open"
+    shownState === "open"
       ? "border-emerald-400/40 text-emerald-300/90"
-      : state === "closing"
+      : shownState === "closing"
         ? "border-crimson/50 text-crimson"
         : "border-white/15 text-silver-dim";
   return (
@@ -24,10 +26,10 @@ function StatusChip({ state }: { state: FestEvent["registration"] }) {
       <span
         className={cn(
           "h-1.5 w-1.5 rounded-full",
-          state === "open" ? "bg-emerald-400" : state === "closing" ? "bg-crimson animate-live-pulse" : "bg-silver-dim",
+          shownState === "open" ? "bg-emerald-400" : shownState === "closing" ? "bg-crimson animate-live-pulse" : "bg-silver-dim",
         )}
       />
-      {REGISTRATION_LABEL[state]}
+      {REGISTRATION_LABEL[shownState]}
     </span>
   );
 }

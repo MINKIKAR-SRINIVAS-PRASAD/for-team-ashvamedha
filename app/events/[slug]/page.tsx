@@ -8,6 +8,7 @@ import { CTA } from "@/components/ui/CTA";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { EventLiveScores } from "@/components/EventLiveScores";
 import { REGISTRATION_LABEL } from "@/data/events";
+import { REGISTRATION_OPEN } from "@/data/site";
 import { findEvent, getFestData } from "@/lib/festData";
 import { accentOf } from "@/lib/accents";
 
@@ -106,7 +107,7 @@ export default async function EventDetailPage({
                     className="h-1.5 w-1.5 rounded-full"
                     style={{ background: a.base }}
                   />
-                  {REGISTRATION_LABEL[event.registration]}
+                  {REGISTRATION_LABEL[REGISTRATION_OPEN ? event.registration : "closed"]}
                 </span>
                 <span className="tag">{event.category}</span>
                 <span className="tag">{event.format}</span>
@@ -117,9 +118,9 @@ export default async function EventDetailPage({
                   href={`/register?event=${event.slug}`}
                   variant="primary"
                   className="!px-7 !py-4"
-                  disabled={event.registration === "closed"}
+                  disabled={!REGISTRATION_OPEN || event.registration === "closed"}
                 >
-                  {event.registration === "closed" ? "Entries Closed" : "Register Now"}
+                  {!REGISTRATION_OPEN || event.registration === "closed" ? "Entries Closed" : "Register Now"}
                 </CTA>
                 <CTA href="/schedule" variant="ghost" className="!px-7 !py-4">
                   See in Schedule

@@ -110,7 +110,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "FIBA rules; tournament type decided according to number of participating teams",
     accent: "volt",
-    image: "/images2026/basketball.png",
+    image: "/github-copy/components/images2026/basketball.jpeg",
     glyph: "basketball",
   },
 
@@ -133,7 +133,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "50-minute match (2 × 25 min); extra time 16 min (2 × 8 min); penalty shoot-out in tied knockout matches",
     accent: "crimson",
-    image: "/images2026/football.png",
+    image: "/github-copy/components/images2026/football.png",
     glyph: "football",
   },
 
@@ -157,7 +157,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "League: best of 3 sets; semi-finals/finals: best of 5 sets; FIVB rules",
     accent: "gold",
-    image: "/images2026/volleyball.png",
+    image: "/github-copy/components/images2026/volleyball.jpeg",
     glyph: "volleyball",
   },
 
@@ -181,7 +181,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "Knockout/elimination; singles, doubles, singles; best of 3 games to 21 points",
     accent: "gold",
-    image: "/images2026/badminton.png",
+    image: "/github-copy/components/images2026/badminton.jpeg",
     glyph: "badminton",
   },
 
@@ -204,7 +204,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "Best of 5; 5-match team order: Men's Singles, Women's Singles, Men's Doubles, Mixed Doubles, Men's Singles",
     accent: "volt",
-    image: "/images2026/tabletennis.png",
+    image: "/github-copy/components/images2026/tabletennis.jpeg",
     glyph: "tabletennis",
   },
 
@@ -227,7 +227,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "Two singles + one doubles; best of 3 sets; league and knockout formats as specified in the rulebook",
     accent: "gold",
-    image: "/images2026/lawntennis.png",
+    image: "/github-copy/components/images2026/lawntennis.jpeg",
     glyph: "lawn",
   },
 
@@ -250,7 +250,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "FIDE Swiss system; qualifier/knockout may precede the Swiss league depending on entries",
     accent: "violet",
-    image: "/images2026/chess.png",
+    image: "/github-copy/components/images2026/chess.jpeg",
     glyph: "chess",
   },
 
@@ -274,7 +274,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "Squat + deadlift + bench press; DOTS scoring",
     accent: "crimson",
-    image: null,
+    image: "/github-copy/components/images2026/powerlifting.jpeg",
     glyph: "gym events",
   },
 
@@ -297,32 +297,8 @@ export const EVENTS: FestEvent[] = [
     format:
       "Two innings; 9-minute turns for Men and 7-minute turns for Women; knockout matches",
     accent: "violet",
-    image: "/images2026/khokho.png",
+    image: "/github-copy/components/images2026/khokho.jpeg",
     glyph: "kho-kho",
-  },
-
-  {
-    slug: "swimming",
-    name: "Swimming",
-    arena: "Swimming Pool",
-    category: "Power & Fitness",
-    tagline: "Two individual events.",
-    description:
-      "The rulebook specifies 100 m Freestyle and 100 m Breaststroke events. Participants must follow lane, starting and stroke regulations, with the fastest valid timing determining ranking.",
-    date: "09–11 Oct 2026",
-    day: 1,
-    time: "TBA",
-    venue: "TBA",
-    teamSize: "Individual",
-    registration: "open",
-    entryFee: "₹1,500 / single event; ₹2,500 / both events",
-    prizePool:
-      "Winner ₹5,500 / Runner-up ₹3,500 / 2nd Runner-up ₹2,500",
-    format:
-      "100 m Freestyle + 100 m Breaststroke",
-    accent: "volt",
-    image: null,
-    glyph: "swimming",
   },
 
   {
@@ -345,7 +321,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "Two rounds: preliminary + final; prelims contain 20–30 questions; top 8 teams advance",
     accent: "violet",
-    image: null,
+    image: "/github-copy/components/images2026/sportsquiz.jpeg",
     glyph: "sportsquiz",
   },
 
@@ -368,7 +344,7 @@ export const EVENTS: FestEvent[] = [
     format:
       "5 overs per innings; tennis ball; Super Over for tied knockout matches",
     accent: "crimson",
-    image: null,
+    image: "/github-copy/components/images2026/mixed cricket.jpeg",
     glyph: "football",
   },
 
@@ -394,7 +370,7 @@ export const EVENTS: FestEvent[] = [
     prizePool: "TBA",
     format: "TBA",
     accent: "violet",
-    image: null,
+    image: "/github-copy/components/images2026/valorent.jpegg",
     glyph: "esportst",
   },
 
@@ -416,7 +392,7 @@ export const EVENTS: FestEvent[] = [
     prizePool: "TBA",
     format: "TBA",
     accent: "volt",
-    image: null,
+    image: "/github-copy/components/images2026/BGMI.jpeg",
     glyph: "esportst",
   },
 
@@ -438,7 +414,7 @@ export const EVENTS: FestEvent[] = [
     prizePool: "TBA",
     format: "TBA",
     accent: "crimson",
-    image: null,
+    image: "/github-copy/components/images2026/free fire.jpeg",
     glyph: "esportst",
   },
 ];
