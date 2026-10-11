@@ -22,6 +22,7 @@ Glyph = Literal[
 SlotStatus = Literal["scheduled", "live", "completed"]
 MatchStatus = Literal["upcoming", "live", "final"]
 Winner = Literal["home", "away", "draw"]
+GalleryCategory = str  # the gallery is photo-only now, so any label (or none) is fine
 Span = Literal["tall", "wide", "square"]
 SponsorTier = Literal["title", "powered", "partner"]
 PaymentStatus = Literal["pending", "submitted", "verified", "rejected", "not_required"]
